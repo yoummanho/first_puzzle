@@ -1,4 +1,4 @@
-// Version: v1.1
+// Version: v1.11
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -19,6 +19,10 @@ public class Board : MonoBehaviour
     [SerializeField]
     private Vector2 spacing = new Vector2(5f, 5f);          // 타일 간 간격
 
+    [Header("Added for Outer Frame Border")]
+    [SerializeField]
+    private int borderPadding = 15;                     // 외각 테두리 두께 (픽셀 단위 여백)
+
     private List<Tile> tileList;                                // 생성한 타일 정보 저장
 
     [SerializeField]
@@ -35,7 +39,7 @@ public class Board : MonoBehaviour
     {
         tileList = new List<Tile>();
 
-        // 1. 격자 칸수에 맞춰 Board(tilesParent) 크기 및 GridLayoutGroup 동적 조절
+        // 1. 격자 칸수 및 테두리 두께에 맞춰 Board(tilesParent) 크기 및 GridLayoutGroup 동적 조절
         RectTransform parentRect = tilesParent.GetComponent<RectTransform>();
         GridLayoutGroup gridLayout = tilesParent.GetComponent<GridLayoutGroup>();
         if (gridLayout == null)
@@ -43,17 +47,23 @@ public class Board : MonoBehaviour
             gridLayout = tilesParent.gameObject.AddComponent<GridLayoutGroup>();
         }
 
+        // 인펙터에서 입력받은 borderPadding 값으로 상하좌우 여백 유연하게 설정
+        gridLayout.padding.left = borderPadding;
+        gridLayout.padding.right = borderPadding;
+        gridLayout.padding.top = borderPadding;
+        gridLayout.padding.bottom = borderPadding;
+
         gridLayout.cellSize = cellSize;
         gridLayout.spacing = spacing;
         gridLayout.constraint = GridLayoutGroup.Constraint.FixedColumnCount;
         gridLayout.constraintCount = puzzleSize.x;
 
-        // 가로, 세로 칸수에 맞춰 tilesParent의 전체 가로/세로 폭(Width, Height) 계산
-        float boardWidth = (puzzleSize.x * cellSize.x) + ((puzzleSize.x - 1) * spacing.x);
-        float boardHeight = (puzzleSize.y * cellSize.y) + ((puzzleSize.y - 1) * spacing.y);
+        // 순수 퍼즐 영역 크기 계산 + 양쪽 테두리 여백 두께(borderPadding * 2)를 더해 최종 외각 보드 크기 산출
+        float boardWidth = (puzzleSize.x * cellSize.x) + ((puzzleSize.x - 1) * spacing.x) + (borderPadding * 2);
+        float boardHeight = (puzzleSize.y * cellSize.y) + ((puzzleSize.y - 1) * spacing.y) + (borderPadding * 2);
         parentRect.sizeDelta = new Vector2(boardWidth, boardHeight);
 
-        // 타일 셀 크기와 간격을 바탕으로 기준 이동 거리(상하좌우 인접 거리) 자동 보정
+        // 타일 셀 크기와 간격을 바탕으로 기준 이동 거리 자동 보정 (여백이 늘어나도 상대 거리는 일정)
         neighborTileDistance = cellSize.x + spacing.x;
 
         // 2. 타일 동적 생성 및 에디터 슬라이싱 스프라이트 주입 진행

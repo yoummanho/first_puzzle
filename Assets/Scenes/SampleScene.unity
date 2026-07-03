@@ -357,6 +357,7 @@ MonoBehaviour:
   - {fileID: 597504347, guid: ee6461efd8dcfc64fbcbc8758f52ef65, type: 3}
   cellSize: {x: 100, y: 100}
   spacing: {x: 1, y: 1}
+  borderPadding: 15
   puzzleSize: {x: 5, y: 9}
 --- !u!114 &930756174
 MonoBehaviour:
