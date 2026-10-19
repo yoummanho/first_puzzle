@@ -1,0 +1,6 @@
+{
+  "name": "Puzzle.Runtime",
+  "rootNamespace": "FirstPuzzle",
+  "references": ["UnityEngine.UI", "Unity.TextMeshPro"],
+  "autoReferenced": true
+}

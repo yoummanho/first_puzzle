@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c350969bd9a0fb4e940e54a938d2598, type: 3}
+  m_Name: test-4x4
+  m_EditorClassIdentifier: Puzzle.Runtime::FirstPuzzle.StageData
+  stageId: test-4x4
+  illustration: {fileID: 2800000, guid: ee6461efd8dcfc64fbcbc8758f52ef65, type: 3}
+  columns: 4
+  rows: 4
+  shuffleSeed: 20261022
+  shuffleCount: 320
+  shuffleVersion: 1

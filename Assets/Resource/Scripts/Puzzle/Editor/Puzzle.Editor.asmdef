@@ -1,0 +1,6 @@
+{
+  "name": "Puzzle.Editor",
+  "rootNamespace": "FirstPuzzle.Editor",
+  "references": ["Puzzle.Runtime", "UnityEngine.UI", "Unity.TextMeshPro", "Unity.InputSystem"],
+  "includePlatforms": ["Editor"]
+}

@@ -1,0 +1,6 @@
+{
+  "name": "Puzzle.Tests",
+  "references": ["Puzzle.Runtime", "Puzzle.Editor", "UnityEngine.UI", "Unity.TextMeshPro"],
+  "includePlatforms": ["Editor"],
+  "optionalUnityReferences": ["TestAssemblies"]
+}
