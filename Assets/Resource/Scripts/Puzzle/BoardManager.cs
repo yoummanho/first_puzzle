@@ -57,9 +57,14 @@ namespace FirstPuzzle
 
         public bool LoadStage(StageData nextStage)
         {
-            if (nextStage == null || !nextStage.Validate(out string _))
+            if (nextStage == null)
             {
                 Debug.LogError("Cannot load puzzle: invalid StageData.", this);
+                return false;
+            }
+            if (!nextStage.Validate(out string error))
+            {
+                Debug.LogError($"Cannot load puzzle: {error}", this);
                 return false;
             }
             if (boardArea == null || tilePrefab == null)
@@ -87,7 +92,7 @@ namespace FirstPuzzle
             }
             stage = nextStage;
             state = new PuzzleBoardState(stage.Columns, stage.Rows, stage.ShuffleSeed,
-                stage.ShuffleCount, initialUndoAllowance);
+                stage.ShuffleCount, Mathf.Max(0, initialUndoAllowance));
             busy = false;
             paused = false;
             clearProgress = 0f;
@@ -97,6 +102,7 @@ namespace FirstPuzzle
                 PuzzleTile tile = Instantiate(tilePrefab, boardArea);
                 tile.name = id == state.BlankTile ? "Blank" : $"Tile_{id + 1:00}";
                 tile.Initialize(stage, id, OnTilePressed);
+                tile.gameObject.SetActive(true);
                 tile.SetNumbersVisible(numberGuide);
                 tiles[id] = tile;
             }
@@ -134,26 +140,35 @@ namespace FirstPuzzle
             StateChanged?.Invoke();
             if (generation != activeGeneration) return;
             if (state.IsSolved) PuzzleSolved?.Invoke();
-            if (generation == activeGeneration) StartCoroutine(FinishTransition(activeGeneration));
+            if (generation == activeGeneration && isActiveAndEnabled)
+                StartCoroutine(FinishTransition(activeGeneration));
         }
 
         private IEnumerator FinishTransition(int activeGeneration)
         {
-            while (AnyTileMoving() || paused) yield return null;
-            if (generation != activeGeneration) yield break;
+            while (AnyTileMoving() || paused)
+            {
+                if (generation != activeGeneration || !isActiveAndEnabled) yield break;
+                yield return null;
+            }
+            if (generation != activeGeneration || !isActiveAndEnabled) yield break;
             if (state.IsSolved)
             {
                 SetNumberGuide(numberGuide);
+                // Subscribers may restart, load another stage or disable the board.
+                if (generation != activeGeneration || !isActiveAndEnabled) yield break;
                 while (clearProgress < 1f)
                 {
+                    if (generation != activeGeneration || !isActiveAndEnabled) yield break;
                     if (!paused)
                     {
-                        clearProgress = Mathf.Min(1f, clearProgress + Time.deltaTime / clearDuration);
+                        clearProgress = Mathf.Min(1f, clearProgress + Time.deltaTime / Mathf.Max(0.01f, clearDuration));
                         RefreshLayout();
                         tiles[state.BlankTile].SetImageAlpha(clearProgress);
                     }
                     yield return null;
                 }
+                if (generation != activeGeneration || !isActiveAndEnabled) yield break;
                 busy = false;
                 StateChanged?.Invoke();
                 if (generation == activeGeneration) ClearPresentationFinished?.Invoke();
@@ -172,7 +187,16 @@ namespace FirstPuzzle
         }
 
         public void SetMultiPush(bool value) { multiPush = value; StateChanged?.Invoke(); }
-        public void SetSlideAnimation(bool value) { slideAnimation = value; StateChanged?.Invoke(); }
+        public void SetSlideAnimation(bool value)
+        {
+            slideAnimation = value;
+            if (!value && tiles != null)
+            {
+                foreach (PuzzleTile tile in tiles) tile.StopMotion();
+                RefreshLayout();
+            }
+            StateChanged?.Invoke();
+        }
 
         public void SetNumberGuide(bool value)
         {
@@ -240,6 +264,7 @@ namespace FirstPuzzle
 
         private void OnDisable()
         {
+            generation++;
             StopAllCoroutines();
             if (tiles != null) foreach (PuzzleTile tile in tiles) tile.StopMotion();
             pendingReward = 0;
@@ -255,6 +280,7 @@ namespace FirstPuzzle
                 busy = true;
                 StartCoroutine(FinishTransition(generation));
             }
+            StateChanged?.Invoke();
         }
     }
 }

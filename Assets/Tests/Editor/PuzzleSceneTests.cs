@@ -55,6 +55,10 @@ namespace FirstPuzzleTests
             yield return new WaitForSecondsRealtime(0.15f);
             Assert.AreEqual(pausedPosition, clickedTile.Rect.anchoredPosition);
             Assert.IsTrue(board.IsBusy);
+            board.SetSlideAnimation(false);
+            Assert.IsFalse(clickedTile.IsMoving);
+            Assert.AreNotEqual(pausedPosition, clickedTile.Rect.anchoredPosition);
+            Assert.IsTrue(board.IsBusy, "Turning animation off must not bypass pause.");
             board.SetPaused(false);
             yield return WaitForBoard(board);
             Assert.IsTrue(board.TryUndo());
@@ -133,6 +137,46 @@ namespace FirstPuzzleTests
             }
             float gaplessPitch = Vector2.Distance(finishedTiles[0].Rect.anchoredPosition, finishedTiles[1].Rect.anchoredPosition);
             Assert.That(finishedTiles[0].Rect.rect.width, Is.EqualTo(gaplessPitch).Within(0.001f));
+        }
+
+        [UnityTest]
+        public IEnumerator RestartFromClearNotificationDoesNotFinishTheNewBoard()
+        {
+            Assert.IsFalse(SceneManager.GetActiveScene().isDirty);
+            SessionState.SetString(RestoreKey, SceneManager.GetActiveScene().path);
+            EditorSceneManager.OpenScene(PhaseOneSceneBuilder.ScenePath);
+            yield return new EnterPlayMode();
+            yield return null;
+            BoardManager board = Object.FindFirstObjectByType<BoardManager>();
+            Object.FindFirstObjectByType<PhaseOneDemo>().enabled = false;
+            StageData finishStage = AssetDatabase.LoadAssetAtPath<StageData>(
+                "Assets/Resource/PuzzlePhaseOne/test-one-move.asset");
+            Assert.IsTrue(board.LoadStage(finishStage));
+            yield return null;
+            board.SetSlideAnimation(false);
+            bool solved = false;
+            bool restarted = false;
+            int presentations = 0;
+            board.PuzzleSolved += () => solved = true;
+            board.ClearPresentationFinished += () => presentations++;
+            board.StateChanged += () =>
+            {
+                if (!solved || restarted) return;
+                restarted = true;
+                board.Restart();
+            };
+            Assert.IsTrue(board.TryMoveTile(Model(board).GetTileAt(8)));
+            yield return new WaitForSecondsRealtime(0.6f);
+            Assert.IsTrue(restarted);
+            Assert.IsFalse(board.IsSolved);
+            Assert.IsFalse(board.IsBusy);
+            Assert.AreEqual(0, board.MoveCount);
+            Assert.AreEqual(0, presentations);
+            foreach (PuzzleTile tile in board.GetComponentsInChildren<PuzzleTile>())
+            {
+                if (tile.TileId == Model(board).BlankTile)
+                    Assert.AreEqual(0f, tile.GetComponent<UnityEngine.UI.RawImage>().color.a);
+            }
         }
 
         private static PuzzleBoardState Model(BoardManager board) =>

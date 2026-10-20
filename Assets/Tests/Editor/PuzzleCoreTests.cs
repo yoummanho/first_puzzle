@@ -117,6 +117,27 @@ namespace FirstPuzzleTests
             Assert.IsFalse(board.TryMove(7, true));
         }
 
+        [Test]
+        public void InactiveTileCanInitializeAndSnapWithoutStartingACoroutine()
+        {
+            StageData stage = AssetDatabase.LoadAssetAtPath<StageData>(
+                "Assets/Resource/PuzzlePhaseOne/test-3x3.asset");
+            var instance = new GameObject("Inactive tile", typeof(RectTransform));
+            instance.SetActive(false);
+            try
+            {
+                PuzzleTile tile = instance.AddComponent<PuzzleTile>();
+                tile.MotionPaused = true;
+                tile.Initialize(stage, 0, null);
+                Assert.IsFalse(tile.MotionPaused);
+                Assert.AreEqual(stage.GetTileUV(0), instance.GetComponent<UnityEngine.UI.RawImage>().uvRect);
+                tile.MoveTo(new Vector2(20f, 30f), 0.1f);
+                Assert.AreEqual(new Vector2(20f, 30f), tile.Rect.anchoredPosition);
+                Assert.IsFalse(tile.IsMoving);
+            }
+            finally { UnityEngine.Object.DestroyImmediate(instance); }
+        }
+
         [TestCase(1200, 600, 3, 4)]
         [TestCase(600, 1200, 6, 8)]
         public void CroppedUVsAreSquareInSourcePixelsAndRunTopToBottom(int width, int height, int cols, int rows)

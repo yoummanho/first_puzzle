@@ -21,7 +21,9 @@ namespace FirstPuzzle
         public bool MotionPaused { get; set; }
         public RectTransform Rect => rect;
 
-        private void Awake()
+        private void Awake() => CacheComponents();
+
+        private void CacheComponents()
         {
             rect = GetComponent<RectTransform>();
             image = GetComponent<UnityEngine.UI.RawImage>();
@@ -30,11 +32,17 @@ namespace FirstPuzzle
 
         public void Initialize(StageData stage, int tileId, Action<int> pressed)
         {
+            if (stage == null) throw new ArgumentNullException(nameof(stage));
+            Rect uv = stage.GetTileUV(tileId);
+            // Inactive prefab instances have not necessarily received Awake yet.
+            CacheComponents();
+            StopMotion();
+            MotionPaused = false;
             TileId = tileId;
             blank = tileId == stage.Columns * stage.Rows - 1;
             onPressed = pressed;
             image.texture = stage.Illustration;
-            image.uvRect = stage.GetTileUV(tileId);
+            image.uvRect = uv;
             image.raycastTarget = !blank;
             SetImageAlpha(blank ? 0f : 1f);
             if (numberLabel != null)
@@ -67,7 +75,7 @@ namespace FirstPuzzle
         public void MoveTo(Vector2 destination, float duration)
         {
             StopMotion();
-            if (duration <= 0f || (rect.anchoredPosition - destination).sqrMagnitude < 0.01f)
+            if (!isActiveAndEnabled || duration <= 0f || (rect.anchoredPosition - destination).sqrMagnitude < 0.01f)
             {
                 rect.anchoredPosition = destination;
                 return;

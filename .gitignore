@@ -159,3 +159,8 @@ x86/
 
 # Built Visual Studio Code Extensions
 *.vsix
+
+# Unity package dependencies must travel with the project (not NuGet cache).
+!/Packages/
+!/Packages/manifest.json
+!/Packages/packages-lock.json
