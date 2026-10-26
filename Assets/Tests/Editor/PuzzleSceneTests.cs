@@ -25,7 +25,12 @@ namespace FirstPuzzleTests
             EditorSceneManager.OpenScene(PhaseOneSceneBuilder.ScenePath);
             yield return new EnterPlayMode();
             yield return null;
+            // Captured locals cannot survive EnterPlayMode's domain reload.
+            yield return VerifyMotionUndoRewardsAndCompletion();
+        }
 
+        private static IEnumerator VerifyMotionUndoRewardsAndCompletion()
+        {
             BoardManager board = Object.FindFirstObjectByType<BoardManager>();
             Assert.IsNotNull(board);
             Assert.IsTrue(board.IsReady);
@@ -36,13 +41,18 @@ namespace FirstPuzzleTests
             Assert.AreEqual(0, board.UndoUsed);
 
             foreach (PuzzleTile tile in board.GetComponentsInChildren<PuzzleTile>())
+            {
+                Assert.IsNotNull(tile.Rect, $"Tile {tile.name} has no cached RectTransform.");
                 Assert.That(tile.Rect.rect.width, Is.EqualTo(tile.Rect.rect.height).Within(0.001f));
+            }
 
             PuzzleBoardState model = Model(board);
+            Assert.IsNotNull(model);
             int adjacent = model.BlankCell % model.Columns == 0 ? model.BlankCell + 1 : model.BlankCell - 1;
             int tileId = model.GetTileAt(adjacent);
             int[] original = model.CopyCells();
             PuzzleTile clickedTile = System.Array.Find(board.GetComponentsInChildren<PuzzleTile>(), tile => tile.TileId == tileId);
+            Assert.IsNotNull(clickedTile, $"Tile {tileId} is missing from board {board.name}.");
             // Verify the actual EventSystem pointer route, not just a direct model call.
             ExecuteEvents.Execute(clickedTile.gameObject, new PointerEventData(EventSystem.current)
                 { button = PointerEventData.InputButton.Left }, ExecuteEvents.pointerClickHandler);
@@ -147,8 +157,16 @@ namespace FirstPuzzleTests
             EditorSceneManager.OpenScene(PhaseOneSceneBuilder.ScenePath);
             yield return new EnterPlayMode();
             yield return null;
+            yield return VerifyRestartFromClearNotification();
+        }
+
+        private static IEnumerator VerifyRestartFromClearNotification()
+        {
             BoardManager board = Object.FindFirstObjectByType<BoardManager>();
-            Object.FindFirstObjectByType<PhaseOneDemo>().enabled = false;
+            Assert.IsNotNull(board);
+            var demo = Object.FindFirstObjectByType<PhaseOneDemo>();
+            Assert.IsNotNull(demo, "PhaseOneTest must contain the demo controls.");
+            demo.enabled = false;
             StageData finishStage = AssetDatabase.LoadAssetAtPath<StageData>(
                 "Assets/Resource/PuzzlePhaseOne/test-one-move.asset");
             Assert.IsTrue(board.LoadStage(finishStage));

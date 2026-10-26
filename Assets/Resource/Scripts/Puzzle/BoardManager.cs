@@ -9,6 +9,8 @@ namespace FirstPuzzle
         [SerializeField] private StageData stage;
         [SerializeField] private RectTransform boardArea;
         [SerializeField] private PuzzleTile tilePrefab;
+        [SerializeField] private RectTransform imageFrame;
+        [SerializeField, Min(0)] private float framePadding = 15f;
         [SerializeField, Min(0)] private float tileGap = 4f;
         [SerializeField, Range(0.08f, 0.1f)] private float slideDuration = 0.09f;
         [SerializeField, Min(0.01f)] private float clearDuration = 0.4f;
@@ -251,6 +253,13 @@ namespace FirstPuzzle
             if (state == null || boardArea == null) return;
             lastAreaSize = boardArea.rect.size;
             float side = Mathf.Max(0f, CellPitch - Mathf.Min(tileGap, CellPitch * 0.25f) * (1f - clearProgress));
+            if (imageFrame != null)
+            {
+                imageFrame.anchorMin = imageFrame.anchorMax = imageFrame.pivot = new Vector2(.5f, .5f);
+                imageFrame.anchoredPosition = Vector2.zero;
+                imageFrame.sizeDelta = new Vector2(CellPitch * state.Columns, CellPitch * state.Rows)
+                    + Vector2.one * (2f * framePadding);
+            }
             for (int id = 0; id < tiles.Length; id++)
                 tiles[id].SetGeometry(GetPosition(state.FindCell(id)), side);
         }

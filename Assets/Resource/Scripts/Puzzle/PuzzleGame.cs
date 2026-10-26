@@ -1,7 +1,6 @@
 using System.Collections;
 using TMPro;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 namespace FirstPuzzle
 {
@@ -19,11 +18,24 @@ namespace FirstPuzzle
         private bool countdown;
         private Coroutine resumeRoutine;
         public float Elapsed => elapsed;
+        public SettingsManager Settings { get; private set; }
+        public bool IsCountingDown => countdown;
+        private TMP_Text bgmLabel, sfxLabel;
+
+        private void Awake()
+        {
+            Settings = new SettingsManager();
+            PauseSettingsUI.Install(this, out bgmLabel, out sfxLabel);
+            var audio = GetComponent<PuzzleAudio>();
+            if (audio == null) audio = gameObject.AddComponent<PuzzleAudio>();
+            audio.Initialize(Settings, board);
+        }
 
         private void OnEnable()
         {
             board.StateChanged += Refresh;
             board.ClearPresentationFinished += Completed;
+            Settings.Changed += ApplySettings;
         }
 
         private void Start() => Load(0);
@@ -32,6 +44,7 @@ namespace FirstPuzzle
         {
             board.StateChanged -= Refresh;
             board.ClearPresentationFinished -= Completed;
+            Settings.Changed -= ApplySettings;
             if (resumeRoutine != null) StopCoroutine(resumeRoutine);
             countdown = false;
         }
@@ -52,9 +65,8 @@ namespace FirstPuzzle
             elapsed = 0;
             curtain.SetActive(false);
             preview.gameObject.SetActive(false);
-            board.SetMultiPush(PlayerPrefs.GetInt("PREF_MULTIPUSH", 1) != 0);
-            board.SetSlideAnimation(PlayerPrefs.GetInt("PREF_SLIDE_ANIM", 1) != 0);
-            board.SetNumberGuide(PlayerPrefs.GetInt("PUZZLE_NUMBERS", 1) != 0);
+            ApplySettings();
+            board.SetNumberGuide(PlayerPrefs.GetInt("PUZZLE_NUMBERS", 0) != 0);
             board.LoadStage(stages[index]);
             preview.texture = stages[index].Illustration;
             preview.uvRect = stages[index].GetImageUV();
@@ -74,15 +86,20 @@ namespace FirstPuzzle
         }
         public void Lines()
         {
-            board.SetMultiPush(!board.MultiPush);
-            PlayerPrefs.SetInt("PREF_MULTIPUSH", board.MultiPush ? 1 : 0);
-            PlayerPrefs.Save();
+            Settings.SetMultiPush(!Settings.MultiPush);
         }
         public void Animation()
         {
-            board.SetSlideAnimation(!board.SlideAnimation);
-            PlayerPrefs.SetInt("PREF_SLIDE_ANIM", board.SlideAnimation ? 1 : 0);
-            PlayerPrefs.Save();
+            Settings.SetSlideAnimation(!Settings.SlideAnimation);
+        }
+        public void ToggleBgm() => Settings.SetBgm(!Settings.Bgm);
+        public void ToggleSfx() => Settings.SetSfx(!Settings.Sfx);
+        private void ApplySettings()
+        {
+            board.SetMultiPush(Settings.MultiPush);
+            board.SetSlideAnimation(Settings.SlideAnimation);
+            bgmLabel.text = "Music: " + (Settings.Bgm ? "ON" : "OFF");
+            sfxLabel.text = "Sound effects: " + (Settings.Sfx ? "ON" : "OFF");
         }
         public void ShowPreview(bool show)
         {
@@ -90,7 +107,10 @@ namespace FirstPuzzle
         }
         public void Pause()
         {
-            if (!board.IsReady || board.IsSolved || board.IsPaused) return;
+            if (!board.IsReady || board.IsSolved) return;
+            if (resumeRoutine != null) StopCoroutine(resumeRoutine);
+            resumeRoutine = null;
+            countdown = false;
             ShowPreview(false);
             board.SetPaused(true);
             curtain.SetActive(true);
@@ -122,6 +142,8 @@ namespace FirstPuzzle
             string key = "PUZZLE_BEST_" + stages[index].StageId;
             int best = PlayerPrefs.GetInt(key, int.MaxValue);
             PlayerPrefs.SetInt(key, Mathf.Min(best, board.MoveCount));
+            string timeKey = "PUZZLE_BEST_TIME_" + stages[index].StageId;
+            PlayerPrefs.SetFloat(timeKey, Mathf.Min(PlayerPrefs.GetFloat(timeKey, float.MaxValue), elapsed));
             PlayerPrefs.SetInt("PUZZLE_CLEAR_" + stages[index].StageId, 1);
             PlayerPrefs.Save();
             pauseControls.SetActive(false);
