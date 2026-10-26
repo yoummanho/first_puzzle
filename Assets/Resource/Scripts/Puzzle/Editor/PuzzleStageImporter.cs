@@ -63,14 +63,11 @@ namespace FirstPuzzle.Editor
                         var data = new SerializedObject(stage);
                         data.FindProperty("stageId").stringValue = $"picture-{next:00}";
                         data.FindProperty("illustration").objectReferenceValue = texture;
-                        // Repeat the established difficulty progression for each group of new images.
-                        Vector2Int[] sizes = { new Vector2Int(3, 3), new Vector2Int(3, 4), new Vector2Int(4, 4),
-                            new Vector2Int(4, 5), new Vector2Int(5, 6), new Vector2Int(6, 8) };
-                        int difficulty = (next - 8 + sizes.Length) % sizes.Length;
-                        data.FindProperty("columns").intValue = sizes[difficulty].x;
-                        data.FindProperty("rows").intValue = sizes[difficulty].y;
+                        Vector2Int size = PuzzleImageLayout.ForTexture(texture);
+                        data.FindProperty("columns").intValue = size.x;
+                        data.FindProperty("rows").intValue = size.y;
                         data.FindProperty("shuffleSeed").intValue = 7350 + next;
-                        data.FindProperty("shuffleCount").intValue = 30 + difficulty * 20;
+                        data.FindProperty("shuffleCount").intValue = 30 + (Math.Max(size.x, size.y) - 3) * 20;
                         data.ApplyModifiedPropertiesWithoutUndo();
                         AssetDatabase.CreateAsset(stage, $"{StageFolder}/Stage{next:00}.asset");
                         assets.Add(stage);

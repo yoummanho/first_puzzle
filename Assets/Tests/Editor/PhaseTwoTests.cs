@@ -69,12 +69,14 @@ namespace FirstPuzzleTests
             Assert.IsNotNull(frame);
             Assert.IsNotNull(frame.GetComponent<UnityEngine.UI.Image>().sprite);
             Assert.IsFalse(frame.GetComponent<UnityEngine.UI.Image>().raycastTarget);
-            Assert.AreEqual("stage_image_01", game.stages[0].Illustration.name);
+            Assert.AreEqual("puzzle_001_silver_armor", game.stages[0].Illustration.name);
             var stageIds = new System.Collections.Generic.HashSet<string>();
             for (int stageIndex = 0; stageIndex < game.stages.Length; stageIndex++)
             {
                 Assert.IsTrue(stageIds.Add(game.stages[stageIndex].StageId), "Stage IDs must remain unique.");
                 Assert.IsTrue(game.stages[stageIndex].Validate(out string error), error);
+                Assert.AreEqual(PuzzleImageLayout.ForTexture(game.stages[stageIndex].Illustration),
+                    new Vector2Int(game.stages[stageIndex].Columns, game.stages[stageIndex].Rows));
                 game.Load(stageIndex);
                 yield return null;
                 Assert.AreSame(game.stages[stageIndex], game.board.Stage);

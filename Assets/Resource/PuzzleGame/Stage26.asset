@@ -15,7 +15,7 @@ MonoBehaviour:
   stageId: picture-26
   illustration: {fileID: 2800000, guid: 2cc0206a50f03dd40955c27e9bd84b8b, type: 3}
   columns: 3
-  rows: 3
+  rows: 4
   shuffleSeed: 7376
   shuffleCount: 30
   shuffleVersion: 1

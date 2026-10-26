@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Puzzle.Runtime::FirstPuzzle.StageData
   stageId: picture-14
   illustration: {fileID: 2800000, guid: 26b34d3a452c5e14cb14783e15f98e26, type: 3}
-  columns: 3
+  columns: 6
   rows: 3
   shuffleSeed: 7364
   shuffleCount: 30

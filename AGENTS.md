@@ -31,3 +31,14 @@
 - 검증: Unity 테스트 18/18 통과(2026-10-27 00:18:58 KST), 28개 스테이지 로딩 및 등록 재실행 시 씬 불변 확인.
 - 다음 작업: 이미지 실제 비율에 따른 보드 구성, 이미지 파일명 정리, 임시 배경 추가. 이후 Phase 3.
 - 푸시: 이 커밋 생성 후 요청된 원격 브랜치로 푸시 예정.
+
+### 2026-10-27 00:33 KST — 이미지 구성 및 배경 보완
+- 직전 커밋: `62431ea` (`feat: complete phase two and register puzzle illustrations`, 00:26:29 KST). 00:32 KST에 `origin/wip/home-phase1`로 푸시 성공 확인.
+- 커밋 제목: `feat: fit puzzle grids to artwork and add temporary background`
+- 페이즈: Phase 1/2 콘텐츠 보완. Phase 3/4는 예정 유지.
+- 변경: 이미지 24종을 직접 확인하고 `puzzle_번호_내용`으로 이름 정리. GIF/WebP 원본과 변환 PNG 이름을 통일하고 GUID를 보존.
+- 원본 종횡비에 따라 보드 구성 및 신규 등록 정책 변경. 플레이 스테이지 28개: 3x3 4개, 3x4 17개, 3x5 3개, 3x7 1개, 4x3 2개, 6x3 1개. 이미지별 원본 해상도/보드는 [이미지 목록](Assets/Resource.art/Puzzle_images/README.md)에 기록.
+- 임시 배경: [bg_puzzle_misty_forest_temp.png](Assets/Resource.art/Backgrounds/bg_puzzle_misty_forest_temp.png). 내장 이미지 생성 도구 사용. 생성 프롬프트는 [배경 설명](Assets/Resource.art/Backgrounds/README.md)에 기록. 화면을 비율 유지로 채우며 터치 차단 해제.
+- 검증: Unity 테스트 31/31 통과(00:31:56 KST), 이미지 재등록 중복 없음. 플레이 프레임 진행(7280→9693) 및 720x1280 화면에서 배경/보드/버튼 표시 확인. 에디터 플레이 종료 및 검증용 백그라운드 실행 설정 원복.
+- 남은 작업: Phase 3 로비/도감/방향 선택/모바일 레이아웃, Phase 4 온라인/광고 SDK. 실제 기기 화면 검증은 미실시.
+- 푸시: 이 커밋 생성 후 동일 원격 브랜치로 푸시 예정. 실제 결과는 작업 완료 응답과 다음 커밋 기록에서 확인.
