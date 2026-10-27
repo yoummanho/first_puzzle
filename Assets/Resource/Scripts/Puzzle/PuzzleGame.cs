@@ -156,16 +156,11 @@ namespace FirstPuzzle
             if (resumeRoutine != null) StopCoroutine(resumeRoutine);
             resumeRoutine = null;
             countdown = false;
+            previewHeldFromPauseMenu = false;
             ShowPreview(false);
             if (board.IsReady && !board.IsSolved)
-            {
                 board.SetPaused(true);
-                curtain.SetActive(true);
-                pauseControls.SetActive(true);
-                resultControls.SetActive(false);
-                message.text = "PAUSED";
-                PauseSettingsUI.RefreshTabs(this);
-            }
+            curtain.SetActive(false);
             Lobby.OpenLobby();
             if (Audio != null) Audio.SetMusicContext(MusicContext.Lobby);
             Refresh();

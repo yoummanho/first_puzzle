@@ -160,6 +160,7 @@ namespace FirstPuzzle
             if (galleryPanel != null) galleryPanel.gameObject.SetActive(false);
             if (lobbyPanel != null) lobbyPanel.gameObject.SetActive(false);
             titlePanel.gameObject.SetActive(true);
+            SetInGameBackdropVisible(false);
         }
 
         public void OpenLobby()
@@ -169,6 +170,7 @@ namespace FirstPuzzle
             viewerModal.gameObject.SetActive(false);
             galleryPanel.gameObject.SetActive(false);
             lobbyPanel.gameObject.SetActive(true);
+            SetInGameBackdropVisible(false);
             RefreshLobby();
         }
 
@@ -179,6 +181,7 @@ namespace FirstPuzzle
             viewerModal.gameObject.SetActive(false);
             lobbyPanel.gameObject.SetActive(false);
             galleryPanel.gameObject.SetActive(true);
+            SetInGameBackdropVisible(false);
             RefreshGallery();
         }
 
@@ -188,6 +191,20 @@ namespace FirstPuzzle
             if (viewerModal != null) viewerModal.gameObject.SetActive(false);
             if (galleryPanel != null) galleryPanel.gameObject.SetActive(false);
             if (lobbyPanel != null) lobbyPanel.gameObject.SetActive(false);
+            SetInGameBackdropVisible(true);
+        }
+
+        private void SetInGameBackdropVisible(bool visible)
+        {
+            if (game == null) return;
+            Transform hudContent = game.ResponsiveLayout != null && game.ResponsiveLayout.ContentRect != null
+                ? (Transform)game.ResponsiveLayout.ContentRect
+                : (game.pauseButton != null ? game.pauseButton.transform.parent : null);
+            if (hudContent != null)
+                hudContent.gameObject.SetActive(visible);
+
+            if (!visible && game.curtain != null)
+                game.curtain.SetActive(false);
         }
 
         public void SelectFilter(string filter)
@@ -404,8 +421,10 @@ namespace FirstPuzzle
 
             if (landscape)
             {
-                if (titleCard != null) SetAnchors(titleCard, 0.18f, 0.22f, 0.82f, 0.80f);
-                if (titleStartButton != null) SetAnchors((RectTransform)titleStartButton.transform, 0.28f, 0.12f, 0.72f, 0.34f);
+                if (titleCard != null) SetAnchors(titleCard, 0f, 0f, 1f, 1f);
+                if (titleMainLabel != null) SetAnchors(titleMainLabel.rectTransform, 0.08f, 0.54f, 0.92f, 0.80f);
+                if (titleSubLabel != null) SetAnchors(titleSubLabel.rectTransform, 0.12f, 0.42f, 0.88f, 0.53f);
+                if (titleStartButton != null) SetAnchors((RectTransform)titleStartButton.transform, 0.30f, 0.18f, 0.70f, 0.34f);
 
                 SetAnchors(lobbyHeader, 0.03f, 0.87f, 0.97f, 0.97f);
                 SetAnchors(lobbyTitle.rectTransform, 0.00f, 0.00f, 0.46f, 1.00f);
@@ -425,8 +444,10 @@ namespace FirstPuzzle
             }
             else
             {
-                if (titleCard != null) SetAnchors(titleCard, 0.08f, 0.30f, 0.92f, 0.72f);
-                if (titleStartButton != null) SetAnchors((RectTransform)titleStartButton.transform, 0.16f, 0.14f, 0.84f, 0.34f);
+                if (titleCard != null) SetAnchors(titleCard, 0f, 0f, 1f, 1f);
+                if (titleMainLabel != null) SetAnchors(titleMainLabel.rectTransform, 0.06f, 0.56f, 0.94f, 0.78f);
+                if (titleSubLabel != null) SetAnchors(titleSubLabel.rectTransform, 0.08f, 0.45f, 0.92f, 0.55f);
+                if (titleStartButton != null) SetAnchors((RectTransform)titleStartButton.transform, 0.18f, 0.18f, 0.82f, 0.30f);
 
                 SetAnchors(lobbyHeader, 0.04f, 0.86f, 0.96f, 0.98f);
                 SetAnchors(lobbyTitle.rectTransform, 0.00f, 0.52f, 1.00f, 1.00f);
@@ -485,15 +506,15 @@ namespace FirstPuzzle
 
         private void BuildTitlePanel()
         {
-            // Semi-transparent glass panel so the bright sunny casual background shines through
-            titlePanel = Panel("TitlePanel", transform, 0f, 0f, 1f, 1f, new Color(0.06f, 0.18f, 0.28f, 0.32f), true);
-            titleCard = Panel("TitleCard", titlePanel, 0.08f, 0.30f, 0.92f, 0.72f, new Color(0.08f, 0.24f, 0.36f, 0.88f), true);
-            titleMainLabel = Label("MainTitle", titleCard, 0.06f, 0.56f, 0.94f, 0.90f, "PICTURE PUZZLE", 54);
+            // Fullscreen title screen over the casual background (in-game HUD/board is hidden via SetInGameBackdropVisible)
+            titlePanel = Panel("TitlePanel", transform, 0f, 0f, 1f, 1f, new Color(0.06f, 0.18f, 0.28f, 0.18f), true);
+            titleCard = Panel("TitleCard", titlePanel, 0f, 0f, 1f, 1f, new Color(0.07f, 0.20f, 0.32f, 0.38f), true);
+            titleMainLabel = Label("MainTitle", titleCard, 0.06f, 0.56f, 0.94f, 0.78f, "PICTURE PUZZLE", 68);
             titleMainLabel.fontStyle = FontStyles.Bold;
-            titleSubLabel = Label("SubTitle", titleCard, 0.08f, 0.38f, 0.92f, 0.56f, "COLLECTIBLE ILLUSTRATION SLIDING PUZZLE", 22);
-            titleStartButton = MakeButton(titleCard, "StartButton", "TAP TO START", 0.16f, 0.14f, 0.84f, 0.34f, () => game.EnterLobbyFromTitle());
+            titleSubLabel = Label("SubTitle", titleCard, 0.08f, 0.45f, 0.92f, 0.55f, "COLLECTIBLE ILLUSTRATION SLIDING PUZZLE", 24);
+            titleStartButton = MakeButton(titleCard, "StartButton", "TAP TO START", 0.18f, 0.18f, 0.82f, 0.30f, () => game.EnterLobbyFromTitle());
             var startImg = titleStartButton.GetComponent<Image>();
-            if (startImg != null) startImg.color = new Color(0.18f, 0.56f, 0.64f, 1f);
+            if (startImg != null) startImg.color = new Color(0.16f, 0.52f, 0.62f, 0.96f);
         }
 
         private void BuildLobbyPanel()

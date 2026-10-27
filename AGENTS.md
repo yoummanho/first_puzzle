@@ -136,3 +136,18 @@
 - 검증: Unity 자동 리컴파일 완료(`Temp/pipeline_recompile_status.json`: `status: up_to_date, failed: false, errors: []`, 17:11 KST) 및 열린 씬 동기화·저장 확인.
 - 남은 작업: Phase 3 인게임 세부 연출 점검 (Phase 4 온라인/광고 SDK는 보류 유지).
 - 푸시: 이 커밋 생성 후 `origin/master` 및 `origin/wip/home-phase1`로 푸시 예정.
+
+### 2026-10-27 17:58 KST — 타이틀 전체화면 적용 및 타이틀·로비 진입 시 인게임/PAUSED 화면 비침 현상 수정
+- 직전 커밋: `5a91fdf` (`feat: Content 하단 중복 컨트롤 정리 및 오디오 에셋 7종 인스펙터 등록`, 17:12 KST). `origin/master` 및 `origin/wip/home-phase1` 푸시 완료 확인.
+- 커밋 제목: `fix: 타이틀 전체화면 전환 및 타이틀·로비 뒤 인게임·PAUSED 화면 노출 수정`
+- 페이즈: Phase 3 타이틀·로비·인게임 화면 전환 표시 분리 수정.
+- 변경:
+  - `PuzzleLobbyGalleryUI.cs`, `PuzzleResponsiveLayout.cs`:
+    - 타이틀 화면(`TitlePanel/TitleCard`)을 작은 중앙 카드에서 전체화면(`anchorMin: 0,0`, `anchorMax: 1,1`) 레이아웃으로 변경.
+    - 타이틀, 스테이지 로비, 갤러리 화면이 열릴 때(`OpenTitle`, `OpenLobby`, `OpenGallery`) 뒤쪽 인게임 보드/HUD 컨테이너(`PortraitFrame/Content`)와 `PauseAndResult`(`curtain`)를 비활성화(`SetInGameBackdropVisible(false)`)하여 뒤로 게임 화면이나 `PAUSED` 화면이 반투명하게 비치지 않도록 수정하고, 스테이지를 선택해 인게임에 들어갈 때(`CloseAll`) 다시 활성화하도록 처리.
+  - `PuzzleGame.cs`:
+    - `OpenLobby()` 호출 시 `curtain.SetActive(true)`로 `PAUSED` 화면을 켜던 코드를 `curtain.SetActive(false)`로 변경하여 스테이지 셀렉트(로비) 뒤에 `PAUSED` 창이 겹쳐 보이던 버그를 해결.
+  - `PhaseThreeTests.cs`: 타이틀 전체화면 앵커(`0,0`~`1,1`), 타이틀 및 로비 오픈 중 `Content`와 `curtain`(`PAUSED`) 비활성화, 인게임 진입 시 `Content` 재활성화 검증 추가.
+- 검증: Unity 자동 리컴파일 완료(`Temp/pipeline_recompile_status.json`: `status: completed, failed: false, errors: []`, 17:58 KST).
+- 남은 작업: Phase 3 인게임 세부 연출 점검 (Phase 4 온라인/광고 SDK는 보류 유지).
+- 푸시: 이 커밋 생성 후 `origin/master` 및 `origin/wip/home-phase1`로 푸시 예정.

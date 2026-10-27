@@ -20,6 +20,8 @@ namespace FirstPuzzle
         private PlayOrientation lastOrientation = (PlayOrientation)(-1);
 
         public RectTransform SafeAreaRect => safeAreaRect;
+        public RectTransform PortraitFrame => portraitFrame;
+        public RectTransform ContentRect => contentRect;
         public PlayOrientation ActiveOrientation => lastOrientation;
 
         public void Initialize(PuzzleGame owner)

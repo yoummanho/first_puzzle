@@ -140,6 +140,12 @@ namespace FirstPuzzleTests
                 Assert.IsNotNull(game.Audio.ClearClip, "clearClip must be assigned in Inspector.");
 
                 Assert.IsTrue(game.Lobby.IsTitleOpen, "Game must start on the Title screen.");
+                Assert.IsFalse(hudContent.gameObject.activeSelf, "In-game HUD/board Content must be hidden while Title screen is open.");
+                Assert.IsFalse(game.curtain.activeSelf, "Paused curtain must be hidden while Title screen is open.");
+                var titleCardRect = game.Lobby.transform.Find("TitlePanel/TitleCard") as RectTransform;
+                Assert.IsNotNull(titleCardRect);
+                Assert.AreEqual(Vector2.zero, titleCardRect.anchorMin, "TitleCard must be full-screen.");
+                Assert.AreEqual(Vector2.one, titleCardRect.anchorMax, "TitleCard must be full-screen.");
                 Assert.AreEqual(MusicContext.Title, game.Audio.ActiveMusicContext, "Title BGM must play on Title screen.");
                 AudioClip titleClip = game.Audio.CurrentMusicClip;
                 Assert.IsNotNull(titleClip);
@@ -147,6 +153,8 @@ namespace FirstPuzzleTests
                 game.EnterLobbyFromTitle();
                 Assert.IsFalse(game.Lobby.IsTitleOpen);
                 Assert.IsTrue(game.Lobby.IsLobbyOpen, "Entering from Title must open the Stage Lobby.");
+                Assert.IsFalse(hudContent.gameObject.activeSelf, "In-game HUD/board Content must be hidden while Stage Lobby is open.");
+                Assert.IsFalse(game.curtain.activeSelf, "PAUSED screen (curtain) must NOT be visible behind Stage Lobby.");
                 Assert.AreEqual(MusicContext.Lobby, game.Audio.ActiveMusicContext, "Lobby BGM must play in Lobby.");
                 AudioClip lobbyClip = game.Audio.CurrentMusicClip;
                 Assert.IsNotNull(lobbyClip);
@@ -203,8 +211,10 @@ namespace FirstPuzzleTests
                 // Select unlocked stage from lobby -> plays Game Start SFX and switches to In-Game loop BGM
                 int startsBefore = game.Audio.GameStartPlayCount;
                 game.OpenLobby();
+                Assert.IsFalse(game.curtain.activeSelf, "PAUSED curtain must remain hidden in Lobby.");
                 Assert.IsTrue(game.Lobby.TrySelectStageFromLobby(0));
                 Assert.IsFalse(game.Lobby.IsLobbyOpen);
+                Assert.IsTrue(hudContent.gameObject.activeSelf, "In-game HUD/board Content must be visible when entering In-Game.");
                 Assert.IsFalse(game.board.IsPaused);
                 Assert.AreEqual(startsBefore + 1, game.Audio.GameStartPlayCount, "Entering In-Game must trigger Game Start SFX.");
                 Assert.AreEqual(MusicContext.InGame, game.Audio.ActiveMusicContext, "In-Game loop BGM must play when stage starts.");
