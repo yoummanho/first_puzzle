@@ -26,7 +26,7 @@
    - 원격 기본 브랜치 `origin/master`(및 작업 브랜치 `origin/wip/home-phase1`)에 Phase 1 ~ Phase 3 작업분이 동기화되어 있다.
    - 작업을 시작할 때 `git pull origin master` (또는 작업 브랜치 확인) 후 `AGENTS.md`와 `Assets/SPEC.md`를 먼저 읽는다.
 2. **씬 및 에셋 구조:**
-   - 실제 플레이 씬: `Assets/Scenes/PuzzleGame.unity` (`PuzzleGameSceneBuilder.cs`로 생성, 28개 스테이지 `Assets/Resource/PuzzleGame/Stage01~31.asset` 연결 완료).
+   - 실제 플레이 씬: `Assets/Scenes/PuzzleGame.unity` (`PuzzleGameSceneBuilder.cs`로 생성, 중복을 제거한 24개 고유 스테이지가 3x3부터 칸수 오름차순으로 연결 완료).
    - Phase 1 코어 검증용 씬: `Assets/Scenes/PhaseOneTest.unity` (`PhaseOneSceneBuilder.cs`).
    - 일러스트 원본 경로: `Assets/Resource.art/Puzzle_images` (24종 정리 완료, GIF/WebP는 첫 프레임 PNG와 함께 보존).
    - 임시 배경 경로: `Assets/Resource.art/Backgrounds/bg_puzzle_misty_forest_temp.png`.
@@ -37,7 +37,7 @@
    - `PuzzleProgress.cs`: 스테이지 해금 규칙(첫 스테이지, 각 난이도 첫 스테이지, 직전 클리어 스테이지 다음 단계 해금) 및 최소 이동/최단 시간(`PUZZLE_CLEAR_`, `PUZZLE_BEST_`, `PUZZLE_BEST_TIME_`) 관리.
    - `PuzzleLobbyGalleryUI.cs`: 난이도 탭(`ALL`, `3x3`, `3x4`, `3x5`, `3x7`, `4x3`, `6x3`)별 스테이지 선택 로비, 클리어 일러스트 도감(미해금 잠금/실루엣 처리), 크롭 없는 원본 전체화면 감상 모달(`uvRect = 0,0,1,1`).
    - `PuzzleResponsiveLayout.cs`: 모바일 Safe Area(`Screen.safeArea`) 적용 및 세로(`Portrait`) / 가로(`Landscape`) 전용 HUD·보드·일시정지·로비·도감 레이아웃 재배치.
-   - `PauseSettingsUI.cs`, `PuzzleGame.cs`: 인게임 타이머/통계, 일시정지 가림막(Blind Mask), 미리보기 제한, 3-2-1 재개 카운트다운, 플레이 도중 방향 전환 시 일시정지 및 보드/턴/Undo/시간 보존 연동.
+   - `PauseSettingsUI.cs`, `PuzzleGame.cs`: 인게임 타이머/통계, 햄버거 아이콘(가로 선 3줄) 일시정지 버튼, `GAME` 탭(Restart, Undo, Hold to preview, Number ON/OFF, Back to lobby)과 `SYSTEM` 탭(Music, Sound, Line slide, Animation, Orientation)으로 분리된 일시정지 메뉴 및 `X` 닫기(Continue) 버튼, 3-2-1 재개 카운트다운, 에디터 창 전환 시 자동 일시정지 방지 처리.
 4. **이어서 진행할 작업:**
    - 에디터 Game 뷰 및 모바일 기기/시뮬레이터에서 세로·가로 UI 디자인 디테일 및 폰트/버튼 여백 마감 확인.
    - 실제 BGM/SFX 음원 에셋이 준비되면 `PuzzleAudio` 컴포넌트의 `musicClip`, `moveClip`, `clearClip` 필드에 연결.
@@ -78,3 +78,16 @@
 - 검증: Unity 에디터 재컴파일 에러 0건 확인(`pipeline_recompile_status.json`), `PhaseThreeTests` 3/3 통과 확인(2026-10-27 02:15 KST). 경쾌한 BGM 합성 코드 리컴파일 완료(02:42 KST). 실제 모바일 기기 빌드는 미검증.
 - 남은 작업: 에디터/실기기에서 세로·가로 UI 시각적 디테일 점검, Phase 4 온라인 리더보드(UGS) 및 광고 SDK 연동.
 - 푸시: 이 커밋 생성 후 `origin/master` 및 `origin/wip/home-phase1`에 푸시 예정.
+
+### 2026-10-27 10:47 KST — 중복 스테이지 정리·난이도순 배치 및 일시정지 탭 UI·포커스 자동일시정지 개선
+- 직전 커밋: `deaeea8` (`feat: Phase 3 로비·도감·화면방향 대응 및 경쾌한 배경음악 적용`, 02:42 KST). `origin/master` 및 `origin/wip/home-phase1` 푸시 완료 확인.
+- 커밋 제목: `feat: 중복 스테이지 정리·난이도순 정렬 및 일시정지 탭 UI·포커스 개선`
+- 페이즈: Phase 2/3 스테이지 구성 및 인게임/일시정지 UI 개편.
+- 변경:
+  - `Assets/Scenes/PuzzleGame.unity`, `PuzzleStageImporter.cs`: 동일 일러스트를 중복 참조하던 스테이지(`Stage03`, `Stage05`, `Stage06`, `Stage07`)를 플레이 목록에서 제외해 24개 고유 일러스트 스테이지로 정리하고, 기본 입문 난이도인 `3x3`(9칸)부터 `3x4`·`4x3`(12칸), `3x5`(15칸), `6x3`(18칸), `3x7`(21칸)까지 칸수가 많을수록 난이도가 높아지도록 오름차순 배치.
+  - `PauseSettingsUI.cs`, `PuzzleResponsiveLayout.cs`, `HoldPreview.cs`: 인게임 하단 컨트롤(Undo, Hold to preview, Restart, Number ON/OFF)을 일시정지 메뉴 내부로 이동하고 보드 영역을 확장. HUD 일시정지 버튼을 글로벌 표준 햄버거 아이콘(가로 선 3개 상하 배치)으로 변경하고, 일시정지 메뉴를 `GAME` 탭(Restart, Undo, Hold to preview, Number ON/OFF, Back to lobby)과 `SYSTEM` 탭(Music, Sound, Line slide, Animation, Orientation)으로 분리, Continue 버튼을 우측 상단 `X` 버튼으로 구성.
+  - `PuzzleGame.cs`: 일시정지 버튼을 누르기 전에 유니티 에디터에서 다른 창으로 포커스를 옮겼을 때 무조건 `PAUSED` 되던 현상을 방지(`OnApplicationFocus`에서 일반 플레이 중 자동 일시정지 제거, 3-2-1 재개 카운트다운 중이거나 모바일 백그라운드 전환 시에만 보호 동작).
+  - `PhaseTwoTests.cs`, `PhaseThreeTests.cs`: 24개 고유 스테이지 및 칸수 오름차순 검증, 포커스 변경 시 비일시정지 검증, 햄버거 아이콘 및 `GAME`/`SYSTEM` 탭·`X` 버튼 검증 반영.
+- 검증: Unity 자동 리컴파일 완료(`Temp/pipeline_recompile_status.json`: `failed: false, errors: []`, 10:46 KST) 및 콘솔 에러 0건 확인. 에디터 PlayMode 통합 테스트는 에디터 창에서 직접 실행 가능.
+- 남은 작업: 에디터/실기기 플레이 확인 및 Phase 4 온라인 랭킹/광고 SDK 연동.
+- 푸시: 이 커밋 생성 후 `origin/master`(및 `origin/wip/home-phase1`)로 푸시 예정.

@@ -14,9 +14,6 @@ namespace FirstPuzzle
         private RectTransform boardFrame;
         private RectTransform instructionsRect;
         private RectTransform footerRect;
-        private RectTransform holdButtonRect;
-        private RectTransform restartButtonRect;
-        private RectTransform numbersButtonRect;
         private RectTransform lobbyButtonRect;
 
         private Rect lastSafeArea;
@@ -74,11 +71,6 @@ namespace FirstPuzzle
             boardFrame = contentRect.Find("BoardFrame") as RectTransform;
             instructionsRect = contentRect.Find("Instructions") as RectTransform;
             footerRect = contentRect.Find("Footer") as RectTransform;
-            var hold = contentRect.GetComponentInChildren<HoldPreview>(true);
-            if (hold != null) holdButtonRect = hold.transform as RectTransform;
-            restartButtonRect = contentRect.Find("Restart") as RectTransform;
-            if (game.numbersLabel != null)
-                numbersButtonRect = game.numbersLabel.GetComponentInParent<Button>(true)?.transform as RectTransform;
 
             EnsureTopLobbyButton();
         }
@@ -93,6 +85,8 @@ namespace FirstPuzzle
                 clone.name = "Lobby";
                 clone.onClick = new Button.ButtonClickedEvent();
                 clone.onClick.AddListener(game.OpenLobby);
+                var icon = clone.transform.Find("HamburgerIcon");
+                if (icon != null) Destroy(icon.gameObject);
                 var label = clone.GetComponentInChildren<TMP_Text>(true);
                 if (label != null) label.text = "Lobby";
                 existing = (RectTransform)clone.transform;
@@ -178,20 +172,15 @@ namespace FirstPuzzle
                 contentRect.offsetMin = contentRect.offsetMax = Vector2.zero;
 
                 // Left side: Puzzle BoardFrame
-                SetAnchors(boardFrame, 0.00f, 0.02f, 0.58f, 0.98f);
+                SetAnchors(boardFrame, 0.00f, 0.02f, 0.62f, 0.98f);
 
-                // Right side: Header, Stats, Controls
-                SetAnchors(game.pauseButton?.transform as RectTransform, 0.61f, 0.87f, 0.79f, 0.97f);
-                SetAnchors(lobbyButtonRect, 0.81f, 0.87f, 1.00f, 0.97f);
-                SetAnchors(game.heading?.rectTransform, 0.61f, 0.72f, 1.00f, 0.85f);
-                SetAnchors(game.stats?.rectTransform, 0.61f, 0.61f, 1.00f, 0.71f);
-                SetAnchors(instructionsRect, 0.61f, 0.51f, 1.00f, 0.59f);
-
-                SetAnchors(game.undoButton?.transform as RectTransform, 0.61f, 0.36f, 0.795f, 0.48f);
-                SetAnchors(holdButtonRect, 0.815f, 0.36f, 1.00f, 0.48f);
-                SetAnchors(numbersButtonRect, 0.61f, 0.21f, 0.795f, 0.33f);
-                SetAnchors(restartButtonRect, 0.815f, 0.21f, 1.00f, 0.33f);
-                SetAnchors(footerRect, 0.61f, 0.03f, 1.00f, 0.16f);
+                // Right side: Pause (Hamburger icon), Lobby, Title, Stats, Instructions, Footer
+                SetAnchors(game.pauseButton?.transform as RectTransform, 0.65f, 0.86f, 0.77f, 0.97f);
+                SetAnchors(lobbyButtonRect, 0.79f, 0.86f, 1.00f, 0.97f);
+                SetAnchors(game.heading?.rectTransform, 0.65f, 0.66f, 1.00f, 0.82f);
+                SetAnchors(game.stats?.rectTransform, 0.65f, 0.50f, 1.00f, 0.62f);
+                SetAnchors(instructionsRect, 0.65f, 0.34f, 1.00f, 0.46f);
+                SetAnchors(footerRect, 0.65f, 0.04f, 1.00f, 0.16f);
             }
             else
             {
@@ -199,22 +188,16 @@ namespace FirstPuzzle
                 contentRect.anchorMax = new Vector2(0.96f, 0.975f);
                 contentRect.offsetMin = contentRect.offsetMax = Vector2.zero;
 
-                // Top header row: Pause on Top-Left (SPEC 3.1.2), Title in Center, Lobby on Top-Right
-                SetAnchors(game.pauseButton?.transform as RectTransform, 0.00f, 0.905f, 0.21f, 0.985f);
-                SetAnchors(game.heading?.rectTransform, 0.22f, 0.895f, 0.78f, 0.99f);
+                // Top header row: Hamburger Pause on Top-Left, Title in Center, Lobby on Top-Right
+                SetAnchors(game.pauseButton?.transform as RectTransform, 0.00f, 0.905f, 0.16f, 0.985f);
+                SetAnchors(game.heading?.rectTransform, 0.18f, 0.895f, 0.78f, 0.99f);
                 SetAnchors(lobbyButtonRect, 0.79f, 0.905f, 1.00f, 0.985f);
                 SetAnchors(game.stats?.rectTransform, 0.00f, 0.825f, 1.00f, 0.885f);
 
-                // Center Board
-                SetAnchors(boardFrame, 0.00f, 0.235f, 1.00f, 0.81f);
-                SetAnchors(instructionsRect, 0.00f, 0.185f, 1.00f, 0.23f);
-
-                // Bottom Control Bar
-                SetAnchors(game.undoButton?.transform as RectTransform, 0.00f, 0.115f, 0.31f, 0.175f);
-                SetAnchors(holdButtonRect, 0.335f, 0.115f, 0.665f, 0.175f);
-                SetAnchors(numbersButtonRect, 0.69f, 0.115f, 1.00f, 0.175f);
-                SetAnchors(restartButtonRect, 0.25f, 0.045f, 0.75f, 0.10f);
-                SetAnchors(footerRect, 0.00f, 0.00f, 1.00f, 0.038f);
+                // Center Board expanded since bottom controls are now inside the Pause menu
+                SetAnchors(boardFrame, 0.00f, 0.11f, 1.00f, 0.81f);
+                SetAnchors(instructionsRect, 0.00f, 0.05f, 1.00f, 0.095f);
+                SetAnchors(footerRect, 0.00f, 0.005f, 1.00f, 0.042f);
             }
         }
 

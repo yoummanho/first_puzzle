@@ -9,7 +9,7 @@ using UnityEngine.SceneManagement;
 
 namespace FirstPuzzle.Editor
 {
-    /// <summary>Appends new illustrations without replacing existing stage IDs or progress.</summary>
+    /// <summary>Appends new illustrations, removes duplicate texture stages, and sorts stages by ascending grid tile count.</summary>
     public static class PuzzleStageImporter
     {
         public const string ImageFolder = "Assets/Resource.art/Puzzle_images";
@@ -31,19 +31,32 @@ namespace FirstPuzzle.Editor
             try
             {
                 var game = scene.GetRootGameObjects().SelectMany(root => root.GetComponentsInChildren<PuzzleGame>(true)).Single();
-                var stages = new List<StageData>(game.stages);
+                var rawStages = new List<StageData>(game.stages ?? Array.Empty<StageData>());
+
                 // Prefer an already registered static copy over its animated source.
-                // Keep the source assets on disk; only remove duplicate scene entries.
-                int removed = stages.RemoveAll(stage =>
+                rawStages.RemoveAll(stage =>
                 {
+                    if (stage == null || stage.Illustration == null) return true;
                     string path = AssetDatabase.GetAssetPath(stage.Illustration);
-                    return HasStaticCopy(path) && game.stages.Any(other =>
+                    return HasStaticCopy(path) && rawStages.Any(other =>
+                        other != null && other.Illustration != null &&
                         AssetDatabase.GetAssetPath(other.Illustration) == Path.ChangeExtension(path, ".png"));
                 });
-                var known = new HashSet<Texture2D>(stages.Select(stage => stage.Illustration));
+
+                // Deduplicate stages sharing the same illustration texture (keep the first occurrence).
+                var stages = new List<StageData>();
+                var known = new HashSet<Texture2D>();
+                foreach (var stage in rawStages)
+                {
+                    if (stage != null && stage.Illustration != null && known.Add(stage.Illustration))
+                        stages.Add(stage);
+                }
+
                 // Recover previously created assets too, so repeated imports never duplicate a stage.
                 var assets = AssetDatabase.FindAssets("t:StageData", new[] { StageFolder })
-                    .Select(guid => AssetDatabase.LoadAssetAtPath<StageData>(AssetDatabase.GUIDToAssetPath(guid))).ToList();
+                    .Select(guid => AssetDatabase.LoadAssetAtPath<StageData>(AssetDatabase.GUIDToAssetPath(guid)))
+                    .Where(asset => asset != null)
+                    .ToList();
                 string[] images = AssetDatabase.FindAssets("t:Texture2D", new[] { ImageFolder })
                     .Select(AssetDatabase.GUIDToAssetPath)
                     .Where(path => !HasStaticCopy(path))
@@ -53,7 +66,7 @@ namespace FirstPuzzle.Editor
                 foreach (string path in images)
                 {
                     var texture = AssetDatabase.LoadAssetAtPath<Texture2D>(path);
-                    if (!known.Add(texture)) continue;
+                    if (texture == null || !known.Add(texture)) continue;
                     var stage = assets.FirstOrDefault(asset => asset.Illustration == texture);
                     if (stage == null)
                     {
@@ -76,9 +89,20 @@ namespace FirstPuzzle.Editor
                     stages.Add(stage);
                     added++;
                 }
+
+                // Sort stages by difficulty: 3x3 first (lowest tile count), then increasing tile count (Columns * Rows).
+                stages = stages
+                    .OrderBy(s => s.Columns * s.Rows)
+                    .ThenBy(s => s.Columns)
+                    .ThenBy(s => s.Rows)
+                    .ThenBy(s => s.Illustration != null ? s.Illustration.name : s.StageId, StringComparer.Ordinal)
+                    .ToList();
+
                 foreach (var stage in stages)
                     if (!stage.Validate(out string error)) throw new InvalidOperationException(stage.name + ": " + error);
-                if (added > 0 || removed > 0)
+
+                bool changed = added > 0 || game.stages == null || !game.stages.SequenceEqual(stages);
+                if (changed)
                 {
                     game.stages = stages.ToArray();
                     EditorUtility.SetDirty(game);

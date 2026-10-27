@@ -69,11 +69,18 @@ namespace FirstPuzzleTests
             Assert.IsNotNull(frame);
             Assert.IsNotNull(frame.GetComponent<UnityEngine.UI.Image>().sprite);
             Assert.IsFalse(frame.GetComponent<UnityEngine.UI.Image>().raycastTarget);
-            Assert.AreEqual("puzzle_001_silver_armor", game.stages[0].Illustration.name);
+            Assert.AreEqual(24, game.stages.Length, "Duplicate stages must be removed, leaving 24 unique stages.");
+            Assert.AreEqual(new Vector2Int(3, 3), new Vector2Int(game.stages[0].Columns, game.stages[0].Rows), "Stages must start at 3x3 difficulty.");
             var stageIds = new System.Collections.Generic.HashSet<string>();
+            var illustrations = new System.Collections.Generic.HashSet<Texture2D>();
+            int prevTileCount = 0;
             for (int stageIndex = 0; stageIndex < game.stages.Length; stageIndex++)
             {
                 Assert.IsTrue(stageIds.Add(game.stages[stageIndex].StageId), "Stage IDs must remain unique.");
+                Assert.IsTrue(illustrations.Add(game.stages[stageIndex].Illustration), "Stage illustrations must not overlap.");
+                int tileCount = game.stages[stageIndex].Columns * game.stages[stageIndex].Rows;
+                Assert.GreaterOrEqual(tileCount, prevTileCount, "Stages must be ordered by non-decreasing tile count.");
+                prevTileCount = tileCount;
                 Assert.IsTrue(game.stages[stageIndex].Validate(out string error), error);
                 Assert.AreEqual(PuzzleImageLayout.ForTexture(game.stages[stageIndex].Illustration),
                     new Vector2Int(game.stages[stageIndex].Columns, game.stages[stageIndex].Rows));
@@ -87,15 +94,26 @@ namespace FirstPuzzleTests
                 Assert.That(frame.rect.height, Is.EqualTo(pitch * game.board.Stage.Rows + 30f).Within(.1f));
             }
             game.Load(0);
+            // Switching window focus in Editor must NOT auto-pause before pressing Pause button
+            game.SendMessage("OnApplicationFocus", false);
+            Assert.IsFalse(game.board.IsPaused, "Losing window focus before pressing Pause must not pause the game.");
+            Assert.IsNotNull(game.pauseButton.transform.Find("HamburgerIcon"), "Pause button must have the 3-horizontal-bar hamburger icon.");
             game.ShowPreview(true);
             Assert.IsTrue(game.preview.gameObject.activeSelf);
             game.Pause();
             float elapsed = game.Elapsed;
             Assert.IsTrue(game.curtain.activeSelf);
+            Assert.AreEqual("X", game.resumeButton.GetComponentInChildren<TMPro.TMP_Text>(true).text, "Continue button must be styled as X.");
+            Assert.AreEqual(PauseTab.Game, game.ActivePauseTab);
+            Assert.IsNotNull(game.pauseControls.transform.Find("GameTab/Restart puzzle"));
+            Assert.IsNotNull(game.pauseControls.transform.Find("GameTab/Undo"));
+            Assert.IsNotNull(game.pauseControls.transform.Find("GameTab/Hold to preview"));
             game.ShowPreview(true);
             Assert.IsFalse(game.preview.gameObject.activeSelf);
             Assert.IsFalse(game.board.CanInteract);
-            var musicButton = game.pauseControls.transform.Find("Music").GetComponent<UnityEngine.UI.Button>();
+            game.SelectPauseTab(PauseTab.System);
+            Assert.AreEqual(PauseTab.System, game.ActivePauseTab);
+            var musicButton = game.pauseControls.transform.Find("SystemTab/Music").GetComponent<UnityEngine.UI.Button>();
             musicButton.onClick.Invoke();
             Assert.IsFalse(game.Settings.Bgm);
             Assert.IsTrue(game.Settings.MultiPush, "Cloned button must not invoke the line-slide callback.");

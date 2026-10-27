@@ -135,9 +135,8 @@ namespace FirstPuzzleTests
                 Assert.Greater(game.Lobby.FilteredStageCount, 0);
                 game.Lobby.SelectFilter("ALL");
 
-                // Stage 1 (index 1, 3x4) is locked if stage 0 (3x5) and stage 1 are uncleared, WAIT:
-                // Stage 0 is 3x5, Stage 1 is first 3x4 so Stage 1 is unlocked as entry point to 3x4, while Stage 2 (second 3x4) is locked!
-                Assert.IsFalse(game.Lobby.TrySelectStageFromLobby(2), "Locked stage must not load.");
+                // Stage 0 is first 3x3 (unlocked), Stage 1 is second 3x3 so Stage 1 is locked when Stage 0 is uncleared!
+                Assert.IsFalse(game.Lobby.TrySelectStageFromLobby(1), "Locked stage must not load.");
                 Assert.IsTrue(game.Lobby.IsLobbyOpen);
 
                 // 2. Gallery lock & full original illustration viewer after clear

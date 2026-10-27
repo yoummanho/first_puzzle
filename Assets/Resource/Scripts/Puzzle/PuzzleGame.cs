@@ -21,6 +21,7 @@ namespace FirstPuzzle
         private Coroutine resumeRoutine;
         private TMP_Text bgmLabel, sfxLabel, orientationLabel;
         private Button pauseLobbyButton, resultLobbyButton;
+        private bool previewHeldFromPauseMenu;
 
         public int CurrentStageIndex => index;
         public float Elapsed => elapsed;
@@ -28,6 +29,7 @@ namespace FirstPuzzle
         public PuzzleLobbyGalleryUI Lobby { get; private set; }
         public PuzzleResponsiveLayout ResponsiveLayout { get; private set; }
         public bool IsCountingDown => countdown;
+        public PauseTab ActivePauseTab { get; private set; } = PauseTab.Game;
 
         private void Awake()
         {
@@ -83,6 +85,7 @@ namespace FirstPuzzle
             if (resumeRoutine != null) StopCoroutine(resumeRoutine);
             resumeRoutine = null;
             countdown = false;
+            previewHeldFromPauseMenu = false;
             index = Mathf.Clamp(stageIndex, 0, stages.Length - 1);
             elapsed = 0f;
             curtain.SetActive(false);
@@ -98,7 +101,20 @@ namespace FirstPuzzle
             Refresh();
         }
 
-        public void Undo() => board.TryUndo();
+        public void Undo()
+        {
+            if (board.IsPaused && !countdown)
+            {
+                board.SetPaused(false);
+                bool undone = board.TryUndo();
+                board.SetPaused(true);
+                if (undone) Resume();
+                else Refresh();
+                return;
+            }
+            board.TryUndo();
+        }
+
         public void Restart() => Load(index);
         public void Next()
         {
@@ -120,6 +136,7 @@ namespace FirstPuzzle
                 pauseControls.SetActive(true);
                 resultControls.SetActive(false);
                 message.text = "PAUSED";
+                PauseSettingsUI.RefreshTabs(this);
             }
             Lobby.OpenLobby();
             Refresh();
@@ -130,6 +147,44 @@ namespace FirstPuzzle
             if (Lobby == null) return;
             OpenLobby();
             Lobby.OpenGallery();
+        }
+
+        public void SelectPauseTab(PauseTab tab)
+        {
+            ActivePauseTab = tab;
+            PauseSettingsUI.RefreshTabs(this);
+        }
+
+        public void SetPauseMenuPreviewHold(bool holding)
+        {
+            if (!holding)
+            {
+                if (previewHeldFromPauseMenu)
+                {
+                    previewHeldFromPauseMenu = false;
+                    if (board.IsPaused && !countdown)
+                    {
+                        curtain.SetActive(true);
+                        pauseControls.SetActive(true);
+                    }
+                }
+                preview.gameObject.SetActive(false);
+                return;
+            }
+
+            bool overlayOpen = Lobby != null && (Lobby.IsLobbyOpen || Lobby.IsGalleryOpen || Lobby.IsViewerOpen);
+            if (!board.IsReady || board.IsSolved || countdown || overlayOpen) return;
+
+            if (board.IsPaused && pauseControls.activeInHierarchy)
+            {
+                previewHeldFromPauseMenu = true;
+                curtain.SetActive(false);
+                preview.gameObject.SetActive(true);
+            }
+            else if (board.CanInteract)
+            {
+                preview.gameObject.SetActive(true);
+            }
         }
 
         public void Numbers()
@@ -159,7 +214,7 @@ namespace FirstPuzzle
             board.SetMultiPush(Settings.MultiPush);
             board.SetSlideAnimation(Settings.SlideAnimation);
             if (bgmLabel != null) bgmLabel.text = "Music: " + (Settings.Bgm ? "ON" : "OFF");
-            if (sfxLabel != null) sfxLabel.text = "Sound effects: " + (Settings.Sfx ? "ON" : "OFF");
+            if (sfxLabel != null) sfxLabel.text = "Sound: " + (Settings.Sfx ? "ON" : "OFF");
             if (orientationLabel != null)
                 orientationLabel.text = "Orientation: " + (Settings.IsLandscape ? "LANDSCAPE" : "PORTRAIT");
             if (ResponsiveLayout != null) ResponsiveLayout.Apply(true);
@@ -167,6 +222,11 @@ namespace FirstPuzzle
 
         public void ShowPreview(bool show)
         {
+            if (!show && previewHeldFromPauseMenu)
+            {
+                SetPauseMenuPreviewHold(false);
+                return;
+            }
             bool overlayOpen = Lobby != null && (Lobby.IsLobbyOpen || Lobby.IsGalleryOpen || Lobby.IsViewerOpen);
             preview.gameObject.SetActive(show && board.CanInteract && !countdown && !overlayOpen);
         }
@@ -177,17 +237,23 @@ namespace FirstPuzzle
             if (resumeRoutine != null) StopCoroutine(resumeRoutine);
             resumeRoutine = null;
             countdown = false;
+            previewHeldFromPauseMenu = false;
             ShowPreview(false);
             board.SetPaused(true);
             curtain.SetActive(true);
             pauseControls.SetActive(true);
             resultControls.SetActive(false);
             message.text = "PAUSED";
+            PauseSettingsUI.RefreshTabs(this);
+            Refresh();
         }
 
         public void Resume()
         {
             if (!board.IsPaused || countdown) return;
+            previewHeldFromPauseMenu = false;
+            preview.gameObject.SetActive(false);
+            curtain.SetActive(true);
             if (Lobby != null) Lobby.CloseAll();
             resumeRoutine = StartCoroutine(Countdown());
         }
@@ -225,11 +291,12 @@ namespace FirstPuzzle
         {
             if (board == null || board.Stage == null) return;
             heading.text = $"PICTURE PUZZLE\n{index + 1:00} / {stages.Length:00}    |    {board.Stage.Columns} x {board.Stage.Rows}";
-            undoButton.interactable = board.CanUndo;
-            pauseButton.interactable = !board.IsPaused && !board.IsSolved;
-            numbersLabel.text = "Numbers: " + (board.NumberGuide ? "ON" : "OFF");
-            lineLabel.text = "Line slide: " + (board.MultiPush ? "ON" : "OFF");
-            animationLabel.text = "Animation: " + (board.SlideAnimation ? "ON" : "OFF");
+            bool canUndoNow = board.CanUndo || (board.IsPaused && !countdown && !board.IsBusy && !board.IsSolved && board.UndoRemaining > 0 && board.MoveCount > 0);
+            if (undoButton != null) undoButton.interactable = canUndoNow;
+            if (pauseButton != null) pauseButton.interactable = !board.IsPaused && !board.IsSolved;
+            if (numbersLabel != null) numbersLabel.text = "Number: " + (board.NumberGuide ? "ON" : "OFF");
+            if (lineLabel != null) lineLabel.text = "Line slide: " + (board.MultiPush ? "ON" : "OFF");
+            if (animationLabel != null) animationLabel.text = "Animation: " + (board.SlideAnimation ? "ON" : "OFF");
             if (orientationLabel != null && Settings != null)
                 orientationLabel.text = "Orientation: " + (Settings.IsLandscape ? "LANDSCAPE" : "PORTRAIT");
             RefreshStats();
@@ -237,7 +304,17 @@ namespace FirstPuzzle
 
         private void RefreshStats() => stats.text = $"{TimeText(elapsed)}    /    {board.MoveCount} MOVES    /    {board.UndoRemaining} UNDO";
         private static string TimeText(float seconds) => $"{(int)seconds / 60:00}:{(int)seconds % 60:00}";
-        private void OnApplicationFocus(bool focused) { if (!focused) Pause(); }
-        private void OnApplicationPause(bool paused) { if (paused) Pause(); }
+
+        private void OnApplicationFocus(bool focused)
+        {
+            // Do not auto-pause on window focus change before pressing the Pause button (especially in Unity Editor).
+            if (!focused && countdown) Pause();
+        }
+
+        private void OnApplicationPause(bool paused)
+        {
+            if (!paused) return;
+            if (Application.isMobilePlatform || countdown) Pause();
+        }
     }
 }
