@@ -30,6 +30,7 @@
    - Phase 1 코어 검증용 씬: `Assets/Scenes/PhaseOneTest.unity` (`PhaseOneSceneBuilder.cs`).
    - 일러스트 원본 경로: `Assets/Resource.art/Puzzle_images` (24종 정리 완료, GIF/WebP는 첫 프레임 PNG와 함께 보존).
    - 캐주얼 배경 경로: `Assets/Resource.art/Backgrounds/bg_puzzle_misty_forest_temp.png` (기존 어두운 안개 숲 배경을 밝고 화사한 파스텔 하늘·초원 캐주얼 배경으로 교체, GUID 유지).
+   - 오디오 에셋 경로: `Assets/Resource/Audio/` (`bgm_title.wav`, `bgm_lobby.wav`, `bgm_ingame_loop.wav`, `sfx_game_start.wav`, `sfx_tile_move.wav`, `sfx_tile_correct.wav`, `sfx_stage_clear.wav` 총 7종이 실제 WAV 파일로 저장되어 `PuzzleGame` 루트의 `PuzzleAudio` 인스펙터에 직접 연결됨).
 3. **핵심 런타임 스크립트 (`Assets/Resource/Scripts/Puzzle/`):**
    - `StageData.cs`, `PuzzleBoardState.cs`, `PuzzleTile.cs`, `BoardManager.cs`: Phase 1 퍼즐 코어 (정사각형 타일 유지, 중앙 크롭 UV, 결정론적 역방향 셔플, 다중 밀기, Undo 3회 및 보상 티켓 콜백, 타일이 정답 칸에 들어갈 때 `TilePlacedCorrectly` 이벤트 발생, 클리어 페이드인).
    - `SettingsManager.cs`: 5종 설정(`PREF_BGM`, `PREF_SFX`, `PREF_MULTIPUSH`, `PREF_SLIDE_ANIM`, `PREF_ORIENTATION` 세로/가로) 저장/복원 및 `Screen.orientation` 반영.
@@ -119,4 +120,19 @@
   - `PhaseThreeTests.cs`: 타이틀→로비→인게임 전환, 타이틀/로비/인게임 음악 분리 및 게임 시작 SFX, 타일 정답 위치 안착 시 맑은 효과음 재생 검증 추가.
 - 검증: 코드 및 씬 직렬화 점검 완료.
 - 남은 작업: Phase 3 인게임 UI/연출 추가 다듬기 (Phase 4는 보류 유지).
+- 푸시: 이 커밋 생성 후 `origin/master` 및 `origin/wip/home-phase1`로 푸시 예정.
+
+### 2026-10-27 17:12 KST — PortraitFrame/Content 하단 버튼 정리 및 7종 오디오 WAV 에셋 생성·인스펙터 등록
+- 직전 커밋: `c807d41` (`feat: 타이틀·로비·인게임 흐름 전환 및 캐주얼 배경·상황별 사운드 분리`, 16:33 KST). `origin/master` 및 `origin/wip/home-phase1` 푸시 완료 확인.
+- 커밋 제목: `feat: Content 하단 중복 컨트롤 정리 및 오디오 에셋 7종 인스펙터 등록`
+- 페이즈: Phase 3 씬 하이어라키 정리 및 사운드 에셋 직렬화 마감.
+- 변경:
+  - `Assets/Scenes/PuzzleGame.unity`, `PuzzleSceneAudioAndHierarchySync.cs`, `PauseSettingsUI.cs`, `PuzzleResponsiveLayout.cs`:
+    - 에디트 모드(`PortraitFrame/Content`)에 남아 있던 `Undo`, `Hold to preview`, `Numbers: ON`을 `PauseAndResult/PauseControls` 내부로 이동하여 씬 파일에 직접 저장하고, 중복이던 `Content/Restart` 오브젝트를 제거(`PauseControls/Restart puzzle` 사용).
+    - `Content/Pause` 버튼을 에디트 모드에서도 좌측 상단(`anchorMin: 0.00, 0.905`, `anchorMax: 0.16, 0.985`) 햄버거 아이콘(`HamburgerIcon`, 가로 3선)으로 배치하고 `BoardFrame` 확장 및 밝은 캐주얼 배경 위 텍스트 가독성 색상(짙은 네이비) 반영.
+  - `Assets/Resource/Audio/*.wav`, `PuzzleAudio.cs`:
+    - 런타임에만 메모리 합성되던 7종 사운드를 `Assets/Resource/Audio/` 폴더에 실제 WAV 파일(`bgm_title.wav`, `bgm_lobby.wav`, `bgm_ingame_loop.wav`, `sfx_game_start.wav`, `sfx_tile_move.wav`, `sfx_tile_correct.wav`, `sfx_stage_clear.wav`)로 생성·저장하고, `PuzzleGame` 루트의 `PuzzleAudio` 컴포넌트 인스펙터 슬롯 7개에 모두 직렬화 등록 완료.
+  - `PhaseThreeTests.cs`: `PortraitFrame/Content` 하단 구 버튼 부재 확인 및 `PuzzleAudio` 인스펙터 클립 7종 할당 검증 추가.
+- 검증: Unity 자동 리컴파일 완료(`Temp/pipeline_recompile_status.json`: `status: up_to_date, failed: false, errors: []`, 17:11 KST) 및 열린 씬 동기화·저장 확인.
+- 남은 작업: Phase 3 인게임 세부 연출 점검 (Phase 4 온라인/광고 SDK는 보류 유지).
 - 푸시: 이 커밋 생성 후 `origin/master` 및 `origin/wip/home-phase1`로 푸시 예정.

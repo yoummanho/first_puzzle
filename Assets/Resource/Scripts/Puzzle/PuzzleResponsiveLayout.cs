@@ -73,6 +73,20 @@ namespace FirstPuzzle
 
             var legacyLobby = contentRect.Find("Lobby");
             if (legacyLobby != null) legacyLobby.gameObject.SetActive(false);
+
+            StyleHudLabel(game.heading, new Color(0.11f, 0.24f, 0.34f, 1f), true);
+            StyleHudLabel(game.stats, new Color(0.14f, 0.28f, 0.38f, 0.96f), true);
+            if (instructionsRect != null)
+                StyleHudLabel(instructionsRect.GetComponent<TMP_Text>(), new Color(0.14f, 0.28f, 0.38f, 0.94f), false);
+            if (footerRect != null)
+                StyleHudLabel(footerRect.GetComponent<TMP_Text>(), new Color(0.12f, 0.24f, 0.32f, 0.92f), false);
+        }
+
+        private static void StyleHudLabel(TMP_Text label, Color textColor, bool bold)
+        {
+            if (label == null) return;
+            label.color = textColor;
+            if (bold) label.fontStyle |= FontStyles.Bold;
         }
 
         private void LateUpdate()

@@ -35,6 +35,14 @@ namespace FirstPuzzle
         private int previousMoves, previousUndo;
         private MusicContext currentContext = MusicContext.Title;
 
+        public AudioClip TitleMusicClip => titleMusicClip;
+        public AudioClip LobbyMusicClip => lobbyMusicClip;
+        public AudioClip InGameMusicClip => musicClip;
+        public AudioClip GameStartClip => gameStartClip;
+        public AudioClip MoveClip => moveClip;
+        public AudioClip TileCorrectClip => tileCorrectClip;
+        public AudioClip ClearClip => clearClip;
+
         public AudioClip CurrentMusicClip => music != null ? music.clip : null;
         public MusicContext ActiveMusicContext => currentContext;
         public AudioClip LastEffectPlayed { get; private set; }

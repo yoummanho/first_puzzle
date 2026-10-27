@@ -27,17 +27,20 @@ namespace FirstPuzzle
             out Button resultLobbyButton)
         {
             var parent = game.pauseControls.transform;
-            var template = game.lineLabel.GetComponentInParent<Button>(true);
-            var restart = parent.Find("Restart puzzle")?.GetComponent<Button>();
+            var template = game.lineLabel != null ? game.lineLabel.GetComponentInParent<Button>(true) : game.pauseButton;
+            var restart = (parent.Find("Restart puzzle") ?? parent.Find("GameTab/Restart puzzle"))?.GetComponent<Button>();
 
             // 1. Style HUD Pause button with global 3-horizontal-bars hamburger icon
             SetupHamburgerIcon(game.pauseButton);
 
-            // 2. Hide legacy duplicate HUD Restart button if present in Content
+            // 2. Remove legacy duplicate HUD Restart button if present in Content
             var hudContent = game.pauseButton != null ? game.pauseButton.transform.parent : null;
             var hudRestart = hudContent != null ? hudContent.Find("Restart") : null;
             if (hudRestart != null && hudRestart != restart?.transform)
-                hudRestart.gameObject.SetActive(false);
+            {
+                if (Application.isPlaying) Object.Destroy(hudRestart.gameObject);
+                else Object.DestroyImmediate(hudRestart.gameObject);
+            }
 
             // 3. Create header tabs (GAME / SYSTEM) and X close button (Continue)
             var gameTabBtn = AddOrFindButton(template, parent, "Tab_Game", "GAME", () => game.SelectPauseTab(PauseTab.Game));

@@ -123,9 +123,21 @@ namespace FirstPuzzleTests
                 PlayerPrefs.DeleteKey("PUZZLE_CLEAR_" + firstId);
                 PlayerPrefs.DeleteKey("PUZZLE_CLEAR_" + secondId);
 
-                // 1. Verify initial Title Screen -> Lobby -> In-Game flow and distinct BGM/SFX contexts
+                // 1. Verify initial Title Screen -> Lobby -> In-Game flow, Content hierarchy cleanup, and Inspector AudioClips
                 var hudContent = game.pauseButton.transform.parent;
                 Assert.IsNull(hudContent.Find("Lobby"), "In-game HUD must not have a top Lobby button.");
+                Assert.IsNull(hudContent.Find("Undo"), "Undo must not remain under PortraitFrame/Content.");
+                Assert.IsNull(hudContent.Find("Hold to preview"), "Hold to preview must not remain under PortraitFrame/Content.");
+                Assert.IsNull(hudContent.Find("Numbers: ON"), "Numbers: ON must not remain under PortraitFrame/Content.");
+                Assert.IsNull(hudContent.Find("Restart"), "Duplicate Restart must not remain under PortraitFrame/Content.");
+
+                Assert.IsNotNull(game.Audio.TitleMusicClip, "titleMusicClip must be assigned in Inspector.");
+                Assert.IsNotNull(game.Audio.LobbyMusicClip, "lobbyMusicClip must be assigned in Inspector.");
+                Assert.IsNotNull(game.Audio.InGameMusicClip, "musicClip (In-Game BGM) must be assigned in Inspector.");
+                Assert.IsNotNull(game.Audio.GameStartClip, "gameStartClip must be assigned in Inspector.");
+                Assert.IsNotNull(game.Audio.MoveClip, "moveClip must be assigned in Inspector.");
+                Assert.IsNotNull(game.Audio.TileCorrectClip, "tileCorrectClip must be assigned in Inspector.");
+                Assert.IsNotNull(game.Audio.ClearClip, "clearClip must be assigned in Inspector.");
 
                 Assert.IsTrue(game.Lobby.IsTitleOpen, "Game must start on the Title screen.");
                 Assert.AreEqual(MusicContext.Title, game.Audio.ActiveMusicContext, "Title BGM must play on Title screen.");
