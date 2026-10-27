@@ -69,7 +69,7 @@ namespace FirstPuzzleTests
             Assert.IsNotNull(frame);
             Assert.IsNotNull(frame.GetComponent<UnityEngine.UI.Image>().sprite);
             Assert.IsFalse(frame.GetComponent<UnityEngine.UI.Image>().raycastTarget);
-            Assert.AreEqual(24, game.stages.Length, "Duplicate stages must be removed, leaving 24 unique stages.");
+            Assert.AreEqual(30, game.stages.Length, "All 30 unique illustrations must be registered.");
             Assert.AreEqual(new Vector2Int(3, 3), new Vector2Int(game.stages[0].Columns, game.stages[0].Rows), "Stages must start at 3x3 difficulty.");
             var stageIds = new System.Collections.Generic.HashSet<string>();
             var illustrations = new System.Collections.Generic.HashSet<Texture2D>();

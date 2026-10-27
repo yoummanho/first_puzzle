@@ -1,181 +1,181 @@
-﻿# ?꾨줈?앺듃 ?묒뾽 洹쒖튃
+# 프로젝트 작업 규칙
 
-## ?꾨줈?앺듃 蹂꾩묶
-- `?쇱쫹寃뚯엫`, `first_puzzle`: `E:\Unity\Puzzle\first_puzzle`?먯꽌留?Git 諛?Unity ?묒뾽???섑뻾?쒕떎.
-- `???ㅽ겕由쏀듃`: `C:\Users\EthanHome\OneDrive\Desktop\A\automatic`?먯꽌留?Git 諛??ㅽ겕由쏀듃 ?묒뾽???섑뻾?쒕떎.
-- ???꾨줈?앺듃??蹂寃쎌쓣 ?욎? ?딅뒗??
+## 프로젝트 별칭
+- `퍼즐게임`, `first_puzzle`: `E:\Unity\Puzzle\first_puzzle`에서만 Git 및 Unity 작업을 수행한다.
+- `염_스크립트`: `C:\Users\EthanHome\OneDrive\Desktop\A\automatic`에서만 Git 및 스크립트 작업을 수행한다.
+- 두 프로젝트의 변경을 섞지 않는다.
 
-## ?묒뾽 醫낅즺 ?꾨줈?몄뒪 (湲곕낯 洹쒖빟) 諛??쇱씪 吏꾪뻾 湲곕줉
-- **?묒뾽 醫낅즺 ?꾨줈?몄뒪 ?뺢퇋??(?꾩닔 湲곕낯 洹쒖빟):**
-  1. 紐⑤뱺 ?섏젙 ?먮뒗 湲곕뒫 媛쒕컻 ?묒뾽???꾨즺?섎㈃, 蹂꾨룄 吏?쒓? ?녿뜑?쇰룄 ?묒뾽 醫낅즺 ?④퀎?먯꽌 **諛섎뱶?????뚯씪(`AGENTS.md`)???붿빟 ?댁슜??癒쇱? ?묒꽦쨌媛깆떊????Git 而ㅻ컠 諛??먭꺽 ?몄떆(`origin/master`, `origin/wip/home-phase1`)瑜??섑뻾**?쒕떎.
-  2. **湲곗〈 `AGENTS.md` ?댁슜 蹂寃?紐낆떆 洹쒖튃:** ?덈줈 吏?쒗븳 ?ъ븞??湲곗〈 `AGENTS.md`??湲곗닠???ㅺ퀎쨌湲곕뒫쨌?섏튂(?? UI 踰꾪듉 援ъ꽦, BGM BPM, ?ъ슫???ъ깮 ??대컢 ???먯꽌 蹂寃쎈맂 寃쎌슦, `AGENTS.md` 蹂몃Ц(?꾩옱 ?섏씠利??멸퀎 媛?대뱶 ????湲곗〈 ?ㅻ챸??理쒖떊 ?곹깭濡??섏젙?섍퀬, ?섎떒 ?묒뾽 湲곕줉?먮룄 **`湲곗〈 AGENTS.md ?댁슜 ?鍮?蹂寃??ы빆`** ??ぉ???먯뼱 臾댁뾿???대뼸寃?蹂寃쎈릺?덈뒗吏 紐낇솗??紐낆떆?쒕떎.
-  3. **而ㅻ컠 硫붿떆吏(肄붾찘????媛?ν븯硫??쒓?濡??묒꽦?쒕떎** (?? `feat: ?쇱떆?뺤? 諛⑺뼢踰꾪듉 ?쒓굅쨌?멸쾶??BGM ?쒗룷 ?꾪솕 諛??쒕젅???섏씠?쒖씤쨌?묒뾽醫낅즺 洹쒖빟 ?뺣┰`).
-  4. 湲곕줉?먮뒗 `YYYY-MM-DD HH:mm KST`, 吏곸쟾 而ㅻ컠 ?댁떆 諛??몄떆 ?뺤씤 寃곌낵, ????섏씠利? 湲곗〈 `AGENTS.md` ?鍮?蹂寃??ы빆(?대떦 ??, ?ㅼ젣 蹂寃??댁슜, 而ㅻ컠 ?쒕ぉ, 寃利?寃곌낵, ?⑥? ?묒뾽???곷뒗?? 媛숈? ???щ윭 而ㅻ컠?대㈃ ??ぉ??異붽??쒕떎.
-  5. ?꾩옱 而ㅻ컠???댁떆???먭린 ?먯떊???ы븿?????놁쑝誘濡?而ㅻ컠 ?쒕ぉ?쇰줈 ?앸퀎?쒕떎. ?꾩냽 湲곕줉?먯꽌 吏곸쟾 而ㅻ컠 ?댁떆 諛??뺤씤???몄떆 寃곌낵瑜?蹂댁셿?쒕떎. ?깃났 ???몄떆 ?꾨즺濡?湲곕줉?섏? ?딅뒗??
-  6. ?ㅼ젣 ?뚯뒪??寃곌낵? 誘멸?利???ぉ??援щ텇?쒕떎. ?곸꽭 湲곕뒫 紐낆꽭??[Assets/SPEC.md](Assets/SPEC.md)瑜??곕Ⅸ??
+## 작업 종료 프로세스 (기본 규약) 및 일일 진행 기록
+- **작업 종료 프로세스 정규화 (필수 기본 규약):**
+  1. 모든 수정 또는 기능 개발 작업이 완료되면, 별도 지시가 없더라도 작업 종료 단계에서 **반드시 이 파일(`AGENTS.md`)에 요약 내용을 먼저 작성·갱신한 뒤 Git 커밋 및 원격 푸시(`origin/master`, `origin/wip/home-phase1`)를 수행**한다.
+  2. **기존 `AGENTS.md` 내용 변경 명시 규칙:** 새로 지시한 사안이 기존 `AGENTS.md`에 기술된 설계·기능·수치(예: UI 버튼 구성, BGM BPM, 사운드 재생 타이밍 등)에서 변경된 경우, `AGENTS.md` 본문(현재 페이즈/인계 가이드 등)의 기존 설명을 최신 상태로 수정하고, 하단 작업 기록에도 **`기존 AGENTS.md 내용 대비 변경 사항`** 항목을 두어 무엇이 어떻게 변경되었는지 명확히 명시한다.
+  3. **커밋 메시지(코멘트)는 가능하면 한글로 작성한다** (예: `feat: 일시정지 방향버튼 제거·인게임 BGM 템포 완화 및 딜레이 페이드인·작업종료 규약 정립`).
+  4. 기록에는 `YYYY-MM-DD HH:mm KST`, 직전 커밋 해시 및 푸시 확인 결과, 대상 페이즈, 기존 `AGENTS.md` 대비 변경 사항(해당 시), 실제 변경 내용, 커밋 제목, 검증 결과, 남은 작업을 적는다. 같은 날 여러 커밋이면 항목을 추가한다.
+  5. 현재 커밋의 해시는 자기 자신에 포함할 수 없으므로 커밋 제목으로 식별한다. 후속 기록에서 직전 커밋 해시 및 확인된 푸시 결과를 보완한다. 성공 전 푸시 완료로 기록하지 않는다.
+  6. 실제 테스트 결과와 미검증 항목을 구분한다. 상세 기능 명세는 [Assets/SPEC.md](Assets/SPEC.md)를 따른다.
 
-## ?꾩옱 ?섏씠利?
-| ?섏씠利?| 踰붿쐞 | ?곹깭 |
+## 현재 페이즈
+| 페이즈 | 범위 | 상태 |
 |---|---|---|
-| Phase 1 | StageData, ?뺤궗媛곹삎 ??? 寃곗젙濡좎쟻 ?뷀뵆, ?ㅼ쨷 諛湲? Undo, ?대━???곗텧 | 援ы쁽 諛??먮룞 ?뚯뒪???꾨즺 |
-| Phase 2 | ??대㉧/?대룞 ?? ?쇱떆?뺤? 媛由쇰쭑, 誘몃━蹂닿린 ?쒗븳, 3-2-1 ?ш컻, ?ㅼ젙 4醫? ?ㅻ뵒?? 濡쒖뺄 理쒓퀬 湲곕줉 | 援ы쁽 諛??먮룞 ?뚯뒪???꾨즺 |
-| Phase 3 | ??댄??믩줈鍮꾟넂?멸쾶???먮쫫, ?ㅽ뀒?댁? ?닿툑, ?꾧컧/?먮낯 媛먯긽, ?몃줈쨌媛濡??좏깮, Safe Area 諛?罹먯＜??諛곌꼍쨌?ъ슫??遺꾨━ | 肄붿뼱 諛??고???UI 援ы쁽 ?꾨즺, ?먮룞 ?뚯뒪???듦낵 (?ㅺ린湲?諛?怨좊룄??留덇컧 吏꾪뻾 以? |
-| Phase 4 | ?⑤씪??怨꾩젙/??궧, 愿묎퀬 SDK 諛?蹂댁긽 ?곕룞 | 蹂대쪟(?쇱떆 以묐떒). Phase 3 ?멸쾶???꾩꽦??留덇컧 ?곗꽑 |
+| Phase 1 | StageData, 정사각형 타일, 결정론적 셔플, 다중 밀기, Undo, 클리어 연출 | 구현 및 자동 테스트 완료 |
+| Phase 2 | 타이머/이동 수, 일시정지 가림막, 미리보기 제한, 3-2-1 재개, 설정 4종, 오디오, 로컬 최고 기록 | 구현 및 자동 테스트 완료 |
+| Phase 3 | 타이틀→로비→인게임 흐름, 스테이지 해금, 도감/원본 감상, 세로·가로 선택, Safe Area 및 캐주얼 배경·사운드 분리 | 코어 및 런타임 UI 구현 완료, 자동 테스트 통과 (실기기 및 고도화 마감 진행 중) |
+| Phase 4 | 온라인 계정/랭킹, 광고 SDK 및 보상 연동 | 보류(일시 중단). Phase 3 인게임 완성도 마감 우선 |
 
-## ?ㅻⅨ PC / ?ㅻⅨ ?먯씠?꾪듃 ?멸퀎 媛?대뱶 (Handoff Guide)
-1. **釉뚮옖移??꾪솴:**
-   - ?먭꺽 湲곕낯 釉뚮옖移?`origin/master`(諛??묒뾽 釉뚮옖移?`origin/wip/home-phase1`)??Phase 1 ~ Phase 3 ?묒뾽遺꾩씠 ?숆린?붾릺???덈떎.
-   - ?묒뾽???쒖옉????`git pull origin master` (?먮뒗 ?묒뾽 釉뚮옖移??뺤씤) ??`AGENTS.md`? `Assets/SPEC.md`瑜?癒쇱? ?쎈뒗??
-2. **??諛??먯뀑 援ъ“:**
-   - ?ㅼ젣 ?뚮젅???? `Assets/Scenes/PuzzleGame.unity` (`PuzzleGameSceneBuilder.cs`濡??앹꽦, 以묐났???쒓굅??24媛?怨좎쑀 ?ㅽ뀒?댁?媛 3x3遺??移몄닔 ?ㅻ쫫李⑥닚?쇰줈 ?곌껐 ?꾨즺).
-   - Phase 1 肄붿뼱 寃利앹슜 ?? `Assets/Scenes/PhaseOneTest.unity` (`PhaseOneSceneBuilder.cs`).
-   - ?쇰윭?ㅽ듃 ?먮낯 寃쎈줈: `Assets/Resource.art/Puzzle_images` (24醫??뺣━ ?꾨즺, GIF/WebP??泥??꾨젅??PNG? ?④퍡 蹂댁〈).
-   - 罹먯＜??諛곌꼍 寃쎈줈: `Assets/Resource.art/Backgrounds/bg_puzzle_misty_forest_temp.png` (湲곗〈 ?대몢???덇컻 ??諛곌꼍??諛앷퀬 ?붿궗???뚯뒪???섎뒛쨌珥덉썝 罹먯＜??諛곌꼍?쇰줈 援먯껜, GUID ?좎?).
-   - ?ㅻ뵒???먯뀑 寃쎈줈: `Assets/Resource/Audio/` (`bgm_title.wav`, `bgm_lobby.wav`, `bgm_ingame_loop.wav`[?쇰컲 ?뚮젅?댁슜 120 BPM 猷⑦봽, 8.0珥?, `sfx_game_start.wav`, `sfx_tile_move.wav`, `sfx_tile_correct.wav`, `sfx_stage_clear.wav` 珥?7醫낆씠 ?ㅼ젣 WAV ?뚯씪濡???λ릺??`PuzzleGame` 猷⑦듃??`PuzzleAudio` ?몄뒪?숉꽣??吏곸젒 ?곌껐??.
-3. **?듭떖 ?고????ㅽ겕由쏀듃 (`Assets/Resource/Scripts/Puzzle/`):**
-   - `StageData.cs`, `PuzzleBoardState.cs`, `PuzzleTile.cs`, `BoardManager.cs`: Phase 1 ?쇱쫹 肄붿뼱 (?뺤궗媛곹삎 ????좎?, 以묒븰 ?щ∼ UV, 寃곗젙濡좎쟻 ??갑???뷀뵆, ?ㅼ쨷 諛湲? Undo 3??諛?蹂댁긽 ?곗폆 肄쒕갚, ??쇱씠 ?뺣떟 移몄뿉 ?ㅼ뼱媛???`TilePlacedCorrectly` ?대깽??諛쒖깮, ?대━???섏씠?쒖씤).
-   - `SettingsManager.cs`: 5醫??ㅼ젙(`PREF_BGM`, `PREF_SFX`, `PREF_MULTIPUSH`, `PREF_SLIDE_ANIM`, `PREF_ORIENTATION` ?몃줈/媛濡? ???蹂듭썝 諛?`Screen.orientation` 諛섏쁺.
-   - `PuzzleAudio.cs`: `PuzzleGame` 猷⑦듃 ?ㅻ툕?앺듃??吏곷젹??遺李⑸릺??Inspector?먯꽌 7醫??ㅻ뵒???대┰(`titleMusicClip`, `lobbyMusicClip`, `musicClip` ?멸쾶??猷⑦봽[120 BPM?쇰줈 ?쒗룷 ?꾪솕, 湲곗〈 150 BPM? 異뷀썑 ?쒓컙?쒗븳 ?ㅽ뀒?댁??⑹쑝濡?蹂대쪟], `gameStartClip`, `moveClip`, `tileCorrectClip` ????뺣떟 ?꾩튂 ?덉갑 ??吏㏐퀬 留묒? 踰??뚮━, `clearClip`)??吏곸젒 援먯껜쨌?몄쭛 媛?? ?멸쾶???쒖옉(`PlayGameStartThenInGameMusic`) ??`gameStartClip` ?④낵?뚯씠 ?앸궃 ??**0.5珥??湲???蹂쇰ⅷ 0?먯꽌 0.8珥??숈븞 泥쒖쿇???섏씠?쒖씤**?섎ŉ ?멸쾶??猷⑦봽 BGM???ъ깮??
-   - `PuzzleProgress.cs`: ?ㅽ뀒?댁? ?닿툑 洹쒖튃(泥??ㅽ뀒?댁?, 媛??쒖씠??泥??ㅽ뀒?댁?, 吏곸쟾 ?대━???ㅽ뀒?댁? ?ㅼ쓬 ?④퀎 ?닿툑) 諛?理쒖냼 ?대룞/理쒕떒 ?쒓컙(`PUZZLE_CLEAR_`, `PUZZLE_BEST_`, `PUZZLE_BEST_TIME_`) 愿由?
-   - `PuzzleLobbyGalleryUI.cs`: **??댄?(`TitlePanel`) -> ?ㅽ뀒?댁? 濡쒕퉬(`LobbyPanel`) -> ?멸쾶??* ?붾㈃ ?먮쫫, ?쒖씠????`ALL`, `3x3`, `3x4`, `3x5`, `3x7`, `4x3`, `6x3`)蹂??ㅽ뀒?댁? ?좏깮 濡쒕퉬, ?대━???쇰윭?ㅽ듃 ?꾧컧(誘명빐湲???遺덊닾紐??먮Ъ??媛由쇰쭑?쇰줈 ?먮낯 ?대?吏 ?꾩쟾 李⑤떒, 泥?留덉?留??섏씠吏?먯꽌 Prev/Next 臾댄븳 猷⑦봽 諛⑹?), ?щ∼ ?녿뒗 ?먮낯 ?꾩껜?붾㈃ 媛먯긽 紐⑤떖(`uvRect = 0,0,1,1`).
-   - `PuzzleResponsiveLayout.cs`: 紐⑤컮??Safe Area(`Screen.safeArea`) ?곸슜 諛??몃줈(`Portrait`) / 媛濡?`Landscape`) ?꾩슜 HUD쨌蹂대뱶쨌?쇱떆?뺤?쨌??댄?쨌濡쒕퉬쨌?꾧컧 ?덉씠?꾩썐 ?щ같移?(?멸쾶???곷떒 Lobby 以묐났 踰꾪듉 ?쒓굅).
-   - `PauseSettingsUI.cs`, `PuzzleGame.cs`: ??댄??믩줈鍮꾟넂?멸쾶??吏꾩엯 ?먮쫫(`OpenTitleScreen` ??`EnterLobbyFromTitle` ??`Load`), ?멸쾶??吏꾩엯 ??寃뚯엫 ?쒖옉 SFX ?ъ깮 諛?0.5珥????멸쾶??猷⑦봽 BGM ?섏씠?쒖씤 ?꾪솚, ?꾨쾭嫄??꾩씠肄??쇱떆?뺤? 踰꾪듉, `GAME` ??Restart, Undo, Hold to preview, Number ON/OFF, Back to lobby)怨?`SYSTEM` ??Music, Sound, Line slide, Animation 4醫???湲곗〈 `Orientation: PORTRAIT` 踰꾪듉? ?쒓굅???쇰줈 遺꾨━???쇱떆?뺤? 硫붾돱 諛?`X` ?リ린 踰꾪듉, 3-2-1 ?ш컻 移댁슫?몃떎?? ?먮뵒??李??꾪솚 ???먮룞 ?쇱떆?뺤? 諛⑹? 泥섎━.
-4. **?댁뼱??吏꾪뻾???묒뾽:**
-   - Phase 4(?⑤씪??愿묎퀬 SDK ?곕룞)???쒕룞??蹂대쪟?섍퀬 Phase 3 ?멸쾶???꾩꽦??諛?UI/?ъ슫???뷀뀒??留덇컧??吏묒쨷.
-   - ?ъ슜?먭? Inspector??`PuzzleAudio` ?щ’(`titleMusicClip`, `lobbyMusicClip`, `musicClip`, `gameStartClip`, `moveClip`, `tileCorrectClip`, `clearClip`)???먰븯??而ㅼ뒪? ?ㅻ뵒???먯뀑???곌껐?섏뿬 ?뚯뒪??媛??
+## 다른 PC / 다른 에이전트 인계 가이드 (Handoff Guide)
+1. **브랜치 현황:**
+   - 원격 기본 브랜치 `origin/master`(및 작업 브랜치 `origin/wip/home-phase1`)에 Phase 1 ~ Phase 3 작업분이 동기화되어 있다.
+   - 작업을 시작할 때 `git pull origin master` (또는 작업 브랜치 확인) 후 `AGENTS.md`와 `Assets/SPEC.md`를 먼저 읽는다.
+2. **씬 및 에셋 구조:**
+   - 실제 플레이 씬: `Assets/Scenes/PuzzleGame.unity` (`PuzzleGameSceneBuilder.cs`로 생성, 중복을 제거한 30개 고유 스테이지가 3x3부터 칸수 오름차순으로 연결 완료).
+   - Phase 1 코어 검증용 씬: `Assets/Scenes/PhaseOneTest.unity` (`PhaseOneSceneBuilder.cs`).
+   - 일러스트 원본 경로: `Assets/Resource.art/Puzzle_images` (30종 정리 완료, GIF/WebP는 첫 프레임 PNG와 함께 보존).
+   - 캐주얼 배경 경로: `Assets/Resource.art/Backgrounds/bg_puzzle_misty_forest_temp.png` (기존 어두운 안개 숲 배경을 밝고 화사한 파스텔 하늘·초원 캐주얼 배경으로 교체, GUID 유지).
+   - 오디오 에셋 경로: `Assets/Resource/Audio/` (`bgm_title.wav`, `bgm_lobby.wav`, `bgm_ingame_loop.wav`[일반 플레이용 120 BPM 루프, 8.0초], `sfx_game_start.wav`, `sfx_tile_move.wav`, `sfx_tile_correct.wav`, `sfx_stage_clear.wav` 총 7종이 실제 WAV 파일로 저장되어 `PuzzleGame` 루트의 `PuzzleAudio` 인스펙터에 직접 연결됨).
+3. **핵심 런타임 스크립트 (`Assets/Resource/Scripts/Puzzle/`):**
+   - `StageData.cs`, `PuzzleBoardState.cs`, `PuzzleTile.cs`, `BoardManager.cs`: Phase 1 퍼즐 코어 (정사각형 타일 유지, 중앙 크롭 UV, 결정론적 역방향 셔플, 다중 밀기, Undo 3회 및 보상 티켓 콜백, 타일이 정답 칸에 들어갈 때 `TilePlacedCorrectly` 이벤트 발생, 클리어 페이드인).
+   - `SettingsManager.cs`: 5종 설정(`PREF_BGM`, `PREF_SFX`, `PREF_MULTIPUSH`, `PREF_SLIDE_ANIM`, `PREF_ORIENTATION` 세로/가로) 저장/복원 및 `Screen.orientation` 반영.
+   - `PuzzleAudio.cs`: `PuzzleGame` 루트 오브젝트에 직렬화 부착되어 Inspector에서 7종 오디오 클립(`titleMusicClip`, `lobbyMusicClip`, `musicClip` 인게임 루프[120 BPM으로 템포 완화, 기존 150 BPM은 추후 시간제한 스테이지용으로 보류], `gameStartClip`, `moveClip`, `tileCorrectClip` 타일 정답 위치 안착 시 짧고 맑은 벨 소리, `clearClip`)을 직접 교체·편집 가능. 인게임 시작(`PlayGameStartThenInGameMusic`) 시 `gameStartClip` 효과음이 끝난 뒤 **0.5초 대기 후 볼륨 0에서 0.8초 동안 천천히 페이드인**되며 인게임 루프 BGM이 재생됨.
+   - `PuzzleProgress.cs`: 스테이지 해금 규칙(첫 스테이지, 각 난이도 첫 스테이지, 직전 클리어 스테이지 다음 단계 해금) 및 최소 이동/최단 시간(`PUZZLE_CLEAR_`, `PUZZLE_BEST_`, `PUZZLE_BEST_TIME_`) 관리.
+   - `PuzzleLobbyGalleryUI.cs`: **타이틀(`TitlePanel`) -> 스테이지 로비(`LobbyPanel`) -> 인게임** 화면 흐름, 난이도 탭(`ALL`, `3x3`, `3x4`, `3x5`, `3x6`, `3x7`, `4x3`, `6x3`)별 스테이지 선택 로비, 클리어 일러스트 도감(미해금 시 불투명 자물쇠 가림막으로 원본 이미지 완전 차단, 첫/마지막 페이지에서 Prev/Next 무한 루프 방지), 크롭 없는 원본 전체화면 감상 모달(`uvRect = 0,0,1,1`).
+   - `PuzzleResponsiveLayout.cs`: 모바일 Safe Area(`Screen.safeArea`) 적용 및 세로(`Portrait`) / 가로(`Landscape`) 전용 HUD·보드·일시정지·타이틀·로비·도감 레이아웃 재배치 (인게임 상단 Lobby 중복 버튼 제거).
+   - `PauseSettingsUI.cs`, `PuzzleGame.cs`: 타이틀→로비→인게임 진입 흐름(`OpenTitleScreen` → `EnterLobbyFromTitle` → `Load`), 인게임 진입 시 게임 시작 SFX 재생 및 0.5초 후 인게임 루프 BGM 페이드인 전환, 햄버거 아이콘 일시정지 버튼, `GAME` 탭(Restart, Undo, Hold to preview, Number ON/OFF, Back to lobby)과 `SYSTEM` 탭(Music, Sound, Line slide, Animation 4종 — 기존 `Orientation: PORTRAIT` 버튼은 제거됨)으로 분리된 일시정지 메뉴 및 `X` 닫기 버튼, 3-2-1 재개 카운트다운, 에디터 창 전환 시 자동 일시정지 방지 처리.
+4. **이어서 진행할 작업:**
+   - Phase 4(온라인/광고 SDK 연동)는 한동안 보류하고 Phase 3 인게임 완성도 및 UI/사운드 디테일 마감에 집중.
+   - 사용자가 Inspector의 `PuzzleAudio` 슬롯(`titleMusicClip`, `lobbyMusicClip`, `musicClip`, `gameStartClip`, `moveClip`, `tileCorrectClip`, `clearClip`)에 원하는 커스텀 오디오 에셋을 연결하여 테스트 가능.
 
-## ?묒뾽 湲곕줉
+## 작업 기록
 
-### 2026-10-27 00:26 KST ??Phase 2 諛??대?吏 ?깅줉 泥댄겕?ъ씤??
-- 而ㅻ컠 ?쒕ぉ: `feat: complete phase two and register puzzle illustrations`
-- 湲곗? 而ㅻ컠: `28f6f27` (2026-10-20 16:23 KST, ?ㅼ젣 ?뚮젅?댁슜 ?쇱쫹 ??諛??ㅽ봽?쇱씤 寃뚯엫 ?먮쫫 援ы쁽).
-- 蹂寃? ?쇱떆?뺤?/?ㅼ젙/?ㅻ뵒??諛??섑뵆 ?꾨젅???곸슜 ?묒뾽???뺣━. 湲곗〈 7媛쒖뿉 ???대?吏 21媛쒕? 異붽??섏뿬 ?뚮젅???ъ뿉 珥?28媛??ㅽ뀒?댁? ?곌껐.
-- GIF 3媛쒖? WebP 1媛쒕뒗 泥??꾨젅??PNG濡??곌껐?섍퀬 ?먮낯 蹂댁〈. GIF 以묐났 ?ㅽ뀒?댁? ?먯뀑? 蹂댁〈?섎릺 ?뚮젅??紐⑸줉?먯꽌 ?쒖쇅.
-- ?대?吏 ?깅줉 硫붾돱??以묐났 諛⑹? 諛??뚯뒪???꾨찓???щ줈?????뚮떎 吏??蹂??珥덇린??臾몄젣 ?섏젙.
-- 寃利? Unity ?뚯뒪??18/18 ?듦낵(2026-10-27 00:18:58 KST), 28媛??ㅽ뀒?댁? 濡쒕뵫 諛??깅줉 ?ъ떎??????遺덈? ?뺤씤.
-- ?ㅼ쓬 ?묒뾽: ?대?吏 ?ㅼ젣 鍮꾩쑉???곕Ⅸ 蹂대뱶 援ъ꽦, ?대?吏 ?뚯씪紐??뺣━, ?꾩떆 諛곌꼍 異붽?. ?댄썑 Phase 3.
-- ?몄떆: ??而ㅻ컠 ?앹꽦 ???붿껌???먭꺽 釉뚮옖移섎줈 ?몄떆 ?덉젙.
+### 2026-10-27 00:26 KST — Phase 2 및 이미지 등록 체크포인트
+- 커밋 제목: `feat: complete phase two and register puzzle illustrations`
+- 기준 커밋: `28f6f27` (2026-10-20 16:23 KST, 실제 플레이용 퍼즐 씬 및 오프라인 게임 흐름 구현).
+- 변경: 일시정지/설정/오디오 및 샘플 프레임 적용 작업을 정리. 기존 7개에 새 이미지 21개를 추가하여 플레이 씬에 총 28개 스테이지 연결.
+- GIF 3개와 WebP 1개는 첫 프레임 PNG로 연결하고 원본 보존. GIF 중복 스테이지 에셋은 보존하되 플레이 목록에서 제외.
+- 이미지 등록 메뉴의 중복 방지 및 테스트 도메인 재로드 후 람다 지역 변수 초기화 문제 수정.
+- 검증: Unity 테스트 18/18 통과(2026-10-27 00:18:58 KST), 28개 스테이지 로딩 및 등록 재실행 시 씬 불변 확인.
+- 다음 작업: 이미지 실제 비율에 따른 보드 구성, 이미지 파일명 정리, 임시 배경 추가. 이후 Phase 3.
+- 푸시: 이 커밋 생성 후 요청된 원격 브랜치로 푸시 예정.
 
-### 2026-10-27 00:33 KST ???대?吏 援ъ꽦 諛?諛곌꼍 蹂댁셿
-- 吏곸쟾 而ㅻ컠: `62431ea` (`feat: complete phase two and register puzzle illustrations`, 00:26:29 KST). 00:32 KST??`origin/wip/home-phase1`濡??몄떆 ?깃났 ?뺤씤.
-- 而ㅻ컠 ?쒕ぉ: `feat: fit puzzle grids to artwork and add temporary background`
-- ?섏씠利? Phase 1/2 肄섑뀗痢?蹂댁셿. Phase 3/4???덉젙 ?좎?.
-- 蹂寃? ?대?吏 24醫낆쓣 吏곸젒 ?뺤씤?섍퀬 `puzzle_踰덊샇_?댁슜`?쇰줈 ?대쫫 ?뺣━. GIF/WebP ?먮낯怨?蹂??PNG ?대쫫???듭씪?섍퀬 GUID瑜?蹂댁〈.
-- ?먮낯 醫낇슒鍮꾩뿉 ?곕씪 蹂대뱶 援ъ꽦 諛??좉퇋 ?깅줉 ?뺤콉 蹂寃? ?뚮젅???ㅽ뀒?댁? 28媛? 3x3 4媛? 3x4 17媛? 3x5 3媛? 3x7 1媛? 4x3 2媛? 6x3 1媛? ?대?吏蹂??먮낯 ?댁긽??蹂대뱶??[?대?吏 紐⑸줉](Assets/Resource.art/Puzzle_images/README.md)??湲곕줉.
-- ?꾩떆 諛곌꼍: [bg_puzzle_misty_forest_temp.png](Assets/Resource.art/Backgrounds/bg_puzzle_misty_forest_temp.png). ?댁옣 ?대?吏 ?앹꽦 ?꾧뎄 ?ъ슜. ?앹꽦 ?꾨＼?꾪듃??[諛곌꼍 ?ㅻ챸](Assets/Resource.art/Backgrounds/README.md)??湲곕줉. ?붾㈃??鍮꾩쑉 ?좎?濡?梨꾩슦硫??곗튂 李⑤떒 ?댁젣.
-- 寃利? Unity ?뚯뒪??31/31 ?듦낵(00:31:56 KST), ?대?吏 ?щ벑濡?以묐났 ?놁쓬. ?뚮젅???꾨젅??吏꾪뻾(7280??693) 諛?720x1280 ?붾㈃?먯꽌 諛곌꼍/蹂대뱶/踰꾪듉 ?쒖떆 ?뺤씤. ?먮뵒???뚮젅??醫낅즺 諛?寃利앹슜 諛깃렇?쇱슫???ㅽ뻾 ?ㅼ젙 ?먮났.
-- ?⑥? ?묒뾽: Phase 3 濡쒕퉬/?꾧컧/諛⑺뼢 ?좏깮/紐⑤컮???덉씠?꾩썐, Phase 4 ?⑤씪??愿묎퀬 SDK. ?ㅼ젣 湲곌린 ?붾㈃ 寃利앹? 誘몄떎??
-- ?몄떆: ??而ㅻ컠 ?앹꽦 ???숈씪 ?먭꺽 釉뚮옖移섎줈 ?몄떆 ?덉젙. ?ㅼ젣 寃곌낵???묒뾽 ?꾨즺 ?묐떟怨??ㅼ쓬 而ㅻ컠 湲곕줉?먯꽌 ?뺤씤.
+### 2026-10-27 00:33 KST — 이미지 구성 및 배경 보완
+- 직전 커밋: `62431ea` (`feat: complete phase two and register puzzle illustrations`, 00:26:29 KST). 00:32 KST에 `origin/wip/home-phase1`로 푸시 성공 확인.
+- 커밋 제목: `feat: fit puzzle grids to artwork and add temporary background`
+- 페이즈: Phase 1/2 콘텐츠 보완. Phase 3/4는 예정 유지.
+- 변경: 이미지 24종을 직접 확인하고 `puzzle_번호_내용`으로 이름 정리. GIF/WebP 원본과 변환 PNG 이름을 통일하고 GUID를 보존.
+- 원본 종횡비에 따라 보드 구성 및 신규 등록 정책 변경. 플레이 스테이지 28개: 3x3 4개, 3x4 17개, 3x5 3개, 3x7 1개, 4x3 2개, 6x3 1개. 이미지별 원본 해상도/보드는 [이미지 목록](Assets/Resource.art/Puzzle_images/README.md)에 기록.
+- 임시 배경: [bg_puzzle_misty_forest_temp.png](Assets/Resource.art/Backgrounds/bg_puzzle_misty_forest_temp.png). 내장 이미지 생성 도구 사용. 생성 프롬프트는 [배경 설명](Assets/Resource.art/Backgrounds/README.md)에 기록. 화면을 비율 유지로 채우며 터치 차단 해제.
+- 검증: Unity 테스트 31/31 통과(00:31:56 KST), 이미지 재등록 중복 없음. 플레이 프레임 진행(7280→9693) 및 720x1280 화면에서 배경/보드/버튼 표시 확인. 에디터 플레이 종료 및 검증용 백그라운드 실행 설정 원복.
+- 남은 작업: Phase 3 로비/도감/방향 선택/모바일 레이아웃, Phase 4 온라인/광고 SDK. 실제 기기 화면 검증은 미실시.
+- 푸시: 이 커밋 생성 후 동일 원격 브랜치로 푸시 예정. 실제 결과는 작업 완료 응답과 다음 커밋 기록에서 확인.
 
-### 2026-10-27 02:42 KST ??Phase 3 濡쒕퉬/?꾧컧/諛⑺뼢 ?꾪솚 援ы쁽 諛?寃쎌풄??諛곌꼍?뚯븙 ?곸슜
-- 吏곸쟾 而ㅻ컠: `bac2461` (`feat: fit puzzle grids to artwork and add temporary background`, 00:34:03 KST) 諛?`646ae34` (`wip: codex ?쒕룄 ?꾨떖 ???묒뾽遺?諛깆뾽`, 01:29:41 KST).
-- 而ㅻ컠 ?쒕ぉ: `feat: Phase 3 濡쒕퉬쨌?꾧컧쨌?붾㈃諛⑺뼢 ???諛?寃쎌풄??諛곌꼍?뚯븙 ?곸슜`
-- ?섏씠利? Phase 2 ?ㅻ뵒??媛쒖꽑 + Phase 3 肄붿뼱/UI 援ы쁽.
-- 蹂寃?
-  - `PuzzleAudio.cs`: 湲곗〈 ?붿옍??4???곕퉬?몄뒪瑜?肉뚯슂肉뚯슂 硫붿씤 ?뚮쭏 ?띿쓽 諛앷퀬 寃쎌풄??150 BPM 移⑺뒥 ?꾩??대뱶 猷⑦봽(由щ뱶 硫쒕줈??+ ?ㅽ?移댄넗 ?붿쓬 + ?ν?釉??뚰궧 踰좎씠??+ ?ㅽ봽鍮꾪듃 ?섏씠??濡?援먯껜?섍퀬 ????대룞???대━?댁쓬 媛쒖꽑.
-  - `SettingsManager.cs`, `PauseSettingsUI.cs`, `PuzzleGame.cs`: ?몃줈/媛濡??뚮젅???좏깮(`PREF_ORIENTATION`) 諛??멸쾶???쇱떆?뺤?/?대━??寃곌낵李쎌쓽 濡쒕퉬 ?대룞 踰꾪듉 ?곌껐. ?뚮젅??以?諛⑺뼢 ?꾪솚 ???쇱떆?뺤? ?곹깭濡?蹂대뱶쨌?대룞 ?샕톃ndo쨌?쒓컙??蹂댁〈?섍퀬 3-2-1 移댁슫?몃떎?????ш컻.
-  - `PuzzleProgress.cs`, `PuzzleLobbyGalleryUI.cs`, `PuzzleResponsiveLayout.cs`: ?ㅽ뀒?댁? ?닿툑 ?먮쫫, ?쒖씠????퀎 ?ㅽ뀒?댁? 移대뱶 濡쒕퉬, ?대━???쇰윭?ㅽ듃 ?꾧컧 諛?臾댄겕濡??먮낯 ?꾩껜?붾㈃ 酉곗뼱, Safe Area 諛??몃줈/媛濡??꾩슜 諛섏쓳???덉씠?꾩썐 援ы쁽.
-  - `AGENTS.md`: 而ㅻ컠 肄붾찘???쒓? ?묒꽦 吏移?異붽? 諛?? PC/?먯씠?꾪듃 ?멸퀎 媛?대뱶 ?곸꽭 臾몄꽌??
-- 寃利? Unity ?먮뵒???ъ뺨?뚯씪 ?먮윭 0嫄??뺤씤(`pipeline_recompile_status.json`), `PhaseThreeTests` 3/3 ?듦낵 ?뺤씤(2026-10-27 02:15 KST). 寃쎌풄??BGM ?⑹꽦 肄붾뱶 由ъ뺨?뚯씪 ?꾨즺(02:42 KST). ?ㅼ젣 紐⑤컮??湲곌린 鍮뚮뱶??誘멸?利?
-- ?⑥? ?묒뾽: ?먮뵒???ㅺ린湲곗뿉???몃줈쨌媛濡?UI ?쒓컖???뷀뀒???먭?, Phase 4 ?⑤씪??由щ뜑蹂대뱶(UGS) 諛?愿묎퀬 SDK ?곕룞.
-- ?몄떆: ??而ㅻ컠 ?앹꽦 ??`origin/master` 諛?`origin/wip/home-phase1`???몄떆 ?덉젙.
+### 2026-10-27 02:42 KST — Phase 3 로비/도감/방향 전환 구현 및 경쾌한 배경음악 적용
+- 직전 커밋: `bac2461` (`feat: fit puzzle grids to artwork and add temporary background`, 00:34:03 KST) 및 `646ae34` (`wip: codex 한도 도달 전 작업분 백업`, 01:29:41 KST).
+- 커밋 제목: `feat: Phase 3 로비·도감·화면방향 대응 및 경쾌한 배경음악 적용`
+- 페이즈: Phase 2 오디오 개선 + Phase 3 코어/UI 구현.
+- 변경:
+  - `PuzzleAudio.cs`: 기존 잔잔한 4음 앰비언스를 뿌요뿌요 메인 테마 풍의 밝고 경쾌한 150 BPM 칩튠 아케이드 루프(리드 멜로디 + 스타카토 화음 + 옥타브 워킹 베이스 + 오프비트 하이햇)로 교체하고 타일 이동음/클리어음 개선.
+  - `SettingsManager.cs`, `PauseSettingsUI.cs`, `PuzzleGame.cs`: 세로/가로 플레이 선택(`PREF_ORIENTATION`) 및 인게임/일시정지/클리어 결과창의 로비 이동 버튼 연결. 플레이 중 방향 전환 시 일시정지 상태로 보드·이동 수·Undo·시간을 보존하고 3-2-1 카운트다운 후 재개.
+  - `PuzzleProgress.cs`, `PuzzleLobbyGalleryUI.cs`, `PuzzleResponsiveLayout.cs`: 스테이지 해금 흐름, 난이도 탭별 스테이지 카드 로비, 클리어 일러스트 도감 및 무크롭 원본 전체화면 뷰어, Safe Area 및 세로/가로 전용 반응형 레이아웃 구현.
+  - `AGENTS.md`: 커밋 코멘트 한글 작성 지침 추가 및 타 PC/에이전트 인계 가이드 상세 문서화.
+- 검증: Unity 에디터 재컴파일 에러 0건 확인(`pipeline_recompile_status.json`), `PhaseThreeTests` 3/3 통과 확인(2026-10-27 02:15 KST). 경쾌한 BGM 합성 코드 리컴파일 완료(02:42 KST). 실제 모바일 기기 빌드는 미검증.
+- 남은 작업: 에디터/실기기에서 세로·가로 UI 시각적 디테일 점검, Phase 4 온라인 리더보드(UGS) 및 광고 SDK 연동.
+- 푸시: 이 커밋 생성 후 `origin/master` 및 `origin/wip/home-phase1`에 푸시 예정.
 
-### 2026-10-27 10:47 KST ??以묐났 ?ㅽ뀒?댁? ?뺣━쨌?쒖씠?꾩닚 諛곗튂 諛??쇱떆?뺤? ??UI쨌?ъ빱???먮룞?쇱떆?뺤? 媛쒖꽑
-- 吏곸쟾 而ㅻ컠: `deaeea8` (`feat: Phase 3 濡쒕퉬쨌?꾧컧쨌?붾㈃諛⑺뼢 ???諛?寃쎌풄??諛곌꼍?뚯븙 ?곸슜`, 02:42 KST). `origin/master` 諛?`origin/wip/home-phase1` ?몄떆 ?꾨즺 ?뺤씤.
-- 而ㅻ컠 ?쒕ぉ: `feat: 以묐났 ?ㅽ뀒?댁? ?뺣━쨌?쒖씠?꾩닚 ?뺣젹 諛??쇱떆?뺤? ??UI쨌?ъ빱??媛쒖꽑`
-- ?섏씠利? Phase 2/3 ?ㅽ뀒?댁? 援ъ꽦 諛??멸쾶???쇱떆?뺤? UI 媛쒗렪.
-- 蹂寃?
-  - `Assets/Scenes/PuzzleGame.unity`, `PuzzleStageImporter.cs`: ?숈씪 ?쇰윭?ㅽ듃瑜?以묐났 李몄“?섎뜕 ?ㅽ뀒?댁?(`Stage03`, `Stage05`, `Stage06`, `Stage07`)瑜??뚮젅??紐⑸줉?먯꽌 ?쒖쇅??24媛?怨좎쑀 ?쇰윭?ㅽ듃 ?ㅽ뀒?댁?濡??뺣━?섍퀬, 湲곕낯 ?낅Ц ?쒖씠?꾩씤 `3x3`(9移?遺??`3x4`쨌`4x3`(12移?, `3x5`(15移?, `6x3`(18移?, `3x7`(21移?源뚯? 移몄닔媛 留롮쓣?섎줉 ?쒖씠?꾧? ?믪븘吏?꾨줉 ?ㅻ쫫李⑥닚 諛곗튂.
-  - `PauseSettingsUI.cs`, `PuzzleResponsiveLayout.cs`, `HoldPreview.cs`: ?멸쾶???섎떒 而⑦듃濡?Undo, Hold to preview, Restart, Number ON/OFF)???쇱떆?뺤? 硫붾돱 ?대?濡??대룞?섍퀬 蹂대뱶 ?곸뿭???뺤옣. HUD ?쇱떆?뺤? 踰꾪듉??湲濡쒕쾶 ?쒖? ?꾨쾭嫄??꾩씠肄?媛濡???3媛??곹븯 諛곗튂)?쇰줈 蹂寃쏀븯怨? ?쇱떆?뺤? 硫붾돱瑜?`GAME` ??Restart, Undo, Hold to preview, Number ON/OFF, Back to lobby)怨?`SYSTEM` ??Music, Sound, Line slide, Animation, Orientation)?쇰줈 遺꾨━, Continue 踰꾪듉???곗륫 ?곷떒 `X` 踰꾪듉?쇰줈 援ъ꽦.
-  - `PuzzleGame.cs`: ?쇱떆?뺤? 踰꾪듉???꾨Ⅴ湲??꾩뿉 ?좊땲???먮뵒?곗뿉???ㅻⅨ 李쎌쑝濡??ъ빱?ㅻ? ??꼈????臾댁“嫄?`PAUSED` ?섎뜕 ?꾩긽??諛⑹?(`OnApplicationFocus`?먯꽌 ?쇰컲 ?뚮젅??以??먮룞 ?쇱떆?뺤? ?쒓굅, 3-2-1 ?ш컻 移댁슫?몃떎??以묒씠嫄곕굹 紐⑤컮??諛깃렇?쇱슫???꾪솚 ?쒖뿉留?蹂댄샇 ?숈옉).
-  - `PhaseTwoTests.cs`, `PhaseThreeTests.cs`: 24媛?怨좎쑀 ?ㅽ뀒?댁? 諛?移몄닔 ?ㅻ쫫李⑥닚 寃利? ?ъ빱??蹂寃???鍮꾩씪?쒖젙吏 寃利? ?꾨쾭嫄??꾩씠肄?諛?`GAME`/`SYSTEM` ???X` 踰꾪듉 寃利?諛섏쁺.
-- 寃利? Unity ?먮룞 由ъ뺨?뚯씪 ?꾨즺(`Temp/pipeline_recompile_status.json`: `failed: false, errors: []`, 10:46 KST) 諛?肄섏넄 ?먮윭 0嫄??뺤씤. ?먮뵒??PlayMode ?듯빀 ?뚯뒪?몃뒗 ?먮뵒??李쎌뿉??吏곸젒 ?ㅽ뻾 媛??
-- ?⑥? ?묒뾽: ?먮뵒???ㅺ린湲??뚮젅???뺤씤 諛?Phase 4 ?⑤씪????궧/愿묎퀬 SDK ?곕룞.
-- ?몄떆: ??而ㅻ컠 ?앹꽦 ??`origin/master`(諛?`origin/wip/home-phase1`)濡??몄떆 ?덉젙.
+### 2026-10-27 10:47 KST — 중복 스테이지 정리·난이도순 배치 및 일시정지 탭 UI·포커스 자동일시정지 개선
+- 직전 커밋: `deaeea8` (`feat: Phase 3 로비·도감·화면방향 대응 및 경쾌한 배경음악 적용`, 02:42 KST). `origin/master` 및 `origin/wip/home-phase1` 푸시 완료 확인.
+- 커밋 제목: `feat: 중복 스테이지 정리·난이도순 정렬 및 일시정지 탭 UI·포커스 개선`
+- 페이즈: Phase 2/3 스테이지 구성 및 인게임/일시정지 UI 개편.
+- 변경:
+  - `Assets/Scenes/PuzzleGame.unity`, `PuzzleStageImporter.cs`: 동일 일러스트를 중복 참조하던 스테이지(`Stage03`, `Stage05`, `Stage06`, `Stage07`)를 플레이 목록에서 제외해 24개 고유 일러스트 스테이지로 정리하고, 기본 입문 난이도인 `3x3`(9칸)부터 `3x4`·`4x3`(12칸), `3x5`(15칸), `6x3`(18칸), `3x7`(21칸)까지 칸수가 많을수록 난이도가 높아지도록 오름차순 배치.
+  - `PauseSettingsUI.cs`, `PuzzleResponsiveLayout.cs`, `HoldPreview.cs`: 인게임 하단 컨트롤(Undo, Hold to preview, Restart, Number ON/OFF)을 일시정지 메뉴 내부로 이동하고 보드 영역을 확장. HUD 일시정지 버튼을 글로벌 표준 햄버거 아이콘(가로 선 3개 상하 배치)으로 변경하고, 일시정지 메뉴를 `GAME` 탭(Restart, Undo, Hold to preview, Number ON/OFF, Back to lobby)과 `SYSTEM` 탭(Music, Sound, Line slide, Animation, Orientation)으로 분리, Continue 버튼을 우측 상단 `X` 버튼으로 구성.
+  - `PuzzleGame.cs`: 일시정지 버튼을 누르기 전에 유니티 에디터에서 다른 창으로 포커스를 옮겼을 때 무조건 `PAUSED` 되던 현상을 방지(`OnApplicationFocus`에서 일반 플레이 중 자동 일시정지 제거, 3-2-1 재개 카운트다운 중이거나 모바일 백그라운드 전환 시에만 보호 동작).
+  - `PhaseTwoTests.cs`, `PhaseThreeTests.cs`: 30개 고유 스테이지 및 칸수 오름차순 검증, 포커스 변경 시 비일시정지 검증, 햄버거 아이콘 및 `GAME`/`SYSTEM` 탭·`X` 버튼 검증 반영.
+- 검증: Unity 자동 리컴파일 완료(`Temp/pipeline_recompile_status.json`: `failed: false, errors: []`, 10:46 KST) 및 콘솔 에러 0건 확인. 에디터 PlayMode 통합 테스트는 에디터 창에서 직접 실행 가능.
+- 남은 작업: 에디터/실기기 플레이 확인 및 Phase 4 온라인 랭킹/광고 SDK 연동.
+- 푸시: 이 커밋 생성 후 `origin/master`(및 `origin/wip/home-phase1`)로 푸시 예정.
 
-### 2026-10-27 11:43 KST ???멸쾶??Lobby 踰꾪듉 ?쒓굅쨌濡쒕퉬 ?섏씠吏 臾댄븳 猷⑦봽 諛⑹?쨌?좉툑 ?ㅽ뀒?댁? ?먮Ъ??媛由쇰쭑 異붽?
-- 吏곸쟾 而ㅻ컠: `301f45d` (`feat: 以묐났 ?ㅽ뀒?댁? ?뺣━쨌?쒖씠?꾩닚 ?뺣젹 諛??쇱떆?뺤? ??UI쨌?ъ빱??媛쒖꽑`, 10:47 KST). `origin/master` 諛?`origin/wip/home-phase1` ?몄떆 ?꾨즺 ?뺤씤.
-- 而ㅻ컠 ?쒕ぉ: `feat: ?멸쾶??濡쒕퉬 踰꾪듉 ?쒓굅쨌?섏씠吏 臾댄븳猷⑦봽 諛⑹? 諛??좉툑 ?ㅽ뀒?댁? ?먮Ъ??媛由쇰쭑 ?곸슜`
-- ?섏씠利? Phase 3 ?멸쾶??HUD 諛??ㅽ뀒?댁? 濡쒕퉬/?꾧컧 UI 媛쒖꽑.
-- 蹂寃?
-  - `PuzzleResponsiveLayout.cs`: ?쇱떆?뺤?(`PAUSED`) 硫붾돱??`GAME` ???덉뿉 `Back to lobby`媛 ?덉쑝誘濡??멸쾶??HUD ?곷떒??以묐났 ?쒖떆?섎뜕 `Lobby` 踰꾪듉???쒓굅?섍퀬 ?곷떒 ??댄? ?덉씠?꾩썐???뺣━.
+### 2026-10-27 11:43 KST — 인게임 Lobby 버튼 제거·로비 페이지 무한 루프 방지·잠금 스테이지 자물쇠 가림막 추가
+- 직전 커밋: `301f45d` (`feat: 중복 스테이지 정리·난이도순 정렬 및 일시정지 탭 UI·포커스 개선`, 10:47 KST). `origin/master` 및 `origin/wip/home-phase1` 푸시 완료 확인.
+- 커밋 제목: `feat: 인게임 로비 버튼 제거·페이지 무한루프 방지 및 잠금 스테이지 자물쇠 가림막 적용`
+- 페이즈: Phase 3 인게임 HUD 및 스테이지 로비/도감 UI 개선.
+- 변경:
+  - `PuzzleResponsiveLayout.cs`: 일시정지(`PAUSED`) 메뉴의 `GAME` 탭 안에 `Back to lobby`가 있으므로 인게임 HUD 상단에 중복 표시되던 `Lobby` 버튼을 제거하고 상단 타이틀 레이아웃을 정리.
   - `PuzzleLobbyGalleryUI.cs`:
-    - ?ㅽ뀒?댁? 濡쒕퉬 諛??꾧컧?먯꽌 `Prev` / `Next` ?섏씠吏 ?대룞 ??紐⑤뱢??`%`) ?쒗솚???쒓굅?섏뿬 泥??섏씠吏?먯꽌??`Prev` 鍮꾪솢?깊솕, 留덉?留??섏씠吏?먯꽌??`Next` 鍮꾪솢?깊솕 泥섎━濡?臾댄븳 猷⑦봽 諛⑹?.
-    - `LOCKED` ?곹깭???ㅽ뀒?댁? 移대뱶 諛?誘명빐湲??꾧컧 移대뱶?먯꽌 ?먮낯 ?쇰윭?ㅽ듃 ?띿뒪泥섍? ?몄텧?섏? ?딅룄濡?`Thumbnail.texture = null` 泥섎━?섍퀬, ?몃꽕???욌㈃???꾩쟾????뒗 遺덊닾紐?媛由쇰쭑(`LockOverlay`)怨?以묒븰 ?먮Ъ???꾩씠肄?`PadlockIcon`)??異붽?.
-  - `PhaseThreeTests.cs`: ?멸쾶???곷떒 `Lobby` 踰꾪듉 遺???뺤씤, ?섏씠吏 泥???寃쎄퀎?먯꽌 臾댄븳 猷⑦봽 諛⑹? ?뺤씤, ?좉툑 移대뱶??`LockOverlay` ?쒖꽦??諛??먮낯 ?띿뒪泥?鍮꾨끂異?寃利?異붽?.
-- 寃利? Unity ?먮룞 由ъ뺨?뚯씪 ?꾨즺(`Temp/pipeline_recompile_status.json`: `failed: false, errors: []`, 11:43 KST) 諛?肄섏넄 ?먮윭 0嫄??뺤씤.
-- ?⑥? ?묒뾽: ?먮뵒???ㅺ린湲??뚮젅???뺤씤 諛?Phase 4 ?⑤씪????궧/愿묎퀬 SDK ?곕룞.
-- ?몄떆: ??而ㅻ컠 ?앹꽦 ??`origin/master` 諛?`origin/wip/home-phase1`濡??몄떆 ?덉젙.
+    - 스테이지 로비 및 도감에서 `Prev` / `Next` 페이지 이동 시 모듈러(`%`) 순환을 제거하여 첫 페이지에서는 `Prev` 비활성화, 마지막 페이지에서는 `Next` 비활성화 처리로 무한 루프 방지.
+    - `LOCKED` 상태인 스테이지 카드 및 미해금 도감 카드에서 원본 일러스트 텍스처가 노출되지 않도록 `Thumbnail.texture = null` 처리하고, 썸네일 앞면을 완전히 덮는 불투명 가림막(`LockOverlay`)과 중앙 자물쇠 아이콘(`PadlockIcon`)을 추가.
+  - `PhaseThreeTests.cs`: 인게임 상단 `Lobby` 버튼 부재 확인, 페이지 첫/끝 경계에서 무한 루프 방지 확인, 잠금 카드의 `LockOverlay` 활성화 및 원본 텍스처 비노출 검증 추가.
+- 검증: Unity 자동 리컴파일 완료(`Temp/pipeline_recompile_status.json`: `failed: false, errors: []`, 11:43 KST) 및 콘솔 에러 0건 확인.
+- 남은 작업: 에디터/실기기 플레이 확인 및 Phase 4 온라인 랭킹/광고 SDK 연동.
+- 푸시: 이 커밋 생성 후 `origin/master` 및 `origin/wip/home-phase1`로 푸시 예정.
 
-### 2026-10-27 16:33 KST ????댄??믩줈鍮꾟넂?멸쾶??援ъ“ ?꾪솚쨌罹먯＜??諛곌꼍 援먯껜 諛??곹솴蹂?BGM/SFX ?몄뒪?숉꽣 ?곕룞
-- 吏곸쟾 而ㅻ컠: `ab3af13` (`feat: ?멸쾶??濡쒕퉬 踰꾪듉 ?쒓굅쨌?섏씠吏 臾댄븳猷⑦봽 諛⑹? 諛??좉툑 ?ㅽ뀒?댁? ?먮Ъ??媛由쇰쭑 ?곸슜`, 11:43 KST). `origin/master` 諛?`origin/wip/home-phase1` ?몄떆 ?꾨즺 ?뺤씤.
-- 而ㅻ컠 ?쒕ぉ: `feat: ??댄?쨌濡쒕퉬쨌?멸쾶???먮쫫 ?꾪솚 諛?罹먯＜??諛곌꼍쨌?곹솴蹂??ъ슫??遺꾨━`
-- ?섏씠利? Phase 3 ?멸쾶???먮쫫/諛곌꼍/?ъ슫??怨좊룄??(Phase 4 ?⑤씪??愿묎퀬 SDK ?곕룞? ?쇱떆 蹂대쪟).
-- 蹂寃?
-  - `PuzzleLobbyGalleryUI.cs`, `PuzzleGame.cs`: 寃뚯엫 ?쒖옉 ??諛붾줈 ?멸쾶?꾩쑝濡??ㅼ뼱媛吏 ?딄퀬 **??댄?(`TitlePanel`) -> ?ㅽ뀒?댁? 濡쒕퉬(`LobbyPanel`) -> ?멸쾶??* ?쒖꽌濡?吏꾩엯?섎룄濡?援ъ“ ?꾪솚.
-  - `Assets/Resource.art/Backgrounds/bg_puzzle_misty_forest_temp.png`, `README.md`: 湲곗〈 ?대몼怨?移숈튃???덇컻 ??諛곌꼍??諛앷퀬 ?붿궗???뚯뒪???섎뒛쨌援щ쫫쨌珥덉썝 ?띿쓽 罹먯＜??諛곌꼍 ?대?吏(1024횞1536)濡?援먯껜?섍퀬 ??댄?/濡쒕퉬 ?⑤꼸 諛곌꼍 ?щ챸?꾨? 議곗젙??諛앹? 諛곌꼍??鍮꾩튂?꾨줉 媛쒖꽑.
+### 2026-10-27 16:33 KST — 타이틀→로비→인게임 구조 전환·캐주얼 배경 교체 및 상황별 BGM/SFX 인스펙터 연동
+- 직전 커밋: `ab3af13` (`feat: 인게임 로비 버튼 제거·페이지 무한루프 방지 및 잠금 스테이지 자물쇠 가림막 적용`, 11:43 KST). `origin/master` 및 `origin/wip/home-phase1` 푸시 완료 확인.
+- 커밋 제목: `feat: 타이틀·로비·인게임 흐름 전환 및 캐주얼 배경·상황별 사운드 분리`
+- 페이즈: Phase 3 인게임/흐름/배경/사운드 고도화 (Phase 4 온라인/광고 SDK 연동은 일시 보류).
+- 변경:
+  - `PuzzleLobbyGalleryUI.cs`, `PuzzleGame.cs`: 게임 시작 시 바로 인게임으로 들어가지 않고 **타이틀(`TitlePanel`) -> 스테이지 로비(`LobbyPanel`) -> 인게임** 순서로 진입하도록 구조 전환.
+  - `Assets/Resource.art/Backgrounds/bg_puzzle_misty_forest_temp.png`, `README.md`: 기존 어둡고 칙칙한 안개 숲 배경을 밝고 화사한 파스텔 하늘·구름·초원 풍의 캐주얼 배경 이미지(1024×1536)로 교체하고 타이틀/로비 패널 배경 투명도를 조정해 밝은 배경이 비치도록 개선.
   - `PuzzleAudio.cs`, `BoardManager.cs`, `Assets/Scenes/PuzzleGame.unity`:
-    - `PuzzleGame` 猷⑦듃 ?ㅻ툕?앺듃??`PuzzleAudio` 而댄룷?뚰듃瑜?吏곸젒 吏곷젹???곌껐?섏뿬 ?먮뵒??Inspector?먯꽌 7醫??ъ슫??`titleMusicClip`, `lobbyMusicClip`, `musicClip` ?멸쾶??猷⑦봽, `gameStartClip`, `moveClip`, `tileCorrectClip`, `clearClip`)瑜?吏곸젒 ?몄쭛/?좊떦?????덈룄濡?援ъ꽦.
-    - ??댄? ?뚯븙, 濡쒕퉬 ?뚯븙, ?멸쾶??猷⑦봽 ?뚯븙??援щ텇?섍퀬, 濡쒕퉬?먯꽌 ?ㅽ뀒?댁?瑜??좏깮???멸쾶?꾩뿉 吏꾩엯????寃뚯엫 ?쒖옉 ?④낵??`gameStartClip`)???ъ깮?????멸쾶??猷⑦봽 ?뚯븙(`musicClip`)???섏삤?꾨줉 援ы쁽.
-    - ??쇱쓣 ?대룞???뚮쭏???먮옒 ?뺣떟 移몄뿉 ?덈줈 留욎떠吏???쇱씠 ?덉쑝硫?`BoardManager.TilePlacedCorrectly`) 吏㏐퀬 留묒? 踰??뚮━(`tileCorrectClip`)媛 ?ъ깮?섎룄濡?援ы쁽.
-  - `PhaseThreeTests.cs`: ??댄??믩줈鍮꾟넂?멸쾶???꾪솚, ??댄?/濡쒕퉬/?멸쾶???뚯븙 遺꾨━ 諛?寃뚯엫 ?쒖옉 SFX, ????뺣떟 ?꾩튂 ?덉갑 ??留묒? ?④낵???ъ깮 寃利?異붽?.
-- 寃利? 肄붾뱶 諛???吏곷젹???먭? ?꾨즺.
-- ?⑥? ?묒뾽: Phase 3 ?멸쾶??UI/?곗텧 異붽? ?ㅻ벉湲?(Phase 4??蹂대쪟 ?좎?).
-- ?몄떆: ??而ㅻ컠 ?앹꽦 ??`origin/master` 諛?`origin/wip/home-phase1`濡??몄떆 ?덉젙.
+    - `PuzzleGame` 루트 오브젝트에 `PuzzleAudio` 컴포넌트를 직접 직렬화 연결하여 에디터 Inspector에서 7종 사운드(`titleMusicClip`, `lobbyMusicClip`, `musicClip` 인게임 루프, `gameStartClip`, `moveClip`, `tileCorrectClip`, `clearClip`)를 직접 편집/할당할 수 있도록 구성.
+    - 타이틀 음악, 로비 음악, 인게임 루프 음악을 구분하고, 로비에서 스테이지를 선택해 인게임에 진입할 때 게임 시작 효과음(`gameStartClip`)이 재생된 뒤 인게임 루프 음악(`musicClip`)이 나오도록 구현.
+    - 타일을 이동할 때마다 원래 정답 칸에 새로 맞춰진 타일이 있으면(`BoardManager.TilePlacedCorrectly`) 짧고 맑은 벨 소리(`tileCorrectClip`)가 재생되도록 구현.
+  - `PhaseThreeTests.cs`: 타이틀→로비→인게임 전환, 타이틀/로비/인게임 음악 분리 및 게임 시작 SFX, 타일 정답 위치 안착 시 맑은 효과음 재생 검증 추가.
+- 검증: 코드 및 씬 직렬화 점검 완료.
+- 남은 작업: Phase 3 인게임 UI/연출 추가 다듬기 (Phase 4는 보류 유지).
+- 푸시: 이 커밋 생성 후 `origin/master` 및 `origin/wip/home-phase1`로 푸시 예정.
 
-### 2026-10-27 17:12 KST ??PortraitFrame/Content ?섎떒 踰꾪듉 ?뺣━ 諛?7醫??ㅻ뵒??WAV ?먯뀑 ?앹꽦쨌?몄뒪?숉꽣 ?깅줉
-- 吏곸쟾 而ㅻ컠: `c807d41` (`feat: ??댄?쨌濡쒕퉬쨌?멸쾶???먮쫫 ?꾪솚 諛?罹먯＜??諛곌꼍쨌?곹솴蹂??ъ슫??遺꾨━`, 16:33 KST). `origin/master` 諛?`origin/wip/home-phase1` ?몄떆 ?꾨즺 ?뺤씤.
-- 而ㅻ컠 ?쒕ぉ: `feat: Content ?섎떒 以묐났 而⑦듃濡??뺣━ 諛??ㅻ뵒???먯뀑 7醫??몄뒪?숉꽣 ?깅줉`
-- ?섏씠利? Phase 3 ???섏씠?대씪???뺣━ 諛??ъ슫???먯뀑 吏곷젹??留덇컧.
-- 蹂寃?
+### 2026-10-27 17:12 KST — PortraitFrame/Content 하단 버튼 정리 및 7종 오디오 WAV 에셋 생성·인스펙터 등록
+- 직전 커밋: `c807d41` (`feat: 타이틀·로비·인게임 흐름 전환 및 캐주얼 배경·상황별 사운드 분리`, 16:33 KST). `origin/master` 및 `origin/wip/home-phase1` 푸시 완료 확인.
+- 커밋 제목: `feat: Content 하단 중복 컨트롤 정리 및 오디오 에셋 7종 인스펙터 등록`
+- 페이즈: Phase 3 씬 하이어라키 정리 및 사운드 에셋 직렬화 마감.
+- 변경:
   - `Assets/Scenes/PuzzleGame.unity`, `PuzzleSceneAudioAndHierarchySync.cs`, `PauseSettingsUI.cs`, `PuzzleResponsiveLayout.cs`:
-    - ?먮뵒??紐⑤뱶(`PortraitFrame/Content`)???⑥븘 ?덈뜕 `Undo`, `Hold to preview`, `Numbers: ON`??`PauseAndResult/PauseControls` ?대?濡??대룞?섏뿬 ???뚯씪??吏곸젒 ??ν븯怨? 以묐났?대뜕 `Content/Restart` ?ㅻ툕?앺듃瑜??쒓굅(`PauseControls/Restart puzzle` ?ъ슜).
-    - `Content/Pause` 踰꾪듉???먮뵒??紐⑤뱶?먯꽌??醫뚯륫 ?곷떒(`anchorMin: 0.00, 0.905`, `anchorMax: 0.16, 0.985`) ?꾨쾭嫄??꾩씠肄?`HamburgerIcon`, 媛濡?3???쇰줈 諛곗튂?섍퀬 `BoardFrame` ?뺤옣 諛?諛앹? 罹먯＜??諛곌꼍 ???띿뒪??媛?낆꽦 ?됱긽(吏숈? ?ㅼ씠鍮? 諛섏쁺.
+    - 에디트 모드(`PortraitFrame/Content`)에 남아 있던 `Undo`, `Hold to preview`, `Numbers: ON`을 `PauseAndResult/PauseControls` 내부로 이동하여 씬 파일에 직접 저장하고, 중복이던 `Content/Restart` 오브젝트를 제거(`PauseControls/Restart puzzle` 사용).
+    - `Content/Pause` 버튼을 에디트 모드에서도 좌측 상단(`anchorMin: 0.00, 0.905`, `anchorMax: 0.16, 0.985`) 햄버거 아이콘(`HamburgerIcon`, 가로 3선)으로 배치하고 `BoardFrame` 확장 및 밝은 캐주얼 배경 위 텍스트 가독성 색상(짙은 네이비) 반영.
   - `Assets/Resource/Audio/*.wav`, `PuzzleAudio.cs`:
-    - ?고??꾩뿉留?硫붾え由??⑹꽦?섎뜕 7醫??ъ슫?쒕? `Assets/Resource/Audio/` ?대뜑???ㅼ젣 WAV ?뚯씪(`bgm_title.wav`, `bgm_lobby.wav`, `bgm_ingame_loop.wav`, `sfx_game_start.wav`, `sfx_tile_move.wav`, `sfx_tile_correct.wav`, `sfx_stage_clear.wav`)濡??앹꽦쨌??ν븯怨? `PuzzleGame` 猷⑦듃??`PuzzleAudio` 而댄룷?뚰듃 ?몄뒪?숉꽣 ?щ’ 7媛쒖뿉 紐⑤몢 吏곷젹???깅줉 ?꾨즺.
-  - `PhaseThreeTests.cs`: `PortraitFrame/Content` ?섎떒 援?踰꾪듉 遺???뺤씤 諛?`PuzzleAudio` ?몄뒪?숉꽣 ?대┰ 7醫??좊떦 寃利?異붽?.
-- 寃利? Unity ?먮룞 由ъ뺨?뚯씪 ?꾨즺(`Temp/pipeline_recompile_status.json`: `status: up_to_date, failed: false, errors: []`, 17:11 KST) 諛??대┛ ???숆린?붋룹????뺤씤.
-- ?⑥? ?묒뾽: Phase 3 ?멸쾶???몃? ?곗텧 ?먭? (Phase 4 ?⑤씪??愿묎퀬 SDK??蹂대쪟 ?좎?).
-- ?몄떆: ??而ㅻ컠 ?앹꽦 ??`origin/master` 諛?`origin/wip/home-phase1`濡??몄떆 ?덉젙.
+    - 런타임에만 메모리 합성되던 7종 사운드를 `Assets/Resource/Audio/` 폴더에 실제 WAV 파일(`bgm_title.wav`, `bgm_lobby.wav`, `bgm_ingame_loop.wav`, `sfx_game_start.wav`, `sfx_tile_move.wav`, `sfx_tile_correct.wav`, `sfx_stage_clear.wav`)로 생성·저장하고, `PuzzleGame` 루트의 `PuzzleAudio` 컴포넌트 인스펙터 슬롯 7개에 모두 직렬화 등록 완료.
+  - `PhaseThreeTests.cs`: `PortraitFrame/Content` 하단 구 버튼 부재 확인 및 `PuzzleAudio` 인스펙터 클립 7종 할당 검증 추가.
+- 검증: Unity 자동 리컴파일 완료(`Temp/pipeline_recompile_status.json`: `status: up_to_date, failed: false, errors: []`, 17:11 KST) 및 열린 씬 동기화·저장 확인.
+- 남은 작업: Phase 3 인게임 세부 연출 점검 (Phase 4 온라인/광고 SDK는 보류 유지).
+- 푸시: 이 커밋 생성 후 `origin/master` 및 `origin/wip/home-phase1`로 푸시 예정.
 
-### 2026-10-27 17:58 KST ????댄? ?꾩껜?붾㈃ ?곸슜 諛???댄?쨌濡쒕퉬 吏꾩엯 ???멸쾶??PAUSED ?붾㈃ 鍮꾩묠 ?꾩긽 ?섏젙
-- 吏곸쟾 而ㅻ컠: `5a91fdf` (`feat: Content ?섎떒 以묐났 而⑦듃濡??뺣━ 諛??ㅻ뵒???먯뀑 7醫??몄뒪?숉꽣 ?깅줉`, 17:12 KST). `origin/master` 諛?`origin/wip/home-phase1` ?몄떆 ?꾨즺 ?뺤씤.
-- 而ㅻ컠 ?쒕ぉ: `fix: ??댄? ?꾩껜?붾㈃ ?꾪솚 諛???댄?쨌濡쒕퉬 ???멸쾶?꽷텾AUSED ?붾㈃ ?몄텧 ?섏젙`
-- ?섏씠利? Phase 3 ??댄?쨌濡쒕퉬쨌?멸쾶???붾㈃ ?꾪솚 ?쒖떆 遺꾨━ ?섏젙.
-- 蹂寃?
+### 2026-10-27 17:58 KST — 타이틀 전체화면 적용 및 타이틀·로비 진입 시 인게임/PAUSED 화면 비침 현상 수정
+- 직전 커밋: `5a91fdf` (`feat: Content 하단 중복 컨트롤 정리 및 오디오 에셋 7종 인스펙터 등록`, 17:12 KST). `origin/master` 및 `origin/wip/home-phase1` 푸시 완료 확인.
+- 커밋 제목: `fix: 타이틀 전체화면 전환 및 타이틀·로비 뒤 인게임·PAUSED 화면 노출 수정`
+- 페이즈: Phase 3 타이틀·로비·인게임 화면 전환 표시 분리 수정.
+- 변경:
   - `PuzzleLobbyGalleryUI.cs`, `PuzzleResponsiveLayout.cs`:
-    - ??댄? ?붾㈃(`TitlePanel/TitleCard`)???묒? 以묒븰 移대뱶?먯꽌 ?꾩껜?붾㈃(`anchorMin: 0,0`, `anchorMax: 1,1`) ?덉씠?꾩썐?쇰줈 蹂寃?
-    - ??댄?, ?ㅽ뀒?댁? 濡쒕퉬, 媛ㅻ윭由??붾㈃???대┫ ??`OpenTitle`, `OpenLobby`, `OpenGallery`) ?ㅼそ ?멸쾶??蹂대뱶/HUD 而⑦뀒?대꼫(`PortraitFrame/Content`)? `PauseAndResult`(`curtain`)瑜?鍮꾪솢?깊솕(`SetInGameBackdropVisible(false)`)?섏뿬 ?ㅻ줈 寃뚯엫 ?붾㈃?대굹 `PAUSED` ?붾㈃??諛섑닾紐낇븯寃?鍮꾩튂吏 ?딅룄濡??섏젙?섍퀬, ?ㅽ뀒?댁?瑜??좏깮???멸쾶?꾩뿉 ?ㅼ뼱媛???`CloseAll`) ?ㅼ떆 ?쒖꽦?뷀븯?꾨줉 泥섎━.
+    - 타이틀 화면(`TitlePanel/TitleCard`)을 작은 중앙 카드에서 전체화면(`anchorMin: 0,0`, `anchorMax: 1,1`) 레이아웃으로 변경.
+    - 타이틀, 스테이지 로비, 갤러리 화면이 열릴 때(`OpenTitle`, `OpenLobby`, `OpenGallery`) 뒤쪽 인게임 보드/HUD 컨테이너(`PortraitFrame/Content`)와 `PauseAndResult`(`curtain`)를 비활성화(`SetInGameBackdropVisible(false)`)하여 뒤로 게임 화면이나 `PAUSED` 화면이 반투명하게 비치지 않도록 수정하고, 스테이지를 선택해 인게임에 들어갈 때(`CloseAll`) 다시 활성화하도록 처리.
   - `PuzzleGame.cs`:
-    - `OpenLobby()` ?몄텧 ??`curtain.SetActive(true)`濡?`PAUSED` ?붾㈃??耳쒕뜕 肄붾뱶瑜?`curtain.SetActive(false)`濡?蹂寃쏀븯???ㅽ뀒?댁? ??됲듃(濡쒕퉬) ?ㅼ뿉 `PAUSED` 李쎌씠 寃뱀퀜 蹂댁씠??踰꾧렇瑜??닿껐.
-  - `PhaseThreeTests.cs`: ??댄? ?꾩껜?붾㈃ ?듭빱(`0,0`~`1,1`), ??댄? 諛?濡쒕퉬 ?ㅽ뵂 以?`Content`? `curtain`(`PAUSED`) 鍮꾪솢?깊솕, ?멸쾶??吏꾩엯 ??`Content` ?ы솢?깊솕 寃利?異붽?.
-- 寃利? Unity ?먮룞 由ъ뺨?뚯씪 ?꾨즺(`Temp/pipeline_recompile_status.json`: `status: completed, failed: false, errors: []`, 17:58 KST).
-- ?⑥? ?묒뾽: Phase 3 ?멸쾶???몃? ?곗텧 ?먭? (Phase 4 ?⑤씪??愿묎퀬 SDK??蹂대쪟 ?좎?).
-- ?몄떆: ??而ㅻ컠 ?앹꽦 ??`origin/master` 諛?`origin/wip/home-phase1`濡??몄떆 ?덉젙.
+    - `OpenLobby()` 호출 시 `curtain.SetActive(true)`로 `PAUSED` 화면을 켜던 코드를 `curtain.SetActive(false)`로 변경하여 스테이지 셀렉트(로비) 뒤에 `PAUSED` 창이 겹쳐 보이던 버그를 해결.
+  - `PhaseThreeTests.cs`: 타이틀 전체화면 앵커(`0,0`~`1,1`), 타이틀 및 로비 오픈 중 `Content`와 `curtain`(`PAUSED`) 비활성화, 인게임 진입 시 `Content` 재활성화 검증 추가.
+- 검증: Unity 자동 리컴파일 완료(`Temp/pipeline_recompile_status.json`: `status: completed, failed: false, errors: []`, 17:58 KST).
+- 남은 작업: Phase 3 인게임 세부 연출 점검 (Phase 4 온라인/광고 SDK는 보류 유지).
+- 푸시: 이 커밋 생성 후 `origin/master` 및 `origin/wip/home-phase1`로 푸시 예정.
 
-### 2026-10-27 18:31 KST ???쇱떆?뺤? 諛⑺뼢踰꾪듉 ?쒓굅쨌?멸쾶??BGM ?쒗룷 ?꾪솕 諛??쒕젅???섏씠?쒖씤쨌?묒뾽醫낅즺 洹쒖빟 ?뺣┰
-- 吏곸쟾 而ㅻ컠: `3ada396` (`fix: ??댄? ?꾩껜?붾㈃ ?꾪솚 諛???댄?쨌濡쒕퉬 ???멸쾶?꽷텾AUSED ?붾㈃ ?몄텧 ?섏젙`, 17:58 KST). `origin/master` 諛?`origin/wip/home-phase1` ?몄떆 ?꾨즺 ?뺤씤.
-- 而ㅻ컠 ?쒕ぉ: `feat: ?쇱떆?뺤? 諛⑺뼢踰꾪듉 ?쒓굅쨌?멸쾶??BGM ?쒗룷 ?꾪솕 諛??쒕젅???섏씠?쒖씤쨌?묒뾽醫낅즺 洹쒖빟 ?뺣┰`
-- ?섏씠利? Phase 3 ?멸쾶???쇱떆?뺤? UI 諛??ъ슫???곗텧 媛쒖꽑 + ?꾨줈?앺듃 ?묒뾽 醫낅즺 湲곕낯 洹쒖빟 ?뺣┰.
-- **湲곗〈 `AGENTS.md` ?댁슜 ?鍮?蹂寃??ы빆:**
-  1. **`PAUSED` 硫붾돱 `SYSTEM` ??援ъ꽦 蹂寃?** 湲곗〈 `AGENTS.md`(10:47 KST 湲곕줉 諛??멸퀎 媛?대뱶)?먯꽌??`SYSTEM` ??씠 `Music, Sound, Line slide, Animation, Orientation` 5醫낆쑝濡?湲곗닠?섏뼱 ?덉뿀?쇰굹, ??吏?쒖뿉 ?곕씪 **`PAUSED -> SYSTEM` 硫붾돱 ??`Orientation: PORTRAIT` 踰꾪듉????젣**?섏뿬 `Music`, `Sound`, `Line slide`, `Animation` 4醫낆쑝濡?蹂寃쏀븿.
-  2. **?멸쾶???뚮젅??BGM(`bgm_ingame_loop.wav`) BPM 蹂寃?** 湲곗〈 `AGENTS.md`(02:42 KST 湲곕줉)?먯꽌???멸쾶??猷⑦봽 BGM??`150 BPM`(6.4珥?猷⑦봽)?쇰줈 湲곗닠?덉쑝?? ?쇰컲 ?ㅽ뀒?댁??먯꽌???쒗룷媛 ?덈Т 鍮좊Ⅴ?ㅻ뒗 吏?쒖뿉 ?곕씪 **120 BPM(16遺꾩쓬??0.125珥? 8.0珥?猷⑦봽)?쇰줈 ?쒗룷瑜??꾪솕**??(湲곗〈 150 BPM? ?ν썑 ?쒓컙?쒗븳 ?ㅽ뀒?댁? 異붽? ???쒖슜?섎룄濡?蹂대쪟).
-  3. **?멸쾶??吏꾩엯 ??BGM ?쒖옉 ??대컢 蹂寃?** 湲곗〈 `AGENTS.md`(16:33 KST 湲곕줉 諛??멸퀎 媛?대뱶)?먯꽌???멸쾶??吏꾩엯 ??寃뚯엫 ?쒖옉 ?④낵?뚭낵 ?④퍡 ?멸쾶??猷⑦봽 BGM?쇰줈 ?꾪솚?쒕떎怨좊쭔 湲곗닠?섏뼱 ?덉뿀?쇰굹, ??吏?쒖뿉 ?곕씪 **寃뚯엫 ?쒖옉 ?④낵??`sfx_game_start.wav`)???앸궃 ??0.5珥??꾨???蹂쇰ⅷ 0?먯꽌 0.8珥덇컙 泥쒖쿇???섏씠?쒖씤?섎ŉ ?쒖옉**?섎룄濡?蹂寃쏀븿.
-  4. **?묒뾽 醫낅즺 ?꾨줈?몄뒪 湲곕낯 洹쒖빟 ?좎꽕:** 湲곗〈 `AGENTS.md` ?곷떒??`而ㅻ컠 諛??쇱씪 吏꾪뻾 湲곕줉`??"?붿껌 ?놁씠 而ㅻ컠/?몄떆?섏? ?딆쑝硫??쇨퀬 ?섏뼱 ?덈뜕 臾멸뎄瑜?媛쒗렪?섏뿬, **紐⑤뱺 ?섏젙/媛쒕컻 ?꾨즺 ??`AGENTS.md` ?붿빟 媛깆떊(湲곗〈 ?댁슜 ?鍮?蹂寃쎌젏 紐낆떆 ?ы븿) 諛?Git 而ㅻ컠쨌?몄떆瑜??섑뻾?섎뒗 ?뺢퇋?붾맂 ?묒뾽 醫낅즺 ?꾨줈?몄뒪**瑜?湲곕낯 洹쒖빟?쇰줈 紐낅Ц?뷀븿.
-- 蹂寃?
-  - `PauseSettingsUI.cs`: `PAUSED` 硫붾돱??`SYSTEM` ??뿉??`Orientation` 踰꾪듉???앹꽦?섏? ?딅룄濡??쒓굅(湲곗〈 ?ъ뿉 ?⑥븘 ?덉쓣 寃쎌슦 ?쒓굅)?섍퀬 4媛???ぉ(`Music`, `Sound`, `Line slide`, `Animation`)??留욎떠 ?몃줈(1??4??/媛濡?2횞2 洹몃━?? ?덉씠?꾩썐 ?뺣젹.
+### 2026-10-27 18:31 KST — 일시정지 방향버튼 제거·인게임 BGM 템포 완화 및 딜레이 페이드인·작업종료 규약 정립
+- 직전 커밋: `3ada396` (`fix: 타이틀 전체화면 전환 및 타이틀·로비 뒤 인게임·PAUSED 화면 노출 수정`, 17:58 KST). `origin/master` 및 `origin/wip/home-phase1` 푸시 완료 확인.
+- 커밋 제목: `feat: 일시정지 방향버튼 제거·인게임 BGM 템포 완화 및 딜레이 페이드인·작업종료 규약 정립`
+- 페이즈: Phase 3 인게임 일시정지 UI 및 사운드 연출 개선 + 프로젝트 작업 종료 기본 규약 정립.
+- **기존 `AGENTS.md` 내용 대비 변경 사항:**
+  1. **`PAUSED` 메뉴 `SYSTEM` 탭 구성 변경:** 기존 `AGENTS.md`(10:47 KST 기록 및 인계 가이드)에서는 `SYSTEM` 탭이 `Music, Sound, Line slide, Animation, Orientation` 5종으로 기술되어 있었으나, 새 지시에 따라 **`PAUSED -> SYSTEM` 메뉴 내 `Orientation: PORTRAIT` 버튼을 삭제**하여 `Music`, `Sound`, `Line slide`, `Animation` 4종으로 변경함.
+  2. **인게임 플레이 BGM(`bgm_ingame_loop.wav`) BPM 변경:** 기존 `AGENTS.md`(02:42 KST 기록)에서는 인게임 루프 BGM을 `150 BPM`(6.4초 루프)으로 기술했으나, 일반 스테이지에서는 템포가 너무 빠르다는 지시에 따라 **120 BPM(16분음표 0.125초, 8.0초 루프)으로 템포를 완화**함 (기존 150 BPM은 향후 시간제한 스테이지 추가 시 활용하도록 보류).
+  3. **인게임 진입 시 BGM 시작 타이밍 변경:** 기존 `AGENTS.md`(16:33 KST 기록 및 인계 가이드)에서는 인게임 진입 시 게임 시작 효과음과 함께 인게임 루프 BGM으로 전환된다고만 기술되어 있었으나, 새 지시에 따라 **게임 시작 효과음(`sfx_game_start.wav`)이 끝난 뒤 0.5초 후부터 볼륨 0에서 0.8초간 천천히 페이드인되며 시작**하도록 변경함.
+  4. **작업 종료 프로세스 기본 규약 신설:** 기존 `AGENTS.md` 상단의 `커밋 및 일일 진행 기록`에 "요청 없이 커밋/푸시하지 않으며"라고 되어 있던 문구를 개편하여, **모든 수정/개발 완료 시 `AGENTS.md` 요약 갱신(기존 내용 대비 변경점 명시 포함) 및 Git 커밋·푸시를 수행하는 정규화된 작업 종료 프로세스**를 기본 규약으로 명문화함.
+- 변경:
+  - `PauseSettingsUI.cs`: `PAUSED` 메뉴의 `SYSTEM` 탭에서 `Orientation` 버튼을 생성하지 않도록 제거(기존 씬에 남아 있을 경우 제거)하고 4개 항목(`Music`, `Sound`, `Line slide`, `Animation`)에 맞춰 세로(1열 4행)/가로(2×2 그리드) 레이아웃 정렬.
   - `PuzzleAudio.cs`, `PuzzleSceneAudioAndHierarchySync.cs`, `Assets/Resource/Audio/bgm_ingame_loop.wav`:
-    - ?멸쾶??猷⑦봽 BGM ?⑹꽦 ?쒗룷瑜?150 BPM(`0.10f` step)?먯꽌 **120 BPM(`0.125f` step, 8.0珥?猷⑦봽)**?쇰줈 ??텛怨?`Assets/Resource/Audio/bgm_ingame_loop.wav` ?뚯씪???ъ깮??`352,812` bytes, GUID 蹂댁〈).
-    - `PlayGameStartThenInGameMusic(delayAfterSfx: 0.5f, fadeInDuration: 0.8f)` 諛?`DelayedInGameMusicRoutine` 肄붾（?댁쓣 異붽??섏뿬 ?ㅽ뀒?댁? ?쒖옉 ??湲곗〈 BGM??利됱떆 硫덉텛怨?`gameStartClip` ?④낵???ъ깮 醫낅즺 ??0.5珥??湲고븳 ??`musicClip`??蹂쇰ⅷ `0`?먯꽌 `0.16`源뚯? 0.8珥??숈븞 遺?쒕읇寃??섏씠?쒖씤?섎룄濡?援ы쁽.
-  - `PuzzleGame.cs`: `LoadStageInternal(..., enterInGame: true)`?먯꽌 `Audio.PlayGameStartThenInGameMusic()`???몄텧?섎룄濡??곌껐.
-  - `PhaseTwoTests.cs`, `PhaseThreeTests.cs`: `SystemTab/Orientation` 遺???뺤씤, ?멸쾶??吏꾩엯 吏곹썑 `CurrentMusicVolume == 0f` 諛?`IsMusicTransitioning == true` 寃利? `InGameMusicClip.length` 8.0珥?120 BPM) 寃利?諛섏쁺.
-- 寃利? Unity ?먮뵒???뚯씠?꾨씪??由ъ뺨?뚯씪 ?꾨즺(`Temp/pipeline_recompile_status.json`: `status: up_to_date, failed: false, errors: []`, 18:29 KST) 諛?`bgm_ingame_loop.wav` 媛깆떊 ?뺤씤.
-- ?⑥? ?묒뾽: Phase 3 異붽? ?쇰뱶諛????(Phase 4 ?⑤씪??愿묎퀬 SDK??蹂대쪟 ?좎?).
-- ?몄떆: ??而ㅻ컠 ?앹꽦 ??`origin/master` 諛?`origin/wip/home-phase1`濡??몄떆 ?덉젙.
+    - 인게임 루프 BGM 합성 템포를 150 BPM(`0.10f` step)에서 **120 BPM(`0.125f` step, 8.0초 루프)**으로 늦추고 `Assets/Resource/Audio/bgm_ingame_loop.wav` 파일을 재생성(`352,812` bytes, GUID 보존).
+    - `PlayGameStartThenInGameMusic(delayAfterSfx: 0.5f, fadeInDuration: 0.8f)` 및 `DelayedInGameMusicRoutine` 코루틴을 추가하여 스테이지 시작 시 기존 BGM을 즉시 멈추고 `gameStartClip` 효과음 재생 종료 후 0.5초 대기한 뒤 `musicClip`을 볼륨 `0`에서 `0.16`까지 0.8초 동안 부드럽게 페이드인하도록 구현.
+  - `PuzzleGame.cs`: `LoadStageInternal(..., enterInGame: true)`에서 `Audio.PlayGameStartThenInGameMusic()`을 호출하도록 연결.
+  - `PhaseTwoTests.cs`, `PhaseThreeTests.cs`: `SystemTab/Orientation` 부재 확인, 인게임 진입 직후 `CurrentMusicVolume == 0f` 및 `IsMusicTransitioning == true` 검증, `InGameMusicClip.length` 8.0초(120 BPM) 검증 반영.
+- 검증: Unity 에디터 파이프라인 리컴파일 완료(`Temp/pipeline_recompile_status.json`: `status: up_to_date, failed: false, errors: []`, 18:29 KST) 및 `bgm_ingame_loop.wav` 갱신 확인.
+- 남은 작업: Phase 3 추가 피드백 대응 (Phase 4 온라인/광고 SDK는 보류 유지).
+- 푸시: 이 커밋 생성 후 `origin/master` 및 `origin/wip/home-phase1`로 푸시 예정.
 
 ### 2026-10-27 22:24 KST — 유니티 Game 뷰 모바일 세로·갤럭시 폴드·Duo 해상도 프리셋 13종 자동 등록
-- 직전 커밋: 4e6658f (eat: 일시정지 방향버튼 제거·인게임 BGM 템포 완화 및 딜레이 페이드인·작업종료 규약 정립, 18:31 KST). origin/master 및 origin/wip/home-phase1 푸시 완료 확인.
-- 커밋 제목: eat: 유니티 Game 뷰 모바일 세로·폴드·Duo 해상도 프리셋 자동 등록
+- 직전 커밋: 4e6658f (feat: 일시정지 방향버튼 제거·인게임 BGM 템포 완화 및 딜레이 페이드인·작업종료 규약 정립, 18:31 KST). origin/master 및 origin/wip/home-phase1 푸시 완료 확인.
+- 커밋 제목: feat: 유니티 Game 뷰 모바일 세로·폴드·Duo 해상도 프리셋 자동 등록
 - 페이즈: Phase 3 모바일·폴더블·듀얼스크린 해상도 테스트 환경 구축.
 - 변경:
   - Assets/Resource/Scripts/Puzzle/Editor/PuzzleGameViewSizeRegistrar.cs:
@@ -188,3 +188,22 @@
 - 검증: Unity 자동 리컴파일 완료(Temp/pipeline_recompile_status.json: status: completed, failed: false, errors: [], 22:22 KST) 및 에디터 GameViewSizes.asset에 13종 프리셋 등록·저장 확인.
 - 남은 작업: Phase 3 추가 UI/연출 피드백 대응 (Phase 4 온라인/광고 SDK는 보류 유지).
 - 푸시: 이 커밋 생성 후 origin/master 및 origin/wip/home-phase1로 푸시 예정.
+
+### 2026-10-27 23:56 KST — Gemini 작업 인계 및 신규 일러스트 6종 등록
+- 직전 커밋: `e19e9a3` (유니티 Game 뷰 모바일 세로·폴드·Duo 해상도 프리셋 자동 등록). 작업 시작 시 원격 조회로 `origin/master`, `origin/wip/home-phase1` 모두 동일 해시임을 확인. `git pull --ff-only origin master`: Already up to date.
+- 커밋 제목: `feat: 신규 퍼즐 이미지 6종 등록 및 비율별 스테이지 배정`
+- 대상 페이즈: Phase 3 콘텐츠 확장 및 에이전트 인계 기록 정비.
+- 기존 AGENTS.md 내용 대비 변경 사항:
+  - 고유 이미지 및 플레이 스테이지 수 24개 → 30개. 신규 3x6 난이도 포함(탭은 스테이지 목록에서 자동 구성).
+  - 깨진 한글 본문은 정상 커밋 `4e6658f`에서 복원하고 Gemini의 22:24 해상도 프리셋 기록은 보존. 해당 기록의 제어문자 및 잘린 마지막 문구 수정.
+- 실제 변경:
+  - 신규 JPG 6장을 직접 확인하여 `puzzle_025_blonde_dark_archer`부터 `puzzle_030_blonde_white_dress`까지 내용 기반 이름으로 변경. Unity AssetDatabase로 이름 변경 및 등록하여 GUID 유지.
+  - 025 금발 어둠의 궁수(710x900), 026 드래곤 라이더(750x900), 028 은발 노란 리본(761x900): 3x4.
+  - 029 바람에 흩날리는 붉은 망토(600x900): 3x5.
+  - 027 분홍 머리 방패 기사(418x900), 030 금발 흰 드레스(2212x4093): 3x6.
+  - Stage32~Stage37 생성, 기존 스테이지 ID 보존 및 칸수 오름차순 정렬. 원본 이미지 픽셀은 변경하지 않음.
+  - 에디터에 남아 있던 미저장 씬 Image 색상 변경(네이비 → 흰색)을 저장하여 보존.
+  - 이미지 README, SPEC의 등록 현황 및 기존 테스트의 스테이지 수/마지막 페이지 검증 갱신.
+- 검증: Unity 리컴파일 오류 0건, 에디터 자동 테스트 35/35 통과(실패 0). 전체 스테이지 로딩·비율·중복·정렬 및 로비 페이지 이동 검증. 등록 재실행 시 씬 불변 확인. git diff --check 통과.
+- 미검증/남은 작업: 실제 모바일 기기의 새 이미지 시각 검수. Phase 4는 보류 유지.
+- 푸시: 본 커밋 생성 후 `origin/master`, `origin/wip/home-phase1`로 푸시 예정. 성공 여부는 완료 응답 및 다음 기록에 반영.

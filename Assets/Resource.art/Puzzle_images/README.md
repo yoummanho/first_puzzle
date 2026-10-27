@@ -30,3 +30,9 @@
 | [puzzle_022_red_suit_reclining.jpg](puzzle_022_red_suit_reclining.jpg) | 928 x 1232 | 3 x 4 |
 | [puzzle_023_red_suit_closeup.jpg](puzzle_023_red_suit_closeup.jpg) | 928 x 1232 | 3 x 4 |
 | [puzzle_024_red_hair_closeup.jpg](puzzle_024_red_hair_closeup.jpg) | 850 x 1870 | 3 x 7 |
+| [puzzle_025_blonde_dark_archer.jpg](puzzle_025_blonde_dark_archer.jpg) | 710 x 900 | 3 x 4 |
+| [puzzle_026_dragon_riders.jpg](puzzle_026_dragon_riders.jpg) | 750 x 900 | 3 x 4 |
+| [puzzle_027_pink_hair_shield_knight.jpg](puzzle_027_pink_hair_shield_knight.jpg) | 418 x 900 | 3 x 6 |
+| [puzzle_028_silver_hair_yellow_ribbon.jpg](puzzle_028_silver_hair_yellow_ribbon.jpg) | 761 x 900 | 3 x 4 |
+| [puzzle_029_windblown_red_cloak.jpg](puzzle_029_windblown_red_cloak.jpg) | 600 x 900 | 3 x 5 |
+| [puzzle_030_blonde_white_dress.jpg](puzzle_030_blonde_white_dress.jpg) | 2212 x 4093 | 3 x 6 |

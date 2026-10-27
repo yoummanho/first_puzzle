@@ -310,9 +310,15 @@ MonoBehaviour:
   - {fileID: 11400000, guid: d812ff06fd6cb1a4792ca55fb0900ea2, type: 2}
   - {fileID: 11400000, guid: 4ec1756b67c54fd4f8e9a31dd4b68c03, type: 2}
   - {fileID: 11400000, guid: 671f9985e593fc941a06b41c29a4004c, type: 2}
+  - {fileID: 11400000, guid: 0826e90955f54ab46bcd973a046e131b, type: 2}
+  - {fileID: 11400000, guid: ce0d75dc646e0e04a837c12e2f515b42, type: 2}
+  - {fileID: 11400000, guid: 438975b4cf5c8e346b8c5eec8672c3f6, type: 2}
   - {fileID: 11400000, guid: 7dbc023095242d04ba7e9903277eaaae, type: 2}
   - {fileID: 11400000, guid: 47153acb0a42e754d90260e5102c2051, type: 2}
   - {fileID: 11400000, guid: a81d7714935bc9445bd5c14782a7f015, type: 2}
+  - {fileID: 11400000, guid: 40d51f0db37edd045a544a67e78cc0aa, type: 2}
+  - {fileID: 11400000, guid: f43a696d318dbab48b01fce6a6feae0c, type: 2}
+  - {fileID: 11400000, guid: 1c16948da0f5d3e42a095b27c6bfcba6, type: 2}
   - {fileID: 11400000, guid: b100a7583e9c1294f93bbf9b66c0c2b4, type: 2}
   - {fileID: 11400000, guid: dc49648f98347cb43b95e497b1dc05ac, type: 2}
   heading: {fileID: 1307626718}
@@ -2573,7 +2579,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 0.1, g: 0.28, b: 0.32, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1

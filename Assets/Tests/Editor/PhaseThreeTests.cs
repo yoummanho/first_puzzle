@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Reflection;
 using FirstPuzzle;
 using FirstPuzzle.Editor;
@@ -190,7 +190,7 @@ namespace FirstPuzzleTests
                 Assert.Greater(game.Lobby.FilteredStageCount, 0);
                 game.Lobby.SelectFilter("ALL");
                 for (int p = 0; p < 10; p++) game.Lobby.NextLobbyPage();
-                Assert.AreEqual(3, game.Lobby.LobbyPage, "Lobby Next must clamp at the last page (page index 3 for 24 stages) without wrapping.");
+                Assert.AreEqual((game.stages.Length - 1) / 6, game.Lobby.LobbyPage, "Lobby Next must clamp at the last page without wrapping.");
                 for (int p = 0; p < 10; p++) game.Lobby.PrevLobbyPage();
                 Assert.AreEqual(0, game.Lobby.LobbyPage);
 
