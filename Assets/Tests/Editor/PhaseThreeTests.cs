@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Reflection;
 using FirstPuzzle;
 using FirstPuzzle.Editor;
@@ -58,6 +58,19 @@ namespace FirstPuzzleTests
             Assert.AreEqual(PlayOrientation.Landscape, restored.Orientation);
             restored.ToggleOrientation();
             Assert.AreEqual(PlayOrientation.Portrait, new SettingsManager().Orientation);
+        }
+
+        [Test]
+        public void GameViewResolutionsIncludeMobilePortraitFoldAndDuoPresets()
+        {
+            PuzzleGameViewSizeRegistrar.EnsureRegisteredAndCount();
+            Assert.GreaterOrEqual(PuzzleGameViewSizeRegistrar.Presets.Length, 13);
+            foreach (PuzzleGameViewSizeRegistrar.Preset preset in PuzzleGameViewSizeRegistrar.Presets)
+            {
+                Assert.IsTrue(
+                    PuzzleGameViewSizeRegistrar.HasPresetInCurrentGroup(preset.Label, preset.Width, preset.Height),
+                    $"Expected Game View preset '{preset.Label}' ({preset.Width}x{preset.Height}) to be registered.");
+            }
         }
 
         [Test]
