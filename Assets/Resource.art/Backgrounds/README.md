@@ -1,10 +1,10 @@
-# Temporary puzzle background
+# Casual puzzle background
 
-- Asset: [bg_puzzle_misty_forest_temp.png](bg_puzzle_misty_forest_temp.png), 1024×1536.
+- Asset: [bg_puzzle_misty_forest_temp.png](bg_puzzle_misty_forest_temp.png), 1024×1536 (preserved GUID so existing scene references stay intact).
 - Generated with the built-in image generation tool on 2026-10-27 KST.
 - Used by the existing `Background` Image in the PuzzleGame scene. EnvelopeParent preserves aspect ratio and fills the viewport; raycast targeting is disabled.
-- Temporary art, replaceable through the Background Image's sprite field.
+- Bright, cheerful, casual sunny sky and pastel meadow style replacing the previous dark misty forest background.
 
 ## Generation prompt
 
-Use case: stylized-concept. Asset type: temporary full-screen background texture for a mobile picture sliding puzzle game, portrait 1024x1536. Create a quiet softly painted atmospheric backdrop: deep navy and muted teal, very subtle mist and gentle diffuse illumination, faint soft abstract foliage silhouettes only at outer corners. Large uncluttered dark central region behind a colorful picture puzzle board and light interface labels. Low contrast throughout, elegant, calm, minimal. Edge-to-edge opaque image. No people, characters, text, letters, logos, watermark, panels, borders, UI controls, puzzle pieces or sharp focal points.
+Bright, cheerful, casual mobile puzzle game background illustration (portrait 1024x1536). Soft sunny pastel sky blue and warm mint-turquoise / lavender-cream gradient with fluffy sunlit clouds, gentle floating bokeh light sparkles, and cute subtle pastel hills/foliage framing only along the very top and bottom edges. Open, uncluttered center for high puzzle board contrast.

@@ -18,8 +18,8 @@
 |---|---|---|
 | Phase 1 | StageData, 정사각형 타일, 결정론적 셔플, 다중 밀기, Undo, 클리어 연출 | 구현 및 자동 테스트 완료 |
 | Phase 2 | 타이머/이동 수, 일시정지 가림막, 미리보기 제한, 3-2-1 재개, 설정 4종, 오디오, 로컬 최고 기록 | 구현 및 자동 테스트 완료 |
-| Phase 3 | 로비, 스테이지 해금, 도감/원본 감상, 세로·가로 선택, Safe Area 및 기기별 UI | 코어 및 런타임 UI 구현 완료, 자동 테스트 통과 (실기기 및 고도화 마감 필요) |
-| Phase 4 | 온라인 계정/랭킹, 광고 SDK 및 보상 연동 | 예정. 현재 광고 보상은 테스트용 모의 처리만 존재 |
+| Phase 3 | 타이틀→로비→인게임 흐름, 스테이지 해금, 도감/원본 감상, 세로·가로 선택, Safe Area 및 캐주얼 배경·사운드 분리 | 코어 및 런타임 UI 구현 완료, 자동 테스트 통과 (실기기 및 고도화 마감 진행 중) |
+| Phase 4 | 온라인 계정/랭킹, 광고 SDK 및 보상 연동 | 보류(일시 중단). Phase 3 인게임 완성도 마감 우선 |
 
 ## 다른 PC / 다른 에이전트 인계 가이드 (Handoff Guide)
 1. **브랜치 현황:**
@@ -29,19 +29,18 @@
    - 실제 플레이 씬: `Assets/Scenes/PuzzleGame.unity` (`PuzzleGameSceneBuilder.cs`로 생성, 중복을 제거한 24개 고유 스테이지가 3x3부터 칸수 오름차순으로 연결 완료).
    - Phase 1 코어 검증용 씬: `Assets/Scenes/PhaseOneTest.unity` (`PhaseOneSceneBuilder.cs`).
    - 일러스트 원본 경로: `Assets/Resource.art/Puzzle_images` (24종 정리 완료, GIF/WebP는 첫 프레임 PNG와 함께 보존).
-   - 임시 배경 경로: `Assets/Resource.art/Backgrounds/bg_puzzle_misty_forest_temp.png`.
+   - 캐주얼 배경 경로: `Assets/Resource.art/Backgrounds/bg_puzzle_misty_forest_temp.png` (기존 어두운 안개 숲 배경을 밝고 화사한 파스텔 하늘·초원 캐주얼 배경으로 교체, GUID 유지).
 3. **핵심 런타임 스크립트 (`Assets/Resource/Scripts/Puzzle/`):**
-   - `StageData.cs`, `PuzzleBoardState.cs`, `PuzzleTile.cs`, `BoardManager.cs`: Phase 1 퍼즐 코어 (정사각형 타일 유지, 중앙 크롭 UV, 결정론적 역방향 셔플, 다중 밀기, Undo 3회 및 보상 티켓 콜백, 클리어 페이드인).
+   - `StageData.cs`, `PuzzleBoardState.cs`, `PuzzleTile.cs`, `BoardManager.cs`: Phase 1 퍼즐 코어 (정사각형 타일 유지, 중앙 크롭 UV, 결정론적 역방향 셔플, 다중 밀기, Undo 3회 및 보상 티켓 콜백, 타일이 정답 칸에 들어갈 때 `TilePlacedCorrectly` 이벤트 발생, 클리어 페이드인).
    - `SettingsManager.cs`: 5종 설정(`PREF_BGM`, `PREF_SFX`, `PREF_MULTIPUSH`, `PREF_SLIDE_ANIM`, `PREF_ORIENTATION` 세로/가로) 저장/복원 및 `Screen.orientation` 반영.
-   - `PuzzleAudio.cs`: BGM/SFX 독립 채널. Inspector에 오디오 클립 미할당 시 뿌요뿌요 메인 테마 스타일의 밝고 경쾌한 150 BPM 칩튠 아케이드 루프(`UpbeatPuzzleBgm`)와 효과음을 자동 합성하여 재생.
+   - `PuzzleAudio.cs`: `PuzzleGame` 루트 오브젝트에 직렬화 부착되어 Inspector에서 7종 오디오 클립(`titleMusicClip`, `lobbyMusicClip`, `musicClip` 인게임 루프, `gameStartClip`, `moveClip`, `tileCorrectClip` 타일 정답 위치 안착 시 짧고 맑은 벨 소리, `clearClip`)을 직접 교체·편집 가능. 미할당 시 각각 구분되는 기본 합성 사운드 자동 재생.
    - `PuzzleProgress.cs`: 스테이지 해금 규칙(첫 스테이지, 각 난이도 첫 스테이지, 직전 클리어 스테이지 다음 단계 해금) 및 최소 이동/최단 시간(`PUZZLE_CLEAR_`, `PUZZLE_BEST_`, `PUZZLE_BEST_TIME_`) 관리.
-   - `PuzzleLobbyGalleryUI.cs`: 난이도 탭(`ALL`, `3x3`, `3x4`, `3x5`, `3x7`, `4x3`, `6x3`)별 스테이지 선택 로비, 클리어 일러스트 도감(미해금 시 불투명 자물쇠 가림막으로 원본 이미지 완전 차단, 첫/마지막 페이지에서 Prev/Next 무한 루프 방지), 크롭 없는 원본 전체화면 감상 모달(`uvRect = 0,0,1,1`).
-   - `PuzzleResponsiveLayout.cs`: 모바일 Safe Area(`Screen.safeArea`) 적용 및 세로(`Portrait`) / 가로(`Landscape`) 전용 HUD·보드·일시정지·로비·도감 레이아웃 재배치 (인게임 상단 Lobby 중복 버튼 제거).
-   - `PauseSettingsUI.cs`, `PuzzleGame.cs`: 인게임 타이머/통계, 햄버거 아이콘(가로 선 3줄) 일시정지 버튼, `GAME` 탭(Restart, Undo, Hold to preview, Number ON/OFF, Back to lobby)과 `SYSTEM` 탭(Music, Sound, Line slide, Animation, Orientation)으로 분리된 일시정지 메뉴 및 `X` 닫기(Continue) 버튼, 3-2-1 재개 카운트다운, 에디터 창 전환 시 자동 일시정지 방지 처리.
+   - `PuzzleLobbyGalleryUI.cs`: **타이틀(`TitlePanel`) -> 스테이지 로비(`LobbyPanel`) -> 인게임** 화면 흐름, 난이도 탭(`ALL`, `3x3`, `3x4`, `3x5`, `3x7`, `4x3`, `6x3`)별 스테이지 선택 로비, 클리어 일러스트 도감(미해금 시 불투명 자물쇠 가림막으로 원본 이미지 완전 차단, 첫/마지막 페이지에서 Prev/Next 무한 루프 방지), 크롭 없는 원본 전체화면 감상 모달(`uvRect = 0,0,1,1`).
+   - `PuzzleResponsiveLayout.cs`: 모바일 Safe Area(`Screen.safeArea`) 적용 및 세로(`Portrait`) / 가로(`Landscape`) 전용 HUD·보드·일시정지·타이틀·로비·도감 레이아웃 재배치 (인게임 상단 Lobby 중복 버튼 제거).
+   - `PauseSettingsUI.cs`, `PuzzleGame.cs`: 타이틀→로비→인게임 진입 흐름(`OpenTitleScreen` → `EnterLobbyFromTitle` → `Load`), 인게임 진입 시 게임 시작 SFX 및 인게임 루프 BGM 전환, 햄버거 아이콘 일시정지 버튼, `GAME` 탭과 `SYSTEM` 탭으로 분리된 일시정지 메뉴 및 `X` 닫기 버튼, 3-2-1 재개 카운트다운, 에디터 창 전환 시 자동 일시정지 방지 처리.
 4. **이어서 진행할 작업:**
-   - 에디터 Game 뷰 및 모바일 기기/시뮬레이터에서 세로·가로 UI 디자인 디테일 및 폰트/버튼 여백 마감 확인.
-   - 실제 BGM/SFX 음원 에셋이 준비되면 `PuzzleAudio` 컴포넌트의 `musicClip`, `moveClip`, `clearClip` 필드에 연결.
-   - Phase 4: Unity Gaming Services(Authentication, Leaderboards) 비동기 랭킹 연동 및 실제 보상형/전면 광고 SDK 연동 (`BoardManager.UndoRewardRequested` -> `CompleteUndoReward` 연결).
+   - Phase 4(온라인/광고 SDK 연동)는 한동안 보류하고 Phase 3 인게임 완성도 및 UI/사운드 디테일 마감에 집중.
+   - 사용자가 Inspector의 `PuzzleAudio` 슬롯(`titleMusicClip`, `lobbyMusicClip`, `musicClip`, `gameStartClip`, `moveClip`, `tileCorrectClip`, `clearClip`)에 원하는 커스텀 오디오 에셋을 연결하여 테스트 가능.
 
 ## 작업 기록
 
@@ -104,4 +103,20 @@
   - `PhaseThreeTests.cs`: 인게임 상단 `Lobby` 버튼 부재 확인, 페이지 첫/끝 경계에서 무한 루프 방지 확인, 잠금 카드의 `LockOverlay` 활성화 및 원본 텍스처 비노출 검증 추가.
 - 검증: Unity 자동 리컴파일 완료(`Temp/pipeline_recompile_status.json`: `failed: false, errors: []`, 11:43 KST) 및 콘솔 에러 0건 확인.
 - 남은 작업: 에디터/실기기 플레이 확인 및 Phase 4 온라인 랭킹/광고 SDK 연동.
+- 푸시: 이 커밋 생성 후 `origin/master` 및 `origin/wip/home-phase1`로 푸시 예정.
+
+### 2026-10-27 16:33 KST — 타이틀→로비→인게임 구조 전환·캐주얼 배경 교체 및 상황별 BGM/SFX 인스펙터 연동
+- 직전 커밋: `ab3af13` (`feat: 인게임 로비 버튼 제거·페이지 무한루프 방지 및 잠금 스테이지 자물쇠 가림막 적용`, 11:43 KST). `origin/master` 및 `origin/wip/home-phase1` 푸시 완료 확인.
+- 커밋 제목: `feat: 타이틀·로비·인게임 흐름 전환 및 캐주얼 배경·상황별 사운드 분리`
+- 페이즈: Phase 3 인게임/흐름/배경/사운드 고도화 (Phase 4 온라인/광고 SDK 연동은 일시 보류).
+- 변경:
+  - `PuzzleLobbyGalleryUI.cs`, `PuzzleGame.cs`: 게임 시작 시 바로 인게임으로 들어가지 않고 **타이틀(`TitlePanel`) -> 스테이지 로비(`LobbyPanel`) -> 인게임** 순서로 진입하도록 구조 전환.
+  - `Assets/Resource.art/Backgrounds/bg_puzzle_misty_forest_temp.png`, `README.md`: 기존 어둡고 칙칙한 안개 숲 배경을 밝고 화사한 파스텔 하늘·구름·초원 풍의 캐주얼 배경 이미지(1024×1536)로 교체하고 타이틀/로비 패널 배경 투명도를 조정해 밝은 배경이 비치도록 개선.
+  - `PuzzleAudio.cs`, `BoardManager.cs`, `Assets/Scenes/PuzzleGame.unity`:
+    - `PuzzleGame` 루트 오브젝트에 `PuzzleAudio` 컴포넌트를 직접 직렬화 연결하여 에디터 Inspector에서 7종 사운드(`titleMusicClip`, `lobbyMusicClip`, `musicClip` 인게임 루프, `gameStartClip`, `moveClip`, `tileCorrectClip`, `clearClip`)를 직접 편집/할당할 수 있도록 구성.
+    - 타이틀 음악, 로비 음악, 인게임 루프 음악을 구분하고, 로비에서 스테이지를 선택해 인게임에 진입할 때 게임 시작 효과음(`gameStartClip`)이 재생된 뒤 인게임 루프 음악(`musicClip`)이 나오도록 구현.
+    - 타일을 이동할 때마다 원래 정답 칸에 새로 맞춰진 타일이 있으면(`BoardManager.TilePlacedCorrectly`) 짧고 맑은 벨 소리(`tileCorrectClip`)가 재생되도록 구현.
+  - `PhaseThreeTests.cs`: 타이틀→로비→인게임 전환, 타이틀/로비/인게임 음악 분리 및 게임 시작 SFX, 타일 정답 위치 안착 시 맑은 효과음 재생 검증 추가.
+- 검증: 코드 및 씬 직렬화 점검 완료.
+- 남은 작업: Phase 3 인게임 UI/연출 추가 다듬기 (Phase 4는 보류 유지).
 - 푸시: 이 커밋 생성 후 `origin/master` 및 `origin/wip/home-phase1`로 푸시 예정.

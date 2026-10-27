@@ -123,12 +123,22 @@ namespace FirstPuzzleTests
                 PlayerPrefs.DeleteKey("PUZZLE_CLEAR_" + firstId);
                 PlayerPrefs.DeleteKey("PUZZLE_CLEAR_" + secondId);
 
-                // 1. Open Lobby & verify difficulty tabs, non-wrapping pagination, and lock overlay
+                // 1. Verify initial Title Screen -> Lobby -> In-Game flow and distinct BGM/SFX contexts
                 var hudContent = game.pauseButton.transform.parent;
                 Assert.IsNull(hudContent.Find("Lobby"), "In-game HUD must not have a top Lobby button.");
 
-                game.OpenLobby();
-                Assert.IsTrue(game.Lobby.IsLobbyOpen);
+                Assert.IsTrue(game.Lobby.IsTitleOpen, "Game must start on the Title screen.");
+                Assert.AreEqual(MusicContext.Title, game.Audio.ActiveMusicContext, "Title BGM must play on Title screen.");
+                AudioClip titleClip = game.Audio.CurrentMusicClip;
+                Assert.IsNotNull(titleClip);
+
+                game.EnterLobbyFromTitle();
+                Assert.IsFalse(game.Lobby.IsTitleOpen);
+                Assert.IsTrue(game.Lobby.IsLobbyOpen, "Entering from Title must open the Stage Lobby.");
+                Assert.AreEqual(MusicContext.Lobby, game.Audio.ActiveMusicContext, "Lobby BGM must play in Lobby.");
+                AudioClip lobbyClip = game.Audio.CurrentMusicClip;
+                Assert.IsNotNull(lobbyClip);
+                Assert.AreNotSame(titleClip, lobbyClip, "Title BGM and Lobby BGM must be distinct.");
                 Assert.IsTrue(game.board.IsPaused);
                 game.ShowPreview(true);
                 Assert.IsFalse(game.preview.gameObject.activeSelf, "Preview must remain blocked while Lobby is open.");
@@ -178,13 +188,29 @@ namespace FirstPuzzleTests
                 game.Lobby.CloseViewer();
                 Assert.IsFalse(game.Lobby.IsViewerOpen);
 
-                // Select unlocked stage from lobby
+                // Select unlocked stage from lobby -> plays Game Start SFX and switches to In-Game loop BGM
+                int startsBefore = game.Audio.GameStartPlayCount;
                 game.OpenLobby();
                 Assert.IsTrue(game.Lobby.TrySelectStageFromLobby(0));
                 Assert.IsFalse(game.Lobby.IsLobbyOpen);
                 Assert.IsFalse(game.board.IsPaused);
+                Assert.AreEqual(startsBefore + 1, game.Audio.GameStartPlayCount, "Entering In-Game must trigger Game Start SFX.");
+                Assert.AreEqual(MusicContext.InGame, game.Audio.ActiveMusicContext, "In-Game loop BGM must play when stage starts.");
+                Assert.AreNotSame(lobbyClip, game.Audio.CurrentMusicClip, "In-Game BGM must be distinct from Lobby BGM.");
 
-                // 3. Mid-game orientation switch preserves board state, moves, undo, and timer, and pauses for 3-2-1 resume
+                // Verify crisp tile-correct SFX when a tile moves into its exact home cell
+                var oneMoveStage = AssetDatabase.LoadAssetAtPath<StageData>("Assets/Resource/PuzzlePhaseOne/test-one-move.asset");
+                Assert.IsNotNull(oneMoveStage);
+                int correctBefore = game.Audio.TileCorrectPlayCount;
+                Assert.IsTrue(game.board.LoadStage(oneMoveStage));
+                var oneMoveModel = (PuzzleBoardState)typeof(BoardManager)
+                    .GetField("state", BindingFlags.NonPublic | BindingFlags.Instance)
+                    .GetValue(game.board);
+                Assert.IsTrue(game.board.TryMoveTile(oneMoveModel.GetTileAt(8)));
+                Assert.Greater(game.Audio.TileCorrectPlayCount, correctBefore, "Placing a tile into its home position must play the crisp tile-correct SFX.");
+
+                // Reload stage 0 for mid-game orientation test
+                game.Load(0);
                 game.board.SetSlideAnimation(false);
                 var model = (PuzzleBoardState)typeof(BoardManager)
                     .GetField("state", BindingFlags.NonPublic | BindingFlags.Instance)

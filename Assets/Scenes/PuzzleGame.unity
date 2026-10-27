@@ -269,6 +269,7 @@ GameObject:
   - component: {fileID: 144465651}
   - component: {fileID: 144465650}
   - component: {fileID: 144465649}
+  - component: {fileID: 144465654}
   m_Layer: 0
   m_Name: PuzzleGame
   m_TagString: Untagged
@@ -412,6 +413,25 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &144465654
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 144465648}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85e62678b3717ed408da4e52f5b43696, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Puzzle.Runtime::FirstPuzzle.PuzzleAudio
+  titleMusicClip: {fileID: 0}
+  lobbyMusicClip: {fileID: 0}
+  musicClip: {fileID: 0}
+  gameStartClip: {fileID: 0}
+  moveClip: {fileID: 0}
+  tileCorrectClip: {fileID: 0}
+  clearClip: {fileID: 0}
 --- !u!1 &165650192
 GameObject:
   m_ObjectHideFlags: 0

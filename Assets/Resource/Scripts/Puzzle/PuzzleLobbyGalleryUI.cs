@@ -9,17 +9,24 @@ namespace FirstPuzzle
     /// <summary>Phase 3 Lobby (difficulty tabs + stage cards) and Illustration Gallery (collection + full-screen viewer).</summary>
     public sealed class PuzzleLobbyGalleryUI : MonoBehaviour
     {
-        private static readonly Color PanelBg = new Color(0.035f, 0.065f, 0.10f, 0.96f);
-        private static readonly Color CardUnlocked = new Color(0.09f, 0.22f, 0.27f, 0.96f);
-        private static readonly Color CardLocked = new Color(0.06f, 0.10f, 0.14f, 0.92f);
-        private static readonly Color TabActive = new Color(0.16f, 0.42f, 0.48f, 1f);
-        private static readonly Color TabInactive = new Color(0.08f, 0.18f, 0.22f, 0.95f);
-        private static readonly Color TextLight = new Color(0.88f, 0.94f, 0.96f, 1f);
+        private static readonly Color PanelBg = new Color(0.08f, 0.22f, 0.34f, 0.72f);
+        private static readonly Color CardUnlocked = new Color(0.11f, 0.30f, 0.42f, 0.92f);
+        private static readonly Color CardLocked = new Color(0.07f, 0.16f, 0.24f, 0.88f);
+        private static readonly Color TabActive = new Color(0.18f, 0.52f, 0.62f, 1f);
+        private static readonly Color TabInactive = new Color(0.09f, 0.24f, 0.34f, 0.90f);
+        private static readonly Color TextLight = new Color(0.95f, 0.98f, 1.00f, 1f);
 
         private PuzzleGame game;
+        private RectTransform titlePanel;
         private RectTransform lobbyPanel;
         private RectTransform galleryPanel;
         private RectTransform viewerModal;
+
+        // Title UI elements
+        private RectTransform titleCard;
+        private TMP_Text titleMainLabel;
+        private TMP_Text titleSubLabel;
+        private Button titleStartButton;
 
         // Lobby UI elements
         private RectTransform lobbyHeader;
@@ -62,6 +69,7 @@ namespace FirstPuzzle
         private int galleryPage;
         private PlayOrientation currentOrientation = PlayOrientation.Portrait;
 
+        public bool IsTitleOpen => titlePanel != null && titlePanel.gameObject.activeSelf;
         public bool IsLobbyOpen => lobbyPanel != null && lobbyPanel.gameObject.activeSelf;
         public bool IsGalleryOpen => galleryPanel != null && galleryPanel.gameObject.activeSelf;
         public bool IsViewerOpen => viewerModal != null && viewerModal.gameObject.activeSelf;
@@ -123,6 +131,7 @@ namespace FirstPuzzle
         {
             game = owner;
             BuildFilters();
+            if (titlePanel == null) BuildTitlePanel();
             if (lobbyPanel == null) BuildLobbyPanel();
             if (galleryPanel == null) BuildGalleryPanel();
             if (viewerModal == null) BuildViewerModal();
@@ -144,9 +153,19 @@ namespace FirstPuzzle
             }
         }
 
+        public void OpenTitle()
+        {
+            if (titlePanel == null) return;
+            if (viewerModal != null) viewerModal.gameObject.SetActive(false);
+            if (galleryPanel != null) galleryPanel.gameObject.SetActive(false);
+            if (lobbyPanel != null) lobbyPanel.gameObject.SetActive(false);
+            titlePanel.gameObject.SetActive(true);
+        }
+
         public void OpenLobby()
         {
             if (lobbyPanel == null) return;
+            if (titlePanel != null) titlePanel.gameObject.SetActive(false);
             viewerModal.gameObject.SetActive(false);
             galleryPanel.gameObject.SetActive(false);
             lobbyPanel.gameObject.SetActive(true);
@@ -156,6 +175,7 @@ namespace FirstPuzzle
         public void OpenGallery()
         {
             if (galleryPanel == null) return;
+            if (titlePanel != null) titlePanel.gameObject.SetActive(false);
             viewerModal.gameObject.SetActive(false);
             lobbyPanel.gameObject.SetActive(false);
             galleryPanel.gameObject.SetActive(true);
@@ -164,6 +184,7 @@ namespace FirstPuzzle
 
         public void CloseAll()
         {
+            if (titlePanel != null) titlePanel.gameObject.SetActive(false);
             if (viewerModal != null) viewerModal.gameObject.SetActive(false);
             if (galleryPanel != null) galleryPanel.gameObject.SetActive(false);
             if (lobbyPanel != null) lobbyPanel.gameObject.SetActive(false);
@@ -383,6 +404,9 @@ namespace FirstPuzzle
 
             if (landscape)
             {
+                if (titleCard != null) SetAnchors(titleCard, 0.18f, 0.22f, 0.82f, 0.80f);
+                if (titleStartButton != null) SetAnchors((RectTransform)titleStartButton.transform, 0.28f, 0.12f, 0.72f, 0.34f);
+
                 SetAnchors(lobbyHeader, 0.03f, 0.87f, 0.97f, 0.97f);
                 SetAnchors(lobbyTitle.rectTransform, 0.00f, 0.00f, 0.46f, 1.00f);
                 SetAnchors((RectTransform)galleryOpenButton.transform, 0.48f, 0.05f, 0.64f, 0.95f);
@@ -401,6 +425,9 @@ namespace FirstPuzzle
             }
             else
             {
+                if (titleCard != null) SetAnchors(titleCard, 0.08f, 0.30f, 0.92f, 0.72f);
+                if (titleStartButton != null) SetAnchors((RectTransform)titleStartButton.transform, 0.16f, 0.14f, 0.84f, 0.34f);
+
                 SetAnchors(lobbyHeader, 0.04f, 0.86f, 0.96f, 0.98f);
                 SetAnchors(lobbyTitle.rectTransform, 0.00f, 0.52f, 1.00f, 1.00f);
                 SetAnchors((RectTransform)galleryOpenButton.transform, 0.00f, 0.02f, 0.32f, 0.48f);
@@ -456,6 +483,19 @@ namespace FirstPuzzle
             }
         }
 
+        private void BuildTitlePanel()
+        {
+            // Semi-transparent glass panel so the bright sunny casual background shines through
+            titlePanel = Panel("TitlePanel", transform, 0f, 0f, 1f, 1f, new Color(0.06f, 0.18f, 0.28f, 0.32f), true);
+            titleCard = Panel("TitleCard", titlePanel, 0.08f, 0.30f, 0.92f, 0.72f, new Color(0.08f, 0.24f, 0.36f, 0.88f), true);
+            titleMainLabel = Label("MainTitle", titleCard, 0.06f, 0.56f, 0.94f, 0.90f, "PICTURE PUZZLE", 54);
+            titleMainLabel.fontStyle = FontStyles.Bold;
+            titleSubLabel = Label("SubTitle", titleCard, 0.08f, 0.38f, 0.92f, 0.56f, "COLLECTIBLE ILLUSTRATION SLIDING PUZZLE", 22);
+            titleStartButton = MakeButton(titleCard, "StartButton", "TAP TO START", 0.16f, 0.14f, 0.84f, 0.34f, () => game.EnterLobbyFromTitle());
+            var startImg = titleStartButton.GetComponent<Image>();
+            if (startImg != null) startImg.color = new Color(0.18f, 0.56f, 0.64f, 1f);
+        }
+
         private void BuildLobbyPanel()
         {
             lobbyPanel = Panel("LobbyPanel", transform, 0f, 0f, 1f, 1f, PanelBg, true);
@@ -468,7 +508,7 @@ namespace FirstPuzzle
                 RefreshLobby();
             });
             orientationButtonLabel = orientationButton.GetComponentInChildren<TMP_Text>(true);
-            resumePlayButton = MakeButton(lobbyHeader, "PlayButton", "Return to Play", 0.68f, 0.02f, 1f, 0.48f, CloseAll);
+            resumePlayButton = MakeButton(lobbyHeader, "PlayButton", "Play Stage", 0.68f, 0.02f, 1f, 0.48f, () => game.EnterInGameFromLobby());
 
             tabBar = Rect("DifficultyTabs", lobbyPanel, 0.04f, 0.78f, 0.96f, 0.845f);
             tabButtons.Clear();

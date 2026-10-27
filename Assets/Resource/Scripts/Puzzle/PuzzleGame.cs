@@ -28,6 +28,7 @@ namespace FirstPuzzle
         public SettingsManager Settings { get; private set; }
         public PuzzleLobbyGalleryUI Lobby { get; private set; }
         public PuzzleResponsiveLayout ResponsiveLayout { get; private set; }
+        public PuzzleAudio Audio { get; private set; }
         public bool IsCountingDown => countdown;
         public PauseTab ActivePauseTab { get; private set; } = PauseTab.Game;
 
@@ -48,9 +49,9 @@ namespace FirstPuzzle
 
             Lobby = PuzzleLobbyGalleryUI.Install(this, ResponsiveLayout.SafeAreaRect != null ? ResponsiveLayout.SafeAreaRect : transform);
 
-            var audio = GetComponent<PuzzleAudio>();
-            if (audio == null) audio = gameObject.AddComponent<PuzzleAudio>();
-            audio.Initialize(Settings, board);
+            Audio = GetComponent<PuzzleAudio>();
+            if (Audio == null) Audio = gameObject.AddComponent<PuzzleAudio>();
+            Audio.Initialize(Settings, board);
         }
 
         private void OnEnable()
@@ -60,7 +61,7 @@ namespace FirstPuzzle
             Settings.Changed += ApplySettings;
         }
 
-        private void Start() => Load(0);
+        private void Start() => OpenTitleScreen();
 
         private void OnDisable()
         {
@@ -73,13 +74,35 @@ namespace FirstPuzzle
 
         private void Update()
         {
-            bool overlayOpen = Lobby != null && (Lobby.IsLobbyOpen || Lobby.IsGalleryOpen || Lobby.IsViewerOpen);
+            bool overlayOpen = Lobby != null && (Lobby.IsTitleOpen || Lobby.IsLobbyOpen || Lobby.IsGalleryOpen || Lobby.IsViewerOpen);
             if (board.IsReady && !board.IsPaused && !board.IsSolved && !overlayOpen)
                 elapsed += Time.deltaTime;
             RefreshStats();
         }
 
-        public void Load(int stageIndex)
+        public void OpenTitleScreen()
+        {
+            if (stages != null && stages.Length > 0 && !board.IsReady)
+                LoadStageInternal(0, false);
+            if (resumeRoutine != null) StopCoroutine(resumeRoutine);
+            resumeRoutine = null;
+            countdown = false;
+            previewHeldFromPauseMenu = false;
+            ShowPreview(false);
+            if (board.IsReady) board.SetPaused(true);
+            curtain.SetActive(false);
+            if (Lobby != null) Lobby.OpenTitle();
+            if (Audio != null) Audio.SetMusicContext(MusicContext.Title);
+            Refresh();
+        }
+
+        public void EnterLobbyFromTitle() => OpenLobby();
+
+        public void EnterInGameFromLobby() => Load(index);
+
+        public void Load(int stageIndex) => LoadStageInternal(stageIndex, true);
+
+        private void LoadStageInternal(int stageIndex, bool enterInGame)
         {
             if (stages == null || stages.Length == 0) return;
             if (resumeRoutine != null) StopCoroutine(resumeRoutine);
@@ -90,7 +113,7 @@ namespace FirstPuzzle
             elapsed = 0f;
             curtain.SetActive(false);
             preview.gameObject.SetActive(false);
-            if (Lobby != null) Lobby.CloseAll();
+            if (enterInGame && Lobby != null) Lobby.CloseAll();
             ApplySettings();
             board.SetNumberGuide(PlayerPrefs.GetInt("PUZZLE_NUMBERS", 0) != 0);
             board.LoadStage(stages[index]);
@@ -98,6 +121,11 @@ namespace FirstPuzzle
             preview.uvRect = stages[index].GetImageUV();
             var aspect = preview.GetComponent<AspectRatioFitter>();
             aspect.aspectRatio = (float)stages[index].Columns / stages[index].Rows;
+            if (enterInGame && Audio != null)
+            {
+                Audio.PlayGameStartSfx();
+                Audio.SetMusicContext(MusicContext.InGame);
+            }
             Refresh();
         }
 
@@ -139,6 +167,7 @@ namespace FirstPuzzle
                 PauseSettingsUI.RefreshTabs(this);
             }
             Lobby.OpenLobby();
+            if (Audio != null) Audio.SetMusicContext(MusicContext.Lobby);
             Refresh();
         }
 
@@ -172,7 +201,7 @@ namespace FirstPuzzle
                 return;
             }
 
-            bool overlayOpen = Lobby != null && (Lobby.IsLobbyOpen || Lobby.IsGalleryOpen || Lobby.IsViewerOpen);
+            bool overlayOpen = Lobby != null && (Lobby.IsTitleOpen || Lobby.IsLobbyOpen || Lobby.IsGalleryOpen || Lobby.IsViewerOpen);
             if (!board.IsReady || board.IsSolved || countdown || overlayOpen) return;
 
             if (board.IsPaused && pauseControls.activeInHierarchy)
@@ -203,7 +232,7 @@ namespace FirstPuzzle
         {
             // SPEC Phase 3: Mid-game orientation change happens while paused, preserving board/moves/undo/time, resuming via 3-2-1.
             bool inActivePlay = board != null && board.IsReady && !board.IsSolved &&
-                                (Lobby == null || (!Lobby.IsLobbyOpen && !Lobby.IsGalleryOpen && !Lobby.IsViewerOpen));
+                                (Lobby == null || (!Lobby.IsTitleOpen && !Lobby.IsLobbyOpen && !Lobby.IsGalleryOpen && !Lobby.IsViewerOpen));
             if (inActivePlay && !board.IsPaused)
                 Pause();
             Settings.ToggleOrientation();
@@ -227,7 +256,7 @@ namespace FirstPuzzle
                 SetPauseMenuPreviewHold(false);
                 return;
             }
-            bool overlayOpen = Lobby != null && (Lobby.IsLobbyOpen || Lobby.IsGalleryOpen || Lobby.IsViewerOpen);
+            bool overlayOpen = Lobby != null && (Lobby.IsTitleOpen || Lobby.IsLobbyOpen || Lobby.IsGalleryOpen || Lobby.IsViewerOpen);
             preview.gameObject.SetActive(show && board.CanInteract && !countdown && !overlayOpen);
         }
 
@@ -255,6 +284,7 @@ namespace FirstPuzzle
             preview.gameObject.SetActive(false);
             curtain.SetActive(true);
             if (Lobby != null) Lobby.CloseAll();
+            if (Audio != null) Audio.SetMusicContext(MusicContext.InGame);
             resumeRoutine = StartCoroutine(Countdown());
         }
 

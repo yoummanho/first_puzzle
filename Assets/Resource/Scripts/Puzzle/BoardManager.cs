@@ -49,6 +49,8 @@ namespace FirstPuzzle
         public event Action StateChanged;
         public event Action PuzzleSolved;
         public event Action ClearPresentationFinished;
+        /// <summary>Fired whenever one or more non-blank tiles move into their exact home cell (parameter = count of newly placed tiles).</summary>
+        public event Action<int> TilePlacedCorrectly;
         /// <summary>The ad adapter must return this ticket with the verified reward/cancel callback.</summary>
         public event Action<int> UndoRewardRequested;
 
@@ -120,19 +122,34 @@ namespace FirstPuzzle
         public bool TryMoveTile(int tile)
         {
             if (!CanInteract || tile < 0 || tile >= state.TileCount) return false;
+            int[] before = state.CopyCells();
             if (!state.TryMove(state.FindCell(tile), multiPush)) return false;
-            BeginTransition();
+            int newlyCorrect = CountNewlyPlacedCorrectTiles(before);
+            BeginTransition(newlyCorrect);
             return true;
         }
 
         public bool TryUndo()
         {
             if (!CanUndo || !state.TryUndo()) return false;
-            BeginTransition();
+            BeginTransition(0);
             return true;
         }
 
-        private void BeginTransition()
+        private int CountNewlyPlacedCorrectTiles(int[] before)
+        {
+            int count = 0;
+            int blank = state.BlankTile;
+            for (int cell = 0; cell < before.Length; cell++)
+            {
+                int currentTile = state.GetTileAt(cell);
+                if (currentTile != blank && currentTile == cell && before[cell] != cell)
+                    count++;
+            }
+            return count;
+        }
+
+        private void BeginTransition(int newlyPlacedCorrectCount)
         {
             busy = true;
             int activeGeneration = generation;
@@ -140,6 +157,8 @@ namespace FirstPuzzle
             for (int id = 0; id < tiles.Length; id++)
                 tiles[id].MoveTo(GetPosition(state.FindCell(id)), duration);
             StateChanged?.Invoke();
+            if (generation != activeGeneration) return;
+            if (newlyPlacedCorrectCount > 0) TilePlacedCorrectly?.Invoke(newlyPlacedCorrectCount);
             if (generation != activeGeneration) return;
             if (state.IsSolved) PuzzleSolved?.Invoke();
             if (generation == activeGeneration && isActiveAndEnabled)
