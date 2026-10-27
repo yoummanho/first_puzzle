@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Reflection;
 using FirstPuzzle;
 using FirstPuzzle.Editor;
@@ -71,6 +71,36 @@ namespace FirstPuzzleTests
                     PuzzleGameViewSizeRegistrar.HasPresetInCurrentGroup(preset.Label, preset.Width, preset.Height),
                     $"Expected Game View preset '{preset.Label}' ({preset.Width}x{preset.Height}) to be registered.");
             }
+        }
+
+        [Test]
+        public void TileNumberLabelUsesOutlinedBoldMaterialAndStudioBgmIs44kHz()
+        {
+            var prefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Resource/PuzzlePhaseOne/PuzzleTile.prefab");
+            Assert.IsNotNull(prefab);
+            var stage = AssetDatabase.LoadAssetAtPath<StageData>("Assets/Resource/PuzzlePhaseOne/test-3x3.asset");
+            Assert.IsNotNull(stage);
+
+            var instance = Object.Instantiate(prefab);
+            try
+            {
+                var tile = instance.GetComponent<PuzzleTile>();
+                Assert.IsNotNull(tile);
+                tile.Initialize(stage, 0, null);
+                tile.SetNumbersVisible(true);
+                Assert.IsNotNull(tile.NumberLabel);
+                Assert.IsTrue(tile.NumberLabel.gameObject.activeSelf);
+                Assert.AreNotEqual(0, (int)(tile.NumberLabel.fontStyle & TMPro.FontStyles.Bold), "Tile number must use Bold style.");
+                Assert.GreaterOrEqual(tile.NumberOutlineWidth, 0.20f, "Tile number material must have a strong outline width.");
+                Assert.IsTrue(tile.NumberLabel.fontSharedMaterial.IsKeywordEnabled(TMPro.ShaderUtilities.Keyword_Outline), "OUTLINE_ON shader keyword must be enabled on tile number material.");
+            }
+            finally
+            {
+                Object.DestroyImmediate(instance);
+            }
+
+            float[] bgmSamples = PuzzleAudio.SynthesizeInGameLoopSamples(44100);
+            Assert.AreEqual(44100 * 8, bgmSamples.Length, "Main stage BGM must be 8.0s at 44.1 kHz studio sample rate.");
         }
 
         [Test]

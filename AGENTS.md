@@ -31,11 +31,11 @@
    - Phase 1 코어 검증용 씬: `Assets/Scenes/PhaseOneTest.unity` (`PhaseOneSceneBuilder.cs`).
    - 일러스트 원본 경로: `Assets/Resource.art/Puzzle_images` (30종 정리 완료, GIF/WebP는 첫 프레임 PNG와 함께 보존).
    - 캐주얼 배경 경로: `Assets/Resource.art/Backgrounds/bg_puzzle_misty_forest_temp.png` (기존 어두운 안개 숲 배경을 밝고 화사한 파스텔 하늘·초원 캐주얼 배경으로 교체, GUID 유지).
-   - 오디오 에셋 경로: `Assets/Resource/Audio/` (`bgm_title.wav`, `bgm_lobby.wav`, `bgm_ingame_loop.wav`[일반 플레이용 120 BPM 루프, 8.0초], `sfx_game_start.wav`, `sfx_tile_move.wav`, `sfx_tile_correct.wav`, `sfx_stage_clear.wav` 총 7종이 실제 WAV 파일로 저장되어 `PuzzleGame` 루트의 `PuzzleAudio` 인스펙터에 직접 연결됨).
+   - 오디오 에셋 경로: `Assets/Resource/Audio/` (`bgm_title.wav`, `bgm_lobby.wav`, `bgm_ingame_loop.wav`[일반 플레이용 120 BPM 44.1 kHz 스튜디오 어쿠스틱 피아노·비브라폰·스트링 패드·업라이트 베이스 루프, 8.0초], `sfx_game_start.wav`, `sfx_tile_move.wav`, `sfx_tile_correct.wav`, `sfx_stage_clear.wav` 총 7종이 실제 WAV 파일로 저장되어 `PuzzleGame` 루트의 `PuzzleAudio` 인스펙터에 직접 연결됨).
 3. **핵심 런타임 스크립트 (`Assets/Resource/Scripts/Puzzle/`):**
-   - `StageData.cs`, `PuzzleBoardState.cs`, `PuzzleTile.cs`, `BoardManager.cs`: Phase 1 퍼즐 코어 (정사각형 타일 유지, 중앙 크롭 UV, 결정론적 역방향 셔플, 다중 밀기, Undo 3회 및 보상 티켓 콜백, 타일이 정답 칸에 들어갈 때 `TilePlacedCorrectly` 이벤트 발생, 클리어 페이드인).
+   - `StageData.cs`, `PuzzleBoardState.cs`, `PuzzleTile.cs`, `BoardManager.cs`: Phase 1 퍼즐 코어 (정사각형 타일 유지, 중앙 크롭 UV, 결정론적 역방향 셔플, 다중 밀기, Undo 3회 및 보상 티켓 콜백, `Numbers: ON` 상태에서 타일 숫자 텍스트에 굵은 외곽선(`LiberationSans SDF - Outline` + `OUTLINE_ON`, `OutlineWidth = 0.24`, 짙은 네이비 외곽선, `Bold`) 적용, 타일이 정답 칸에 들어갈 때 `TilePlacedCorrectly` 이벤트 발생, 클리어 페이드인).
    - `SettingsManager.cs`: 5종 설정(`PREF_BGM`, `PREF_SFX`, `PREF_MULTIPUSH`, `PREF_SLIDE_ANIM`, `PREF_ORIENTATION` 세로/가로) 저장/복원 및 `Screen.orientation` 반영.
-   - `PuzzleAudio.cs`: `PuzzleGame` 루트 오브젝트에 직렬화 부착되어 Inspector에서 7종 오디오 클립(`titleMusicClip`, `lobbyMusicClip`, `musicClip` 인게임 루프[120 BPM으로 템포 완화, 기존 150 BPM은 추후 시간제한 스테이지용으로 보류], `gameStartClip`, `moveClip`, `tileCorrectClip` 타일 정답 위치 안착 시 짧고 맑은 벨 소리, `clearClip`)을 직접 교체·편집 가능. 인게임 시작(`PlayGameStartThenInGameMusic`) 시 `gameStartClip` 효과음이 끝난 뒤 **0.5초 대기 후 볼륨 0에서 0.8초 동안 천천히 페이드인**되며 인게임 루프 BGM이 재생됨.
+   - `PuzzleAudio.cs`: `PuzzleGame` 루트 오브젝트에 직렬화 부착되어 Inspector에서 7종 오디오 클립(`titleMusicClip`, `lobbyMusicClip`, `musicClip` 인게임 루프[120 BPM 44.1 kHz 스튜디오 어쿠스틱 피아노·비브라폰·스트링 패드·업라이트 베이스·브러시 퍼커션 편곡으로 퀄리티 업그레이드, 기존 150 BPM은 추후 시간제한 스테이지용으로 보류], `gameStartClip`, `moveClip`, `tileCorrectClip` 타일 정답 위치 안착 시 짧고 맑은 벨 소리, `clearClip`)을 직접 교체·편집 가능. 인게임 시작(`PlayGameStartThenInGameMusic`) 시 `gameStartClip` 효과음이 끝난 뒤 **0.5초 대기 후 볼륨 0에서 0.8초 동안 천천히 페이드인**되며 인게임 루프 BGM이 재생됨.
    - `PuzzleProgress.cs`: 스테이지 해금 규칙(첫 스테이지, 각 난이도 첫 스테이지, 직전 클리어 스테이지 다음 단계 해금) 및 최소 이동/최단 시간(`PUZZLE_CLEAR_`, `PUZZLE_BEST_`, `PUZZLE_BEST_TIME_`) 관리.
    - `PuzzleLobbyGalleryUI.cs`: **타이틀(`TitlePanel`) -> 스테이지 로비(`LobbyPanel`) -> 인게임** 화면 흐름, 난이도 탭(`ALL`, `3x3`, `3x4`, `3x5`, `3x6`, `3x7`, `4x3`, `6x3`)별 스테이지 선택 로비, 클리어 일러스트 도감(미해금 시 불투명 자물쇠 가림막으로 원본 이미지 완전 차단, 첫/마지막 페이지에서 Prev/Next 무한 루프 방지), 크롭 없는 원본 전체화면 감상 모달(`uvRect = 0,0,1,1`).
    - `PuzzleResponsiveLayout.cs`: 모바일 Safe Area(`Screen.safeArea`) 적용 및 세로(`Portrait`) / 가로(`Landscape`) 전용 HUD·보드·일시정지·타이틀·로비·도감 레이아웃 재배치 (인게임 상단 Lobby 중복 버튼 제거).
@@ -207,3 +207,21 @@
 - 검증: Unity 리컴파일 오류 0건, 에디터 자동 테스트 35/35 통과(실패 0). 전체 스테이지 로딩·비율·중복·정렬 및 로비 페이지 이동 검증. 등록 재실행 시 씬 불변 확인. git diff --check 통과.
 - 미검증/남은 작업: 실제 모바일 기기의 새 이미지 시각 검수. Phase 4는 보류 유지.
 - 푸시: 본 커밋 생성 후 `origin/master`, `origin/wip/home-phase1`로 푸시 예정. 성공 여부는 완료 응답 및 다음 기록에 반영.
+
+### 2026-10-28 01:51 KST — 타일 숫자 외곽선 텍스트 적용 및 메인 스테이지 BGM 44.1kHz 어쿠스틱 스튜디오 사운드 퀄업
+- 직전 커밋: `ac7c301` (`feat: 신규 퍼즐 이미지 6종 등록 및 비율별 스테이지 배정`, 2026-10-27 23:56 KST). `origin/master` 및 `origin/wip/home-phase1` 푸시 완료 확인.
+- 커밋 제목: `feat: 타일 숫자 외곽선 텍스트 적용 및 메인 스테이지 BGM 어쿠스틱 퀄업`
+- 대상 페이즈: Phase 3 인게임 가독성(타일 숫자 외곽선) 및 BGM 사운드 퀄리티 고도화.
+- **기존 `AGENTS.md` 내용 대비 변경 사항:**
+  1. **타일 숫자(`Numbers: ON`) 텍스트 스타일 변경:** 기존에는 `PuzzleTile.prefab`의 `Number` 텍스트가 `m_sharedMaterial: {fileID: 0}`(기본 SDF 머티리얼)로 직렬화되어 외곽선이 렌더링되지 않았으나, **`LiberationSans SDF - Outline` 머티리얼 연결 및 런타임 `OUTLINE_ON`(`OutlineWidth = 0.24`, 짙은 네이비 외곽선, `Bold`) 강제 적용**으로 밝은 일러스트 위에서도 숫자가 뚜렷하게 보이도록 변경함.
+  2. **메인 스테이지 BGM(`bgm_ingame_loop.wav`) 및 타이틀/로비 BGM 음원 퀄리티 변경:** 기존 `AGENTS.md`에서는 22,050 Hz 단음 스텝 칩튠/미디(MIDI) 방식(`352,812` bytes)으로 기술되어 있었으나, 미디 느낌을 없애라는 지시에 따라 **44,100 Hz 폴리포닉(스텝 간 자연스러운 서스테인/릴리즈 오버랩) 어쿠스틱 그랜드 피아노(해머 어택 + 디튠 코러스 + 고차 배음 감쇠) + 일렉트릭 피아노/스트링 패드 8코드 진행(`Cmaj7 -> G/B -> Am7 -> Em7 -> Fmaj7 -> C/E -> Dm7 -> G13`) + 비브라폰 대선율 + 업라이트 베이스 + 브러시 스네어/셰이커 + 심리스 룸 리버브·소프트 새추레이션 마스터링**으로 전면 재합성(`705,644` bytes, 120 BPM 8.0초 루프 유지)함.
+- 실제 변경:
+  - `Assets/Resource/PuzzlePhaseOne/PuzzleTile.prefab`, `Assets/TextMesh Pro/Resources/Fonts & Materials/LiberationSans SDF - Outline.mat`, `Assets/Resource/Scripts/Puzzle/PuzzleTile.cs`:
+    - `PuzzleTile.prefab`의 `Number` 텍스트에 `LiberationSans SDF - Outline` 머티리얼(`guid: 79459efec17a4d00a321bdcc27bbc385`), `Bold`(`m_fontStyle: 1`), 불투명도 `0.96`을 연결.
+    - `PuzzleTile.Initialize` 시점에 `ApplyNumberOutlineStyle()`을 호출하여 `ShaderUtilities.Keyword_Outline`(`OUTLINE_ON`), `OutlineWidth = 0.24`, `OutlineSoftness = 0.04`, `FaceDilate = 0.12`, 짙은 네이비 외곽선(`0.04, 0.07, 0.12, 0.96`)을 보장.
+  - `Assets/Resource/Scripts/Puzzle/PuzzleAudio.cs`, `Assets/Resource/Scripts/Puzzle/Editor/PuzzleSceneAudioAndHierarchySync.cs`, `Assets/Resource/Audio/bgm_ingame_loop.wav`, `bgm_title.wav`, `bgm_lobby.wav`:
+    - 메인 스테이지 인게임 BGM(`SynthesizeInGameLoopSamples`) 및 타이틀/로비 BGM을 44.1 kHz 폴리포닉 어쿠스틱 편곡 및 스튜디오 리버브/새추레이션 마스터링으로 업그레이드하고 실제 WAV 에셋 3종을 갱신(GUID 보존).
+  - `Assets/Tests/Editor/PhaseThreeTests.cs`: `TileNumberLabelUsesOutlinedBoldMaterialAndStudioBgmIs44kHz` 단위 테스트 추가.
+- 검증: WAV 에셋 3종(`bgm_ingame_loop.wav` 705,644 bytes, `bgm_lobby.wav` 378,246 bytes, `bgm_title.wav` 352,844 bytes) 생성 및 `git diff --check` 통과 확인.
+- 남은 작업: 에디터/실기기 청음 및 시각 확인 (Phase 4 온라인/광고 SDK는 보류 유지).
+- 푸시: 이 커밋 생성 후 `origin/master` 및 `origin/wip/home-phase1`로 푸시 예정.

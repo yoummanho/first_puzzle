@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections;
 using TMPro;
 using UnityEngine;
@@ -20,6 +20,8 @@ namespace FirstPuzzle
         public bool IsMoving { get; private set; }
         public bool MotionPaused { get; set; }
         public RectTransform Rect => rect;
+        public TMP_Text NumberLabel => numberLabel;
+        public float NumberOutlineWidth => numberLabel != null && numberLabel.fontSharedMaterial != null && numberLabel.fontSharedMaterial.HasProperty(ShaderUtilities.ID_OutlineWidth) ? numberLabel.fontSharedMaterial.GetFloat(ShaderUtilities.ID_OutlineWidth) : 0f;
 
         private void Awake() => CacheComponents();
 
@@ -49,6 +51,7 @@ namespace FirstPuzzle
             {
                 numberLabel.text = (tileId + 1).ToString();
                 numberLabel.raycastTarget = false;
+                ApplyNumberOutlineStyle();
             }
         }
 
@@ -69,7 +72,36 @@ namespace FirstPuzzle
             rect.anchorMin = rect.anchorMax = rect.pivot = new Vector2(0.5f, 0.5f);
             rect.sizeDelta = new Vector2(side, side);
             rect.anchoredPosition = position;
-            if (numberLabel != null) numberLabel.fontSize = Mathf.Clamp(side * 0.24f, 12f, 40f);
+            if (numberLabel != null) numberLabel.fontSize = Mathf.Clamp(side * 0.26f, 14f, 44f);
+        }
+
+        private static Material sharedOutlineMaterial;
+
+        private void ApplyNumberOutlineStyle()
+        {
+            if (numberLabel == null) return;
+            numberLabel.fontStyle |= FontStyles.Bold;
+            numberLabel.color = new Color(1f, 1f, 1f, 0.96f);
+            numberLabel.extraPadding = true;
+
+            Material baseMat = numberLabel.fontSharedMaterial != null ? numberLabel.fontSharedMaterial : numberLabel.fontMaterial;
+            if (baseMat == null) return;
+
+            if (sharedOutlineMaterial == null || sharedOutlineMaterial.shader != baseMat.shader)
+            {
+                sharedOutlineMaterial = new Material(baseMat);
+                sharedOutlineMaterial.name = baseMat.name + " (TileNumberOutline)";
+                sharedOutlineMaterial.EnableKeyword(ShaderUtilities.Keyword_Outline);
+                if (sharedOutlineMaterial.HasProperty(ShaderUtilities.ID_FaceDilate))
+                    sharedOutlineMaterial.SetFloat(ShaderUtilities.ID_FaceDilate, 0.12f);
+                if (sharedOutlineMaterial.HasProperty(ShaderUtilities.ID_OutlineWidth))
+                    sharedOutlineMaterial.SetFloat(ShaderUtilities.ID_OutlineWidth, 0.24f);
+                if (sharedOutlineMaterial.HasProperty(ShaderUtilities.ID_OutlineSoftness))
+                    sharedOutlineMaterial.SetFloat(ShaderUtilities.ID_OutlineSoftness, 0.04f);
+                if (sharedOutlineMaterial.HasProperty(ShaderUtilities.ID_OutlineColor))
+                    sharedOutlineMaterial.SetColor(ShaderUtilities.ID_OutlineColor, new Color(0.04f, 0.07f, 0.12f, 0.96f));
+            }
+            numberLabel.fontSharedMaterial = sharedOutlineMaterial;
         }
 
         public void MoveTo(Vector2 destination, float duration)

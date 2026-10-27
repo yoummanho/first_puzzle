@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -28,7 +28,7 @@ namespace FirstPuzzle.Editor
         public const string TileCorrectSfxPath = AudioFolder + "/sfx_tile_correct.wav";
         public const string StageClearSfxPath = AudioFolder + "/sfx_stage_clear.wav";
 
-        private const string SyncSessionKey = "FirstPuzzle.SceneAudioAndHierarchySync.v2";
+        private const string SyncSessionKey = "FirstPuzzle.SceneAudioAndHierarchySync.v3";
 
         static PuzzleSceneAudioAndHierarchySync()
         {
@@ -54,7 +54,7 @@ namespace FirstPuzzle.Editor
                 !File.Exists(StageClearSfxPath))
                 return true;
 
-            if (new FileInfo(InGameBgmPath).Length < 340000)
+            if (new FileInfo(InGameBgmPath).Length < 700000)
                 return true;
 
             var scene = SceneManager.GetSceneByPath(PuzzleGameSceneBuilder.ScenePath);

@@ -28,7 +28,7 @@ namespace FirstPuzzle
         [SerializeField] private AudioClip tileCorrectClip;
         [SerializeField] private AudioClip clearClip;
 
-        private const float DefaultMusicVolume = 0.16f;
+        private const float DefaultMusicVolume = 0.22f;
         public const float InGameStartDelaySeconds = 0.5f;
         public const float InGameFadeInDurationSeconds = 0.8f;
 
@@ -76,8 +76,8 @@ namespace FirstPuzzle
 
             music.playOnAwake = effects.playOnAwake = false;
             music.loop = true;
-            music.volume = 0.16f;
-            effects.volume = 0.24f;
+            music.volume = DefaultMusicVolume;
+            effects.volume = 0.26f;
 
             if (titleMusicClip == null) titleMusicClip = generatedTitleMusic = TitleScreenBgm("Puzzle title bgm");
             if (lobbyMusicClip == null) lobbyMusicClip = generatedLobbyMusic = LobbyBgm("Puzzle lobby bgm");
@@ -232,12 +232,46 @@ namespace FirstPuzzle
             effects.PlayOneShot(clearClip);
         }
 
-        /// <summary>Bright, welcoming casual fanfare loop for the Title Screen (120 BPM).</summary>
+        /// <summary>Warm acoustic piano & celesta fanfare loop for the Title Screen (120 BPM, 44.1 kHz).</summary>
         private static AudioClip TitleScreenBgm(string name)
         {
-            const int rate = 22050;
-            const float stepSeconds = 0.125f; // 120 BPM sixteenth note
-            int samplesPerStep = Mathf.RoundToInt(rate * stepSeconds);
+            const int rate = 44100;
+            var samples = SynthesizeTitleBgmSamples(rate);
+            var clip = AudioClip.Create(name, samples.Length, 1, rate, false);
+            clip.SetData(samples, 0);
+            return clip;
+        }
+
+        /// <summary>Relaxed acoustic electric-piano & marimba loop for the Stage Lobby (112 BPM, 44.1 kHz).</summary>
+        private static AudioClip LobbyBgm(string name)
+        {
+            const int rate = 44100;
+            var samples = SynthesizeLobbyBgmSamples(rate);
+            var clip = AudioClip.Create(name, samples.Length, 1, rate, false);
+            clip.SetData(samples, 0);
+            return clip;
+        }
+
+        /// <summary>
+        /// High-quality acoustic-electric piano, warm string pad, vibraphone counter-melody, upright bass,
+        /// and studio percussion arrangement for the Main Stage In-Game BGM (120 BPM, 8.0s seamless loop, 44.1 kHz).
+        /// Uses polyphonic cross-step note decay, stereo-like chorus detuning, and wrap-around reverb so it sounds rich and natural rather than MIDI.
+        /// </summary>
+        private static AudioClip UpbeatPuzzleBgm(string name)
+        {
+            const int rate = 44100;
+            var samples = SynthesizeInGameLoopSamples(rate);
+            var clip = AudioClip.Create(name, samples.Length, 1, rate, false);
+            clip.SetData(samples, 0);
+            return clip;
+        }
+
+        public static float[] SynthesizeTitleBgmSamples(int rate)
+        {
+            const float stepSeconds = 0.125f;
+            const int steps = 32;
+            int totalSamples = Mathf.RoundToInt(rate * stepSeconds * steps);
+            var mix = new float[totalSamples];
 
             float[] lead =
             {
@@ -246,23 +280,43 @@ namespace FirstPuzzle
                 587.33f, 698.46f, 880.00f, 1174.66f, 1046.50f, 0f, 880.00f, 0f,
                 783.99f, 659.25f, 587.33f, 659.25f, 783.99f, 0f, 0f, 0f
             };
-            float[] bass =
+            float[][] chords =
             {
-                261.63f, 0f, 329.63f, 0f, 392.00f, 0f, 329.63f, 0f,
-                220.00f, 0f, 261.63f, 0f, 329.63f, 0f, 261.63f, 0f,
-                293.66f, 0f, 349.23f, 0f, 440.00f, 0f, 349.23f, 0f,
-                196.00f, 0f, 246.94f, 0f, 293.66f, 0f, 196.00f, 0f
+                new[] { 261.63f, 329.63f, 392.00f, 493.88f }, // Cmaj7
+                new[] { 220.00f, 261.63f, 329.63f, 392.00f }, // Am7
+                new[] { 293.66f, 349.23f, 440.00f, 523.25f }, // Dm7
+                new[] { 196.00f, 246.94f, 293.66f, 349.23f }  // G7
             };
 
-            return RenderTwoVoiceLoop(name, rate, samplesPerStep, lead, bass, 0.36f, 0.22f);
+            for (int step = 0; step < steps; step++)
+            {
+                float start = step * stepSeconds;
+                if (lead[step] > 0f)
+                    AddAcousticPianoNote(mix, rate, start, lead[step], 0.48f, 0.24f);
+                if (step % 8 == 0)
+                {
+                    float[] ch = chords[(step / 8) % chords.Length];
+                    for (int n = 0; n < ch.Length; n++)
+                        AddWarmPadNote(mix, rate, start + n * 0.015f, ch[n], stepSeconds * 8f, 0.08f);
+                    AddUprightBassNote(mix, rate, start, ch[0] * 0.5f, stepSeconds * 4f, 0.22f);
+                }
+                else if (step % 8 == 4)
+                {
+                    float[] ch = chords[(step / 8) % chords.Length];
+                    AddUprightBassNote(mix, rate, start, ch[2] * 0.5f, stepSeconds * 4f, 0.18f);
+                }
+            }
+
+            ApplySeamlessStudioPolish(mix, rate);
+            return mix;
         }
 
-        /// <summary>Breezy, relaxed casual acoustic-style marimba/bell loop for the Stage Lobby (112 BPM).</summary>
-        private static AudioClip LobbyBgm(string name)
+        public static float[] SynthesizeLobbyBgmSamples(int rate)
         {
-            const int rate = 22050;
             const float stepSeconds = 0.134f;
-            int samplesPerStep = Mathf.RoundToInt(rate * stepSeconds);
+            const int steps = 32;
+            int totalSamples = Mathf.RoundToInt(rate * stepSeconds * steps);
+            var mix = new float[totalSamples];
 
             float[] lead =
             {
@@ -273,148 +327,364 @@ namespace FirstPuzzle
             };
             float[] bass =
             {
-                130.81f, 196.00f, 261.63f, 196.00f, 130.81f, 196.00f, 261.63f, 196.00f,
-                146.83f, 220.00f, 293.66f, 220.00f, 146.83f, 220.00f, 293.66f, 220.00f,
-                174.61f, 261.63f, 349.23f, 261.63f, 174.61f, 261.63f, 349.23f, 261.63f,
-                196.00f, 246.94f, 293.66f, 246.94f, 130.81f, 196.00f, 261.63f, 0f
+                130.81f, 0f, 196.00f, 0f, 261.63f, 0f, 196.00f, 0f,
+                146.83f, 0f, 220.00f, 0f, 293.66f, 0f, 220.00f, 0f,
+                174.61f, 0f, 261.63f, 0f, 349.23f, 0f, 261.63f, 0f,
+                196.00f, 0f, 246.94f, 0f, 130.81f, 0f, 196.00f, 0f
             };
 
-            return RenderTwoVoiceLoop(name, rate, samplesPerStep, lead, bass, 0.32f, 0.20f);
+            for (int step = 0; step < steps; step++)
+            {
+                float start = step * stepSeconds;
+                if (lead[step] > 0f)
+                    AddVibraphoneNote(mix, rate, start, lead[step], 0.55f, 0.22f);
+                if (bass[step] > 0f)
+                    AddUprightBassNote(mix, rate, start, bass[step], 0.34f, 0.20f);
+            }
+
+            ApplySeamlessStudioPolish(mix, rate);
+            return mix;
         }
 
-        private static AudioClip RenderTwoVoiceLoop(string name, int rate, int samplesPerStep, float[] lead, float[] bass, float leadGain, float bassGain)
+        public static float[] SynthesizeInGameLoopSamples(int rate)
         {
-            int totalSamples = samplesPerStep * lead.Length;
-            var samples = new float[totalSamples];
-            for (int i = 0; i < totalSamples; i++)
+            // 120 BPM: 64 sixteenth-note steps * 0.125s = 8.000s exact seamless loop
+            const float stepSeconds = 0.125f;
+            const int steps = 64;
+            int totalSamples = Mathf.RoundToInt(rate * stepSeconds * steps);
+            var mix = new float[totalSamples];
+
+            // Expressive, singable acoustic-piano lead melody with natural phrasing
+            float[] lead =
             {
-                int step = i / samplesPerStep;
-                int stepSample = i % samplesPerStep;
-                float t = stepSample / (float)rate;
-                float progress = stepSample / (float)samplesPerStep;
-                float env = Mathf.Clamp01(progress / 0.06f) * Mathf.Pow(1f - progress, 0.85f);
-                float s = 0f;
+                // Bar 1 (Cmaj9 -> G/B)
+                659.25f, 0f, 783.99f, 880.00f, 783.99f, 0f, 659.25f, 523.25f,
+                587.33f, 0f, 659.25f, 783.99f, 659.25f, 0f, 587.33f, 0f,
+                // Bar 2 (Am9 -> Em7)
+                523.25f, 0f, 659.25f, 880.00f, 783.99f, 0f, 659.25f, 587.33f,
+                523.25f, 587.33f, 659.25f, 0f, 783.99f, 0f, 0f, 0f,
+                // Bar 3 (Fmaj9 -> C/E)
+                698.46f, 0f, 880.00f, 1046.50f, 987.77f, 0f, 880.00f, 783.99f,
+                659.25f, 0f, 783.99f, 880.00f, 783.99f, 0f, 659.25f, 523.25f,
+                // Bar 4 (Dm9 -> G13 turnaround)
+                587.33f, 659.25f, 698.46f, 783.99f, 880.00f, 0f, 783.99f, 659.25f,
+                783.99f, 0f, 587.33f, 659.25f, 523.25f, 0f, 0f, 0f
+            };
+
+            // Sparkling vibraphone / rhodes counter-arpeggio
+            float[] counter =
+            {
+                0f, 523.25f, 0f, 0f, 0f, 523.25f, 0f, 0f,
+                0f, 493.88f, 0f, 0f, 0f, 493.88f, 0f, 392.00f,
+                0f, 440.00f, 0f, 0f, 0f, 440.00f, 0f, 0f,
+                0f, 392.00f, 0f, 493.88f, 0f, 587.33f, 523.25f, 0f,
+                0f, 523.25f, 0f, 0f, 0f, 587.33f, 0f, 0f,
+                0f, 523.25f, 0f, 0f, 0f, 493.88f, 0f, 0f,
+                0f, 440.00f, 0f, 523.25f, 0f, 587.33f, 0f, 0f,
+                0f, 493.88f, 0f, 440.00f, 0f, 392.00f, 493.88f, 0f
+            };
+
+            // Lush 8-chord jazz-pop progression (1 chord every 8 steps = 1.0s)
+            float[][] chordProgression =
+            {
+                new[] { 261.63f, 329.63f, 392.00f, 493.88f }, // Cmaj7
+                new[] { 246.94f, 293.66f, 392.00f, 493.88f }, // G/B
+                new[] { 220.00f, 261.63f, 329.63f, 392.00f }, // Am7
+                new[] { 196.00f, 246.94f, 329.63f, 392.00f }, // Em7
+                new[] { 261.63f, 349.23f, 440.00f, 523.25f }, // Fmaj7
+                new[] { 261.63f, 329.63f, 392.00f, 493.88f }, // C/E
+                new[] { 293.66f, 349.23f, 440.00f, 523.25f }, // Dm7
+                new[] { 246.94f, 329.63f, 392.00f, 440.00f }  // G13sus -> G7
+            };
+
+            // Warm walking acoustic bassline
+            float[] bass =
+            {
+                130.81f, 0f, 0f, 196.00f, 261.63f, 0f, 196.00f, 0f,
+                123.47f, 0f, 0f, 196.00f, 246.94f, 0f, 196.00f, 0f,
+                110.00f, 0f, 0f, 164.81f, 220.00f, 0f, 164.81f, 0f,
+                82.41f,  0f, 0f, 123.47f, 164.81f, 0f, 196.00f, 0f,
+                87.31f,  0f, 0f, 130.81f, 174.61f, 0f, 220.00f, 0f,
+                82.41f,  0f, 0f, 130.81f, 164.81f, 0f, 196.00f, 0f,
+                73.42f,  0f, 0f, 110.00f, 146.83f, 0f, 174.61f, 0f,
+                98.00f,  0f, 146.83f, 0f, 196.00f, 0f, 146.83f, 98.00f
+            };
+
+            for (int step = 0; step < steps; step++)
+            {
+                float start = step * stepSeconds;
+
+                // 1. Warm String & Electric Piano Pad on each chord change (every 8 steps = 1.0s)
+                if (step % 8 == 0)
+                {
+                    float[] chord = chordProgression[(step / 8) % chordProgression.Length];
+                    for (int n = 0; n < chord.Length; n++)
+                    {
+                        // Gentle harp-like upward strum (14ms between chord tones)
+                        AddWarmPadNote(mix, rate, start + n * 0.014f, chord[n], stepSeconds * 8.8f, 0.075f);
+                        AddElectricPianoComp(mix, rate, start + n * 0.012f, chord[n], stepSeconds * 4.5f, 0.065f);
+                    }
+                }
+                else if (step % 8 == 3 || step % 8 == 6)
+                {
+                    // Syncopated bossa/pop electric piano chord comping
+                    float[] chord = chordProgression[(step / 8) % chordProgression.Length];
+                    for (int n = 0; n < chord.Length; n++)
+                        AddElectricPianoComp(mix, rate, start + n * 0.008f, chord[n], stepSeconds * 2.4f, 0.048f);
+                }
+
+                // 2. Expressive Grand Piano + Bell Layer for Lead Melody (with natural sustain across steps!)
                 if (lead[step] > 0f)
                 {
-                    float p = 2f * Mathf.PI * lead[step] * t;
-                    s += (Mathf.Sin(p) + 0.25f * Mathf.Sin(2f * p) + 0.1f * Mathf.Sin(3f * p)) * env * leadGain;
+                    bool nextIsRest = (step + 1 < steps) && lead[step + 1] <= 0f;
+                    float noteDur = nextIsRest ? 0.52f : 0.34f;
+                    AddAcousticPianoNote(mix, rate, start, lead[step], noteDur, 0.25f);
                 }
+
+                // 3. Vibraphone counter-arpeggio
+                if (counter[step] > 0f)
+                {
+                    AddVibraphoneNote(mix, rate, start, counter[step], 0.42f, 0.11f);
+                }
+
+                // 4. Warm Upright / Acoustic Bass
                 if (bass[step] > 0f)
                 {
-                    float p = 2f * Mathf.PI * bass[step] * t;
-                    s += (Mathf.Sin(p) + 0.2f * Mathf.Sin(2f * p)) * env * bassGain;
+                    float bassDur = (step + 1 < steps && bass[step + 1] <= 0f) ? 0.38f : 0.20f;
+                    AddUprightBassNote(mix, rate, start, bass[step], bassDur, 0.24f);
                 }
-                samples[i] = Mathf.Clamp(s, -0.9f, 0.9f);
+
+                // 5. Soft Acoustic Studio Percussion (warm kick, wooden rim/snare, brushed shaker)
+                if (step % 8 == 0 || step % 8 == 3)
+                    AddWarmKick(mix, rate, start, 0.16f);
+                if (step % 8 == 4)
+                    AddSoftBrushSnare(mix, rate, start, 0.10f);
+                if (step % 2 == 1)
+                    AddSoftShaker(mix, rate, start, 0.032f);
             }
-            var clip = AudioClip.Create(name, samples.Length, 1, rate, false);
-            clip.SetData(samples, 0);
-            return clip;
+
+            ApplySeamlessStudioPolish(mix, rate);
+            return mix;
+        }
+
+        private static void AddAcousticPianoNote(float[] mix, int rate, float startSec, float freq, float durationSec, float amp)
+        {
+            int startIdx = Mathf.RoundToInt(startSec * rate);
+            int len = Mathf.RoundToInt(durationSec * rate);
+            int total = mix.Length;
+
+            for (int i = 0; i < len; i++)
+            {
+                float t = i / (float)rate;
+                // Fast felt-hammer attack + natural exponential string decay
+                float attack = Mathf.Clamp01(t / 0.006f);
+                float decay = Mathf.Exp(-4.2f * t) * 0.72f + Mathf.Exp(-1.35f * t) * 0.28f;
+                float release = Mathf.Clamp01((durationSec - t) / 0.045f);
+                float env = attack * decay * release;
+
+                // Higher partials decay faster like a real acoustic piano string (natural low-pass filter over time)
+                float brightEnv = Mathf.Exp(-11.0f * t);
+                // Slight chorus detune (+0.18% / -0.18%) eliminates sterile digital MIDI tone
+                float w1 = 2f * Mathf.PI * freq * t;
+                float w2 = 2f * Mathf.PI * (freq * 1.0018f) * t;
+                float w3 = 2f * Mathf.PI * (freq * 0.9982f) * t;
+
+                float body = (Mathf.Sin(w1) + 0.45f * Mathf.Sin(w2) + 0.45f * Mathf.Sin(w3)) * 0.53f;
+                float overtones =
+                    0.34f * Mathf.Sin(2f * w1 + 0.3f) * Mathf.Exp(-5.5f * t) +
+                    0.16f * Mathf.Sin(3f * w2) * brightEnv +
+                    0.07f * Mathf.Sin(4f * w1) * brightEnv * brightEnv;
+
+                // Subtle hammer transient on the first 12ms
+                float hammer = t < 0.012f ? Mathf.Sin(7f * w1) * (1f - t / 0.012f) * 0.08f : 0f;
+
+                int idx = (startIdx + i) % total;
+                mix[idx] += (body + overtones + hammer) * env * amp;
+            }
+        }
+
+        private static void AddElectricPianoComp(float[] mix, int rate, float startSec, float freq, float durationSec, float amp)
+        {
+            int startIdx = Mathf.RoundToInt(startSec * rate);
+            int len = Mathf.RoundToInt(durationSec * rate);
+            int total = mix.Length;
+
+            for (int i = 0; i < len; i++)
+            {
+                float t = i / (float)rate;
+                float env = Mathf.Clamp01(t / 0.008f) * Mathf.Exp(-3.0f * t) * Mathf.Clamp01((durationSec - t) / 0.05f);
+                float modIndex = 0.65f * Mathf.Exp(-9.5f * t) + 0.12f;
+                float phase = 2f * Mathf.PI * freq * t;
+                // Rhodes-style warm FM tine + fundamental sine
+                float wave = Mathf.Sin(phase + modIndex * Mathf.Sin(2f * phase)) + 0.35f * Mathf.Sin(phase * 1.001f);
+                int idx = (startIdx + i) % total;
+                mix[idx] += wave * env * amp;
+            }
+        }
+
+        private static void AddVibraphoneNote(float[] mix, int rate, float startSec, float freq, float durationSec, float amp)
+        {
+            int startIdx = Mathf.RoundToInt(startSec * rate);
+            int len = Mathf.RoundToInt(durationSec * rate);
+            int total = mix.Length;
+
+            for (int i = 0; i < len; i++)
+            {
+                float t = i / (float)rate;
+                float tremolo = 1f + 0.14f * Mathf.Sin(2f * Mathf.PI * 5.5f * t);
+                float env = Mathf.Clamp01(t / 0.005f) * Mathf.Exp(-4.5f * t) * Mathf.Clamp01((durationSec - t) / 0.04f);
+                float phase = 2f * Mathf.PI * freq * t;
+                float wave = Mathf.Sin(phase) + 0.18f * Mathf.Sin(4f * phase) * Mathf.Exp(-14f * t);
+                int idx = (startIdx + i) % total;
+                mix[idx] += wave * env * tremolo * amp;
+            }
+        }
+
+        private static void AddWarmPadNote(float[] mix, int rate, float startSec, float freq, float durationSec, float amp)
+        {
+            int startIdx = Mathf.RoundToInt(startSec * rate);
+            int len = Mathf.RoundToInt(durationSec * rate);
+            int total = mix.Length;
+
+            for (int i = 0; i < len; i++)
+            {
+                float t = i / (float)rate;
+                // Slow, silky string-pad swell and gentle fade
+                float attack = Mathf.Clamp01(t / 0.16f);
+                float release = Mathf.Clamp01((durationSec - t) / 0.22f);
+                float env = attack * release * Mathf.Exp(-0.45f * t);
+
+                float p1 = 2f * Mathf.PI * freq * t;
+                float p2 = 2f * Mathf.PI * (freq * 1.0025f) * t + 0.7f;
+                float p3 = 2f * Mathf.PI * (freq * 0.9975f) * t + 1.4f;
+                float wave = (Mathf.Sin(p1) + Mathf.Sin(p2) + Mathf.Sin(p3)) * 0.33f
+                           + 0.15f * Mathf.Sin(2f * p1);
+
+                int idx = (startIdx + i) % total;
+                mix[idx] += wave * env * amp;
+            }
+        }
+
+        private static void AddUprightBassNote(float[] mix, int rate, float startSec, float freq, float durationSec, float amp)
+        {
+            int startIdx = Mathf.RoundToInt(startSec * rate);
+            int len = Mathf.RoundToInt(durationSec * rate);
+            int total = mix.Length;
+
+            for (int i = 0; i < len; i++)
+            {
+                float t = i / (float)rate;
+                float attack = Mathf.Clamp01(t / 0.008f);
+                float decay = Mathf.Exp(-3.4f * t);
+                float release = Mathf.Clamp01((durationSec - t) / 0.035f);
+                float env = attack * decay * release;
+
+                float phase = 2f * Mathf.PI * freq * t;
+                // Plucked acoustic bass fundamental + warm 2nd harmonic + finger pluck envelope
+                float pluck = Mathf.Exp(-18f * t);
+                float wave = Mathf.Sin(phase) + 0.42f * Mathf.Sin(2f * phase) + 0.16f * Mathf.Sin(3f * phase) * pluck;
+
+                int idx = (startIdx + i) % total;
+                mix[idx] += wave * env * amp;
+            }
+        }
+
+        private static void AddWarmKick(float[] mix, int rate, float startSec, float amp)
+        {
+            int startIdx = Mathf.RoundToInt(startSec * rate);
+            int len = Mathf.RoundToInt(0.11f * rate);
+            int total = mix.Length;
+            float phase = 0f;
+
+            for (int i = 0; i < len; i++)
+            {
+                float t = i / (float)rate;
+                float freq = 52f + 95f * Mathf.Exp(-38f * t);
+                phase += 2f * Mathf.PI * freq / rate;
+                float env = Mathf.Exp(-24f * t);
+                int idx = (startIdx + i) % total;
+                mix[idx] += Mathf.Sin(phase) * env * amp;
+            }
+        }
+
+        private static void AddSoftBrushSnare(float[] mix, int rate, float startSec, float amp)
+        {
+            int startIdx = Mathf.RoundToInt(startSec * rate);
+            int len = Mathf.RoundToInt(0.085f * rate);
+            int total = mix.Length;
+            float prev = 0f;
+
+            for (int i = 0; i < len; i++)
+            {
+                float t = i / (float)rate;
+                float env = Mathf.Exp(-32f * t);
+                float body = Mathf.Sin(2f * Mathf.PI * 185f * t) * Mathf.Exp(-45f * t) * 0.45f;
+                float n = Mathf.Sin((i + 17) * 12.9898f) * 43758.5453f;
+                n = (n - Mathf.Floor(n)) * 2f - 1f;
+                // Band-smoothed brush noise
+                prev = prev * 0.62f + n * 0.38f;
+                int idx = (startIdx + i) % total;
+                mix[idx] += (body + prev * 0.55f) * env * amp;
+            }
+        }
+
+        private static void AddSoftShaker(float[] mix, int rate, float startSec, float amp)
+        {
+            int startIdx = Mathf.RoundToInt(startSec * rate);
+            int len = Mathf.RoundToInt(0.045f * rate);
+            int total = mix.Length;
+            float prev = 0f;
+
+            for (int i = 0; i < len; i++)
+            {
+                float t = i / (float)rate;
+                float env = Mathf.Sin(Mathf.PI * Mathf.Clamp01(t / 0.045f)) * Mathf.Exp(-28f * t);
+                float n = Mathf.Sin((i + 73) * 78.233f) * 43758.5453f;
+                n = (n - Mathf.Floor(n)) * 2f - 1f;
+                float highPass = n - prev;
+                prev = n;
+                int idx = (startIdx + i) % total;
+                mix[idx] += highPass * 0.4f * env * amp;
+            }
         }
 
         /// <summary>
-        /// Synthesizes a bright, relaxed Puyo-Puyo style chiptune/arcade loop (120 BPM, 64 sixteenth-note steps;
-        /// 150 BPM reserved for future time-limit stages) with a cheerful lead melody, harmony/arpeggio backing, and walking bassline.
+        /// Applies a multi-tap studio room reverb (wrapped seamlessly around the loop boundary)
+        /// plus warm analog-style soft saturation and a gentle low-pass filter to remove any harsh digital edge.
         /// </summary>
-        private static AudioClip UpbeatPuzzleBgm(string name)
+        private static void ApplySeamlessStudioPolish(float[] mix, int rate)
         {
-            const int rate = 22050;
-            const float stepSeconds = 0.125f; // 120 BPM sixteenth note (0.5s per beat, 8.0s loop; slightly slower than 150 BPM)
-            int samplesPerStep = Mathf.RoundToInt(rate * stepSeconds);
+            int total = mix.Length;
+            var wet = new float[total];
+            int d1 = Mathf.RoundToInt(0.095f * rate);
+            int d2 = Mathf.RoundToInt(0.185f * rate);
+            int d3 = Mathf.RoundToInt(0.290f * rate);
 
-            float[] lead =
+            for (int i = 0; i < total; i++)
             {
-                523.25f, 0f, 659.25f, 0f, 783.99f, 0f, 659.25f, 0f,
-                880.00f, 0f, 783.99f, 0f, 659.25f, 783.99f, 1046.50f, 0f,
-                880.00f, 0f, 698.46f, 0f, 783.99f, 0f, 587.33f, 0f,
-                659.25f, 587.33f, 523.25f, 587.33f, 659.25f, 0f, 783.99f, 0f,
-                1046.50f, 0f, 987.77f, 0f, 880.00f, 0f, 783.99f, 0f,
-                698.46f, 783.99f, 880.00f, 0f, 783.99f, 659.25f, 523.25f, 0f,
-                587.33f, 659.25f, 698.46f, 0f, 783.99f, 880.00f, 987.77f, 0f,
-                1046.50f, 0f, 783.99f, 659.25f, 1046.50f, 0f, 0f, 0f
-            };
-
-            float[] harmony =
-            {
-                0f, 329.63f, 0f, 392.00f, 0f, 523.25f, 0f, 392.00f,
-                0f, 440.00f, 0f, 392.00f, 0f, 493.88f, 0f, 523.25f,
-                0f, 440.00f, 0f, 349.23f, 0f, 392.00f, 0f, 293.66f,
-                0f, 329.63f, 0f, 392.00f, 0f, 493.88f, 0f, 392.00f,
-                0f, 523.25f, 0f, 493.88f, 0f, 440.00f, 0f, 392.00f,
-                0f, 349.23f, 0f, 440.00f, 0f, 392.00f, 0f, 329.63f,
-                0f, 349.23f, 0f, 440.00f, 0f, 493.88f, 0f, 587.33f,
-                523.25f, 0f, 392.00f, 0f, 523.25f, 659.25f, 783.99f, 0f
-            };
-
-            float[] bass =
-            {
-                130.81f, 261.63f, 130.81f, 261.63f, 164.81f, 329.63f, 196.00f, 392.00f,
-                220.00f, 440.00f, 196.00f, 392.00f, 164.81f, 329.63f, 130.81f, 261.63f,
-                174.61f, 349.23f, 174.61f, 349.23f, 196.00f, 392.00f, 196.00f, 392.00f,
-                130.81f, 261.63f, 146.83f, 293.66f, 164.81f, 329.63f, 196.00f, 392.00f,
-                130.81f, 261.63f, 164.81f, 329.63f, 220.00f, 440.00f, 196.00f, 392.00f,
-                174.61f, 349.23f, 174.61f, 349.23f, 130.81f, 261.63f, 164.81f, 329.63f,
-                146.83f, 293.66f, 174.61f, 349.23f, 196.00f, 392.00f, 246.94f, 493.88f,
-                130.81f, 261.63f, 196.00f, 164.81f, 130.81f, 261.63f, 196.00f, 130.81f
-            };
-
-            int totalSamples = samplesPerStep * lead.Length;
-            var samples = new float[totalSamples];
-
-            for (int i = 0; i < totalSamples; i++)
-            {
-                int step = i / samplesPerStep;
-                int stepSample = i % samplesPerStep;
-                float t = stepSample / (float)rate;
-                float progress = stepSample / (float)samplesPerStep;
-
-                float env = Mathf.Clamp01(progress / 0.08f) * Mathf.Pow(1f - progress, 0.65f);
-                float sample = 0f;
-
-                float leadFreq = lead[step];
-                if (leadFreq > 0f)
-                {
-                    float phase = 2f * Mathf.PI * leadFreq * t;
-                    float wave = Mathf.Sin(phase) + 0.32f * Mathf.Sin(3f * phase) + 0.18f * Mathf.Sin(2f * phase);
-                    sample += wave * env * 0.42f;
-                }
-
-                float harmFreq = harmony[step];
-                if (harmFreq > 0f)
-                {
-                    float phase = 2f * Mathf.PI * harmFreq * t;
-                    float wave = Mathf.Sin(phase) + 0.25f * Mathf.Sin(2f * phase);
-                    sample += wave * env * 0.22f;
-                }
-
-                float bassFreq = bass[step];
-                if (bassFreq > 0f)
-                {
-                    float bassEnv = Mathf.Clamp01(progress / 0.05f) * (1f - 0.55f * progress);
-                    float phase = 2f * Mathf.PI * bassFreq * t;
-                    float wave = Mathf.Sin(phase) + 0.4f * Mathf.Sin(2f * phase);
-                    sample += wave * bassEnv * 0.26f;
-                }
-
-                if (step % 2 == 1 && progress < 0.22f)
-                {
-                    float hatEnv = 1f - (progress / 0.22f);
-                    float pseudoNoise = Mathf.Sin(i * 12.9898f) * 43758.5453f;
-                    pseudoNoise -= Mathf.Floor(pseudoNoise);
-                    sample += (pseudoNoise * 2f - 1f) * hatEnv * hatEnv * 0.06f;
-                }
-
-                samples[i] = Mathf.Clamp(sample, -0.95f, 0.95f);
+                float s = mix[i]
+                        + 0.20f * mix[(i - d1 + total) % total]
+                        + 0.12f * mix[(i - d2 + total) % total]
+                        + 0.07f * mix[(i - d3 + total) % total];
+                wet[i] = s;
             }
 
-            var clip = AudioClip.Create(name, samples.Length, 1, rate, false);
-            clip.SetData(samples, 0);
-            return clip;
+            float lp = wet[total - 1];
+            for (int i = 0; i < total; i++)
+            {
+                // Gentle warm low-pass smoothing
+                lp = lp * 0.18f + wet[i] * 0.82f;
+                // Soft tape-style saturation so peaks never clip harshly
+                float x = lp * 0.92f;
+                float saturated = x / (1f + 0.35f * Mathf.Abs(x));
+                mix[i] = Mathf.Clamp(saturated, -0.92f, 0.92f);
+            }
         }
 
         /// <summary>Short, crystal-clear bell chime played when a tile snaps into its exact home position.</summary>
         private static AudioClip CrispChime(string name, float[] notes, float secondsPerNote)
         {
-            const int rate = 22050;
+            const int rate = 44100;
             int samplesPerNote = Mathf.RoundToInt(rate * secondsPerNote);
             var samples = new float[samplesPerNote * notes.Length];
             for (int i = 0; i < samples.Length; i++)
@@ -440,7 +710,7 @@ namespace FirstPuzzle
 
         private static AudioClip Tone(string name, float[] notes, float secondsPerNote)
         {
-            const int rate = 22050;
+            const int rate = 44100;
             int samplesPerNote = Mathf.RoundToInt(rate * secondsPerNote);
             var samples = new float[samplesPerNote * notes.Length];
             for (int i = 0; i < samples.Length; i++)
