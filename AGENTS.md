@@ -5,13 +5,14 @@
 - `염_스크립트`: `C:\Users\EthanHome\OneDrive\Desktop\A\automatic`에서만 Git 및 스크립트 작업을 수행한다.
 - 두 프로젝트의 변경을 섞지 않는다.
 
-## 커밋 및 일일 진행 기록
-- **커밋 메시지(코멘트)는 가능하면 한글로 작성한다** (예: `feat: Phase 3 로비·도감·화면방향 대응 및 경쾌한 배경음악 적용`).
-- 이 프로젝트에서 커밋하는 날에는 **매 커밋 전에 이 파일의 작업 기록을 갱신**하고 해당 커밋에 함께 포함한다.
-- 기록에는 `YYYY-MM-DD HH:mm KST`, 대상 페이즈, 실제 변경 내용, 커밋 제목, 검증 결과, 남은 작업을 적는다. 같은 날 여러 커밋이면 항목을 추가한다.
-- 현재 커밋의 해시는 자기 자신에 포함할 수 없으므로 커밋 제목으로 식별한다. 후속 기록에서 직전 커밋 해시 및 확인된 푸시 결과를 보완한다. 성공 전 푸시 완료로 기록하지 않는다.
-- 실제 테스트 결과와 미검증 항목을 구분한다. 요청 없이 커밋/푸시하지 않으며, 요청된 경우 일반 커밋과 푸시를 사용한다.
-- 상세 기능 명세는 [Assets/SPEC.md](Assets/SPEC.md)를 따른다.
+## 작업 종료 프로세스 (기본 규약) 및 일일 진행 기록
+- **작업 종료 프로세스 정규화 (필수 기본 규약):**
+  1. 모든 수정 또는 기능 개발 작업이 완료되면, 별도 지시가 없더라도 작업 종료 단계에서 **반드시 이 파일(`AGENTS.md`)에 요약 내용을 먼저 작성·갱신한 뒤 Git 커밋 및 원격 푸시(`origin/master`, `origin/wip/home-phase1`)를 수행**한다.
+  2. **기존 `AGENTS.md` 내용 변경 명시 규칙:** 새로 지시한 사안이 기존 `AGENTS.md`에 기술된 설계·기능·수치(예: UI 버튼 구성, BGM BPM, 사운드 재생 타이밍 등)에서 변경된 경우, `AGENTS.md` 본문(현재 페이즈/인계 가이드 등)의 기존 설명을 최신 상태로 수정하고, 하단 작업 기록에도 **`기존 AGENTS.md 내용 대비 변경 사항`** 항목을 두어 무엇이 어떻게 변경되었는지 명확히 명시한다.
+  3. **커밋 메시지(코멘트)는 가능하면 한글로 작성한다** (예: `feat: 일시정지 방향버튼 제거·인게임 BGM 템포 완화 및 딜레이 페이드인·작업종료 규약 정립`).
+  4. 기록에는 `YYYY-MM-DD HH:mm KST`, 직전 커밋 해시 및 푸시 확인 결과, 대상 페이즈, 기존 `AGENTS.md` 대비 변경 사항(해당 시), 실제 변경 내용, 커밋 제목, 검증 결과, 남은 작업을 적는다. 같은 날 여러 커밋이면 항목을 추가한다.
+  5. 현재 커밋의 해시는 자기 자신에 포함할 수 없으므로 커밋 제목으로 식별한다. 후속 기록에서 직전 커밋 해시 및 확인된 푸시 결과를 보완한다. 성공 전 푸시 완료로 기록하지 않는다.
+  6. 실제 테스트 결과와 미검증 항목을 구분한다. 상세 기능 명세는 [Assets/SPEC.md](Assets/SPEC.md)를 따른다.
 
 ## 현재 페이즈
 | 페이즈 | 범위 | 상태 |
@@ -30,15 +31,15 @@
    - Phase 1 코어 검증용 씬: `Assets/Scenes/PhaseOneTest.unity` (`PhaseOneSceneBuilder.cs`).
    - 일러스트 원본 경로: `Assets/Resource.art/Puzzle_images` (24종 정리 완료, GIF/WebP는 첫 프레임 PNG와 함께 보존).
    - 캐주얼 배경 경로: `Assets/Resource.art/Backgrounds/bg_puzzle_misty_forest_temp.png` (기존 어두운 안개 숲 배경을 밝고 화사한 파스텔 하늘·초원 캐주얼 배경으로 교체, GUID 유지).
-   - 오디오 에셋 경로: `Assets/Resource/Audio/` (`bgm_title.wav`, `bgm_lobby.wav`, `bgm_ingame_loop.wav`, `sfx_game_start.wav`, `sfx_tile_move.wav`, `sfx_tile_correct.wav`, `sfx_stage_clear.wav` 총 7종이 실제 WAV 파일로 저장되어 `PuzzleGame` 루트의 `PuzzleAudio` 인스펙터에 직접 연결됨).
+   - 오디오 에셋 경로: `Assets/Resource/Audio/` (`bgm_title.wav`, `bgm_lobby.wav`, `bgm_ingame_loop.wav`[일반 플레이용 120 BPM 루프, 8.0초], `sfx_game_start.wav`, `sfx_tile_move.wav`, `sfx_tile_correct.wav`, `sfx_stage_clear.wav` 총 7종이 실제 WAV 파일로 저장되어 `PuzzleGame` 루트의 `PuzzleAudio` 인스펙터에 직접 연결됨).
 3. **핵심 런타임 스크립트 (`Assets/Resource/Scripts/Puzzle/`):**
    - `StageData.cs`, `PuzzleBoardState.cs`, `PuzzleTile.cs`, `BoardManager.cs`: Phase 1 퍼즐 코어 (정사각형 타일 유지, 중앙 크롭 UV, 결정론적 역방향 셔플, 다중 밀기, Undo 3회 및 보상 티켓 콜백, 타일이 정답 칸에 들어갈 때 `TilePlacedCorrectly` 이벤트 발생, 클리어 페이드인).
    - `SettingsManager.cs`: 5종 설정(`PREF_BGM`, `PREF_SFX`, `PREF_MULTIPUSH`, `PREF_SLIDE_ANIM`, `PREF_ORIENTATION` 세로/가로) 저장/복원 및 `Screen.orientation` 반영.
-   - `PuzzleAudio.cs`: `PuzzleGame` 루트 오브젝트에 직렬화 부착되어 Inspector에서 7종 오디오 클립(`titleMusicClip`, `lobbyMusicClip`, `musicClip` 인게임 루프, `gameStartClip`, `moveClip`, `tileCorrectClip` 타일 정답 위치 안착 시 짧고 맑은 벨 소리, `clearClip`)을 직접 교체·편집 가능. 미할당 시 각각 구분되는 기본 합성 사운드 자동 재생.
+   - `PuzzleAudio.cs`: `PuzzleGame` 루트 오브젝트에 직렬화 부착되어 Inspector에서 7종 오디오 클립(`titleMusicClip`, `lobbyMusicClip`, `musicClip` 인게임 루프[120 BPM으로 템포 완화, 기존 150 BPM은 추후 시간제한 스테이지용으로 보류], `gameStartClip`, `moveClip`, `tileCorrectClip` 타일 정답 위치 안착 시 짧고 맑은 벨 소리, `clearClip`)을 직접 교체·편집 가능. 인게임 시작(`PlayGameStartThenInGameMusic`) 시 `gameStartClip` 효과음이 끝난 뒤 **0.5초 대기 후 볼륨 0에서 0.8초 동안 천천히 페이드인**되며 인게임 루프 BGM이 재생됨.
    - `PuzzleProgress.cs`: 스테이지 해금 규칙(첫 스테이지, 각 난이도 첫 스테이지, 직전 클리어 스테이지 다음 단계 해금) 및 최소 이동/최단 시간(`PUZZLE_CLEAR_`, `PUZZLE_BEST_`, `PUZZLE_BEST_TIME_`) 관리.
    - `PuzzleLobbyGalleryUI.cs`: **타이틀(`TitlePanel`) -> 스테이지 로비(`LobbyPanel`) -> 인게임** 화면 흐름, 난이도 탭(`ALL`, `3x3`, `3x4`, `3x5`, `3x7`, `4x3`, `6x3`)별 스테이지 선택 로비, 클리어 일러스트 도감(미해금 시 불투명 자물쇠 가림막으로 원본 이미지 완전 차단, 첫/마지막 페이지에서 Prev/Next 무한 루프 방지), 크롭 없는 원본 전체화면 감상 모달(`uvRect = 0,0,1,1`).
    - `PuzzleResponsiveLayout.cs`: 모바일 Safe Area(`Screen.safeArea`) 적용 및 세로(`Portrait`) / 가로(`Landscape`) 전용 HUD·보드·일시정지·타이틀·로비·도감 레이아웃 재배치 (인게임 상단 Lobby 중복 버튼 제거).
-   - `PauseSettingsUI.cs`, `PuzzleGame.cs`: 타이틀→로비→인게임 진입 흐름(`OpenTitleScreen` → `EnterLobbyFromTitle` → `Load`), 인게임 진입 시 게임 시작 SFX 및 인게임 루프 BGM 전환, 햄버거 아이콘 일시정지 버튼, `GAME` 탭과 `SYSTEM` 탭으로 분리된 일시정지 메뉴 및 `X` 닫기 버튼, 3-2-1 재개 카운트다운, 에디터 창 전환 시 자동 일시정지 방지 처리.
+   - `PauseSettingsUI.cs`, `PuzzleGame.cs`: 타이틀→로비→인게임 진입 흐름(`OpenTitleScreen` → `EnterLobbyFromTitle` → `Load`), 인게임 진입 시 게임 시작 SFX 재생 및 0.5초 후 인게임 루프 BGM 페이드인 전환, 햄버거 아이콘 일시정지 버튼, `GAME` 탭(Restart, Undo, Hold to preview, Number ON/OFF, Back to lobby)과 `SYSTEM` 탭(Music, Sound, Line slide, Animation 4종 — 기존 `Orientation: PORTRAIT` 버튼은 제거됨)으로 분리된 일시정지 메뉴 및 `X` 닫기 버튼, 3-2-1 재개 카운트다운, 에디터 창 전환 시 자동 일시정지 방지 처리.
 4. **이어서 진행할 작업:**
    - Phase 4(온라인/광고 SDK 연동)는 한동안 보류하고 Phase 3 인게임 완성도 및 UI/사운드 디테일 마감에 집중.
    - 사용자가 Inspector의 `PuzzleAudio` 슬롯(`titleMusicClip`, `lobbyMusicClip`, `musicClip`, `gameStartClip`, `moveClip`, `tileCorrectClip`, `clearClip`)에 원하는 커스텀 오디오 에셋을 연결하여 테스트 가능.
@@ -150,4 +151,24 @@
   - `PhaseThreeTests.cs`: 타이틀 전체화면 앵커(`0,0`~`1,1`), 타이틀 및 로비 오픈 중 `Content`와 `curtain`(`PAUSED`) 비활성화, 인게임 진입 시 `Content` 재활성화 검증 추가.
 - 검증: Unity 자동 리컴파일 완료(`Temp/pipeline_recompile_status.json`: `status: completed, failed: false, errors: []`, 17:58 KST).
 - 남은 작업: Phase 3 인게임 세부 연출 점검 (Phase 4 온라인/광고 SDK는 보류 유지).
+- 푸시: 이 커밋 생성 후 `origin/master` 및 `origin/wip/home-phase1`로 푸시 예정.
+
+### 2026-10-27 18:31 KST — 일시정지 방향버튼 제거·인게임 BGM 템포 완화 및 딜레이 페이드인·작업종료 규약 정립
+- 직전 커밋: `3ada396` (`fix: 타이틀 전체화면 전환 및 타이틀·로비 뒤 인게임·PAUSED 화면 노출 수정`, 17:58 KST). `origin/master` 및 `origin/wip/home-phase1` 푸시 완료 확인.
+- 커밋 제목: `feat: 일시정지 방향버튼 제거·인게임 BGM 템포 완화 및 딜레이 페이드인·작업종료 규약 정립`
+- 페이즈: Phase 3 인게임 일시정지 UI 및 사운드 연출 개선 + 프로젝트 작업 종료 기본 규약 정립.
+- **기존 `AGENTS.md` 내용 대비 변경 사항:**
+  1. **`PAUSED` 메뉴 `SYSTEM` 탭 구성 변경:** 기존 `AGENTS.md`(10:47 KST 기록 및 인계 가이드)에서는 `SYSTEM` 탭이 `Music, Sound, Line slide, Animation, Orientation` 5종으로 기술되어 있었으나, 새 지시에 따라 **`PAUSED -> SYSTEM` 메뉴 내 `Orientation: PORTRAIT` 버튼을 삭제**하여 `Music`, `Sound`, `Line slide`, `Animation` 4종으로 변경함.
+  2. **인게임 플레이 BGM(`bgm_ingame_loop.wav`) BPM 변경:** 기존 `AGENTS.md`(02:42 KST 기록)에서는 인게임 루프 BGM을 `150 BPM`(6.4초 루프)으로 기술했으나, 일반 스테이지에서는 템포가 너무 빠르다는 지시에 따라 **120 BPM(16분음표 0.125초, 8.0초 루프)으로 템포를 완화**함 (기존 150 BPM은 향후 시간제한 스테이지 추가 시 활용하도록 보류).
+  3. **인게임 진입 시 BGM 시작 타이밍 변경:** 기존 `AGENTS.md`(16:33 KST 기록 및 인계 가이드)에서는 인게임 진입 시 게임 시작 효과음과 함께 인게임 루프 BGM으로 전환된다고만 기술되어 있었으나, 새 지시에 따라 **게임 시작 효과음(`sfx_game_start.wav`)이 끝난 뒤 0.5초 후부터 볼륨 0에서 0.8초간 천천히 페이드인되며 시작**하도록 변경함.
+  4. **작업 종료 프로세스 기본 규약 신설:** 기존 `AGENTS.md` 상단의 `커밋 및 일일 진행 기록`에 "요청 없이 커밋/푸시하지 않으며"라고 되어 있던 문구를 개편하여, **모든 수정/개발 완료 시 `AGENTS.md` 요약 갱신(기존 내용 대비 변경점 명시 포함) 및 Git 커밋·푸시를 수행하는 정규화된 작업 종료 프로세스**를 기본 규약으로 명문화함.
+- 변경:
+  - `PauseSettingsUI.cs`: `PAUSED` 메뉴의 `SYSTEM` 탭에서 `Orientation` 버튼을 생성하지 않도록 제거(기존 씬에 남아 있을 경우 제거)하고 4개 항목(`Music`, `Sound`, `Line slide`, `Animation`)에 맞춰 세로(1열 4행)/가로(2×2 그리드) 레이아웃 정렬.
+  - `PuzzleAudio.cs`, `PuzzleSceneAudioAndHierarchySync.cs`, `Assets/Resource/Audio/bgm_ingame_loop.wav`:
+    - 인게임 루프 BGM 합성 템포를 150 BPM(`0.10f` step)에서 **120 BPM(`0.125f` step, 8.0초 루프)**으로 늦추고 `Assets/Resource/Audio/bgm_ingame_loop.wav` 파일을 재생성(`352,812` bytes, GUID 보존).
+    - `PlayGameStartThenInGameMusic(delayAfterSfx: 0.5f, fadeInDuration: 0.8f)` 및 `DelayedInGameMusicRoutine` 코루틴을 추가하여 스테이지 시작 시 기존 BGM을 즉시 멈추고 `gameStartClip` 효과음 재생 종료 후 0.5초 대기한 뒤 `musicClip`을 볼륨 `0`에서 `0.16`까지 0.8초 동안 부드럽게 페이드인하도록 구현.
+  - `PuzzleGame.cs`: `LoadStageInternal(..., enterInGame: true)`에서 `Audio.PlayGameStartThenInGameMusic()`을 호출하도록 연결.
+  - `PhaseTwoTests.cs`, `PhaseThreeTests.cs`: `SystemTab/Orientation` 부재 확인, 인게임 진입 직후 `CurrentMusicVolume == 0f` 및 `IsMusicTransitioning == true` 검증, `InGameMusicClip.length` 8.0초(120 BPM) 검증 반영.
+- 검증: Unity 에디터 파이프라인 리컴파일 완료(`Temp/pipeline_recompile_status.json`: `status: up_to_date, failed: false, errors: []`, 18:29 KST) 및 `bgm_ingame_loop.wav` 갱신 확인.
+- 남은 작업: Phase 3 추가 피드백 대응 (Phase 4 온라인/광고 SDK는 보류 유지).
 - 푸시: 이 커밋 생성 후 `origin/master` 및 `origin/wip/home-phase1`로 푸시 예정.

@@ -123,8 +123,7 @@ namespace FirstPuzzle
             aspect.aspectRatio = (float)stages[index].Columns / stages[index].Rows;
             if (enterInGame && Audio != null)
             {
-                Audio.PlayGameStartSfx();
-                Audio.SetMusicContext(MusicContext.InGame);
+                Audio.PlayGameStartThenInGameMusic();
             }
             Refresh();
         }

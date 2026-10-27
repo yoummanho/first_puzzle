@@ -113,6 +113,7 @@ namespace FirstPuzzleTests
             Assert.IsFalse(game.board.CanInteract);
             game.SelectPauseTab(PauseTab.System);
             Assert.AreEqual(PauseTab.System, game.ActivePauseTab);
+            Assert.IsNull(game.pauseControls.transform.Find("SystemTab/Orientation"), "Orientation button must be removed from PAUSED System tab.");
             var musicButton = game.pauseControls.transform.Find("SystemTab/Music").GetComponent<UnityEngine.UI.Button>();
             musicButton.onClick.Invoke();
             Assert.IsFalse(game.Settings.Bgm);

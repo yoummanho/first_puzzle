@@ -28,7 +28,7 @@ namespace FirstPuzzle.Editor
         public const string TileCorrectSfxPath = AudioFolder + "/sfx_tile_correct.wav";
         public const string StageClearSfxPath = AudioFolder + "/sfx_stage_clear.wav";
 
-        private const string SyncSessionKey = "FirstPuzzle.SceneAudioAndHierarchySync.v1";
+        private const string SyncSessionKey = "FirstPuzzle.SceneAudioAndHierarchySync.v2";
 
         static PuzzleSceneAudioAndHierarchySync()
         {
@@ -52,6 +52,9 @@ namespace FirstPuzzle.Editor
             if (!File.Exists(TitleBgmPath) || !File.Exists(LobbyBgmPath) || !File.Exists(InGameBgmPath) ||
                 !File.Exists(GameStartSfxPath) || !File.Exists(TileMoveSfxPath) || !File.Exists(TileCorrectSfxPath) ||
                 !File.Exists(StageClearSfxPath))
+                return true;
+
+            if (new FileInfo(InGameBgmPath).Length < 340000)
                 return true;
 
             var scene = SceneManager.GetSceneByPath(PuzzleGameSceneBuilder.ScenePath);
@@ -283,11 +286,19 @@ namespace FirstPuzzle.Editor
             const int rate = 22050;
             WriteWavIfMissing(TitleBgmPath, SynthesizeTitleBgm(rate), rate);
             WriteWavIfMissing(LobbyBgmPath, SynthesizeLobbyBgm(rate), rate);
-            WriteWavIfMissing(InGameBgmPath, SynthesizeInGameLoopBgm(rate), rate);
+            WriteWavExactLength(InGameBgmPath, SynthesizeInGameLoopBgm(rate), rate);
             WriteWavIfMissing(GameStartSfxPath, SynthesizeCrispChime(rate, new[] { 523.25f, 659.25f, 783.99f, 1046.50f }, 0.065f), rate);
             WriteWavIfMissing(TileMoveSfxPath, SynthesizeTone(rate, new[] { 783.99f, 987.77f }, 0.032f), rate);
             WriteWavIfMissing(TileCorrectSfxPath, SynthesizeCrispChime(rate, new[] { 1318.51f, 1975.53f }, 0.045f), rate);
             WriteWavIfMissing(StageClearSfxPath, SynthesizeTone(rate, new[] { 523.25f, 659.25f, 783.99f, 1046.50f }, 0.13f), rate);
+        }
+
+        private static void WriteWavExactLength(string path, float[] samples, int sampleRate)
+        {
+            int expectedBytes = 44 + samples.Length * 2;
+            if (File.Exists(path) && new FileInfo(path).Length == expectedBytes) return;
+            if (File.Exists(path)) File.Delete(path);
+            WriteWavIfMissing(path, samples, sampleRate);
         }
 
         private static void WriteWavIfMissing(string path, float[] samples, int sampleRate)
@@ -392,7 +403,8 @@ namespace FirstPuzzle.Editor
 
         private static float[] SynthesizeInGameLoopBgm(int rate)
         {
-            int samplesPerStep = Mathf.RoundToInt(rate * 0.10f);
+            // 120 BPM sixteenth note (0.125s per step; 150 BPM / 0.10s is reserved for future time-limit stages)
+            int samplesPerStep = Mathf.RoundToInt(rate * 0.125f);
             float[] lead =
             {
                 523.25f, 0f, 659.25f, 0f, 783.99f, 0f, 659.25f, 0f,
@@ -501,3 +513,4 @@ namespace FirstPuzzle.Editor
         }
     }
 }
+

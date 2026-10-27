@@ -208,7 +208,7 @@ namespace FirstPuzzleTests
                 game.Lobby.CloseViewer();
                 Assert.IsFalse(game.Lobby.IsViewerOpen);
 
-                // Select unlocked stage from lobby -> plays Game Start SFX and switches to In-Game loop BGM
+                // Select unlocked stage from lobby -> plays Game Start SFX, waits 0.5s after SFX, and slowly fades in In-Game loop BGM
                 int startsBefore = game.Audio.GameStartPlayCount;
                 game.OpenLobby();
                 Assert.IsFalse(game.curtain.activeSelf, "PAUSED curtain must remain hidden in Lobby.");
@@ -217,8 +217,11 @@ namespace FirstPuzzleTests
                 Assert.IsTrue(hudContent.gameObject.activeSelf, "In-game HUD/board Content must be visible when entering In-Game.");
                 Assert.IsFalse(game.board.IsPaused);
                 Assert.AreEqual(startsBefore + 1, game.Audio.GameStartPlayCount, "Entering In-Game must trigger Game Start SFX.");
-                Assert.AreEqual(MusicContext.InGame, game.Audio.ActiveMusicContext, "In-Game loop BGM must play when stage starts.");
+                Assert.AreEqual(MusicContext.InGame, game.Audio.ActiveMusicContext, "In-Game loop BGM context must be set when stage starts.");
                 Assert.AreNotSame(lobbyClip, game.Audio.CurrentMusicClip, "In-Game BGM must be distinct from Lobby BGM.");
+                Assert.AreEqual(0f, game.Audio.CurrentMusicVolume, "In-Game BGM must start muted/silent during the 0.5s post-SFX delay.");
+                Assert.IsTrue(game.Audio.IsMusicTransitioning, "In-Game BGM delayed fade-in coroutine must be active.");
+                Assert.That(game.Audio.InGameMusicClip.length, Is.EqualTo(8.0f).Within(0.15f), "In-Game BGM tempo must be 120 BPM (8.0s loop for 64 sixteenth notes).");
 
                 // Verify crisp tile-correct SFX when a tile moves into its exact home cell
                 var oneMoveStage = AssetDatabase.LoadAssetAtPath<StageData>("Assets/Resource/PuzzlePhaseOne/test-one-move.asset");

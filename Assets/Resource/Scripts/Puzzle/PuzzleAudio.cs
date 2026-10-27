@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 namespace FirstPuzzle
@@ -27,6 +28,10 @@ namespace FirstPuzzle
         [SerializeField] private AudioClip tileCorrectClip;
         [SerializeField] private AudioClip clearClip;
 
+        private const float DefaultMusicVolume = 0.16f;
+        public const float InGameStartDelaySeconds = 0.5f;
+        public const float InGameFadeInDurationSeconds = 0.8f;
+
         private AudioSource music, effects;
         private AudioClip generatedTitleMusic, generatedLobbyMusic, generatedInGameMusic;
         private AudioClip generatedGameStart, generatedMove, generatedTileCorrect, generatedClear;
@@ -34,6 +39,7 @@ namespace FirstPuzzle
         private BoardManager board;
         private int previousMoves, previousUndo;
         private MusicContext currentContext = MusicContext.Title;
+        private Coroutine musicTransitionRoutine;
 
         public AudioClip TitleMusicClip => titleMusicClip;
         public AudioClip LobbyMusicClip => lobbyMusicClip;
@@ -44,6 +50,8 @@ namespace FirstPuzzle
         public AudioClip ClearClip => clearClip;
 
         public AudioClip CurrentMusicClip => music != null ? music.clip : null;
+        public float CurrentMusicVolume => music != null ? music.volume : 0f;
+        public bool IsMusicTransitioning => musicTransitionRoutine != null;
         public MusicContext ActiveMusicContext => currentContext;
         public AudioClip LastEffectPlayed { get; private set; }
         public int TileCorrectPlayCount { get; private set; }
@@ -97,6 +105,11 @@ namespace FirstPuzzle
         {
             currentContext = context;
             if (music == null) return;
+            if (musicTransitionRoutine != null)
+            {
+                StopCoroutine(musicTransitionRoutine);
+                musicTransitionRoutine = null;
+            }
 
             AudioClip target = context switch
             {
@@ -106,11 +119,77 @@ namespace FirstPuzzle
             };
 
             if (target == null) return;
+            music.volume = DefaultMusicVolume;
             if (!forceRestart && music.clip == target && music.isPlaying) return;
 
             music.clip = target;
             music.loop = true;
             music.Play();
+        }
+
+        /// <summary>
+        /// Plays the Game Start SFX immediately, waits 0.5 seconds after the start SFX, and then slowly fades in the In-Game BGM loop.
+        /// </summary>
+        public void PlayGameStartThenInGameMusic(float delayAfterSfx = InGameStartDelaySeconds, float fadeInDuration = InGameFadeInDurationSeconds)
+        {
+            currentContext = MusicContext.InGame;
+            if (musicTransitionRoutine != null)
+            {
+                StopCoroutine(musicTransitionRoutine);
+                musicTransitionRoutine = null;
+            }
+
+            if (music != null)
+            {
+                music.Stop();
+                music.clip = musicClip;
+                music.loop = true;
+                music.volume = 0f;
+            }
+
+            PlayGameStartSfx();
+
+            if (isActiveAndEnabled && music != null && musicClip != null)
+                musicTransitionRoutine = StartCoroutine(DelayedInGameMusicRoutine(delayAfterSfx, fadeInDuration));
+        }
+
+        private IEnumerator DelayedInGameMusicRoutine(float delayAfterSfx, float fadeInDuration)
+        {
+            float sfxDuration = gameStartClip != null ? gameStartClip.length : 0f;
+            float totalWait = Mathf.Max(0f, sfxDuration + delayAfterSfx);
+            if (totalWait > 0f)
+                yield return new WaitForSecondsRealtime(totalWait);
+
+            if (currentContext != MusicContext.InGame || music == null || musicClip == null)
+            {
+                musicTransitionRoutine = null;
+                yield break;
+            }
+
+            music.clip = musicClip;
+            music.loop = true;
+            music.volume = 0f;
+            music.Play();
+
+            if (fadeInDuration <= 0f)
+            {
+                music.volume = DefaultMusicVolume;
+                musicTransitionRoutine = null;
+                yield break;
+            }
+
+            float elapsed = 0f;
+            while (elapsed < fadeInDuration && currentContext == MusicContext.InGame && music != null)
+            {
+                elapsed += Time.unscaledDeltaTime;
+                float t = Mathf.Clamp01(elapsed / fadeInDuration);
+                music.volume = Mathf.Lerp(0f, DefaultMusicVolume, t);
+                yield return null;
+            }
+
+            if (music != null && currentContext == MusicContext.InGame)
+                music.volume = DefaultMusicVolume;
+            musicTransitionRoutine = null;
         }
 
         public void PlayGameStartSfx()
@@ -233,13 +312,13 @@ namespace FirstPuzzle
         }
 
         /// <summary>
-        /// Synthesizes a bright, bouncy Puyo-Puyo style chiptune/arcade loop (150 BPM, 64 sixteenth-note steps)
-        /// with a cheerful lead melody, harmony/arpeggio backing, and upbeat walking bassline.
+        /// Synthesizes a bright, relaxed Puyo-Puyo style chiptune/arcade loop (120 BPM, 64 sixteenth-note steps;
+        /// 150 BPM reserved for future time-limit stages) with a cheerful lead melody, harmony/arpeggio backing, and walking bassline.
         /// </summary>
         private static AudioClip UpbeatPuzzleBgm(string name)
         {
             const int rate = 22050;
-            const float stepSeconds = 0.10f; // 150 BPM sixteenth note (0.4s per beat, 6.4s loop)
+            const float stepSeconds = 0.125f; // 120 BPM sixteenth note (0.5s per beat, 8.0s loop; slightly slower than 150 BPM)
             int samplesPerStep = Mathf.RoundToInt(rate * stepSeconds);
 
             float[] lead =

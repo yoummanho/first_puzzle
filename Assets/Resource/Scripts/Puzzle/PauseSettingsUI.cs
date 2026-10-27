@@ -87,7 +87,7 @@ namespace FirstPuzzle
 
             pauseLobbyButton = AddOrFindButton(restart != null ? restart : template, gameTabRoot, "Lobby", "Back to lobby", game.OpenLobby);
 
-            // System Tab controls: Music, Sound, Line slide, Animation, Orientation
+            // System Tab controls: Music, Sound, Line slide, Animation (Orientation button removed from PAUSED-SYSTEM menu)
             bgmLabel = AddOrFind(template, systemTabRoot, "Music", game.ToggleBgm);
             sfxLabel = AddOrFind(template, systemTabRoot, "Sound", game.ToggleSfx);
 
@@ -109,7 +109,13 @@ namespace FirstPuzzle
                 animBtn.onClick.AddListener(game.Animation);
             }
 
-            orientationLabel = AddOrFind(template, systemTabRoot, "Orientation", game.ToggleOrientation);
+            var legacyOrient = systemTabRoot.Find("Orientation");
+            if (legacyOrient != null)
+            {
+                if (Application.isPlaying) Object.Destroy(legacyOrient.gameObject);
+                else Object.DestroyImmediate(legacyOrient.gameObject);
+            }
+            orientationLabel = null;
 
             // Result panel Lobby button
             var resultParent = game.resultControls.transform;
@@ -231,15 +237,13 @@ namespace FirstPuzzle
             var sfxBtn = sysTabRoot != null ? sysTabRoot.Find("Sound")?.GetComponent<Button>() : null;
             var lineBtn = game.lineLabel != null ? game.lineLabel.GetComponentInParent<Button>(true) : null;
             var animBtn = game.animationLabel != null ? game.animationLabel.GetComponentInParent<Button>(true) : null;
-            var orientBtn = sysTabRoot != null ? sysTabRoot.Find("Orientation")?.GetComponent<Button>() : null;
 
             var sysItems = new RectTransform[]
             {
                 musicBtn != null ? (RectTransform)musicBtn.transform : null,
                 sfxBtn != null ? (RectTransform)sfxBtn.transform : null,
                 lineBtn != null ? (RectTransform)lineBtn.transform : null,
-                animBtn != null ? (RectTransform)animBtn.transform : null,
-                orientBtn != null ? (RectTransform)orientBtn.transform : null
+                animBtn != null ? (RectTransform)animBtn.transform : null
             };
 
             if (orientation == PlayOrientation.Landscape)
@@ -256,7 +260,7 @@ namespace FirstPuzzle
                 SetAnchors(sysTabRoot, 0.00f, 0.00f, 1.00f, 0.81f);
 
                 LayoutGrid(gameItems, 2, 3);
-                LayoutGrid(sysItems, 2, 3);
+                LayoutGrid(sysItems, 2, 2);
 
                 var resultRect = (RectTransform)game.resultControls.transform;
                 SetAnchors(resultRect, 0.18f, 0.10f, 0.82f, 0.52f);
