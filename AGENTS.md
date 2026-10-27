@@ -35,8 +35,8 @@
    - `SettingsManager.cs`: 5종 설정(`PREF_BGM`, `PREF_SFX`, `PREF_MULTIPUSH`, `PREF_SLIDE_ANIM`, `PREF_ORIENTATION` 세로/가로) 저장/복원 및 `Screen.orientation` 반영.
    - `PuzzleAudio.cs`: BGM/SFX 독립 채널. Inspector에 오디오 클립 미할당 시 뿌요뿌요 메인 테마 스타일의 밝고 경쾌한 150 BPM 칩튠 아케이드 루프(`UpbeatPuzzleBgm`)와 효과음을 자동 합성하여 재생.
    - `PuzzleProgress.cs`: 스테이지 해금 규칙(첫 스테이지, 각 난이도 첫 스테이지, 직전 클리어 스테이지 다음 단계 해금) 및 최소 이동/최단 시간(`PUZZLE_CLEAR_`, `PUZZLE_BEST_`, `PUZZLE_BEST_TIME_`) 관리.
-   - `PuzzleLobbyGalleryUI.cs`: 난이도 탭(`ALL`, `3x3`, `3x4`, `3x5`, `3x7`, `4x3`, `6x3`)별 스테이지 선택 로비, 클리어 일러스트 도감(미해금 잠금/실루엣 처리), 크롭 없는 원본 전체화면 감상 모달(`uvRect = 0,0,1,1`).
-   - `PuzzleResponsiveLayout.cs`: 모바일 Safe Area(`Screen.safeArea`) 적용 및 세로(`Portrait`) / 가로(`Landscape`) 전용 HUD·보드·일시정지·로비·도감 레이아웃 재배치.
+   - `PuzzleLobbyGalleryUI.cs`: 난이도 탭(`ALL`, `3x3`, `3x4`, `3x5`, `3x7`, `4x3`, `6x3`)별 스테이지 선택 로비, 클리어 일러스트 도감(미해금 시 불투명 자물쇠 가림막으로 원본 이미지 완전 차단, 첫/마지막 페이지에서 Prev/Next 무한 루프 방지), 크롭 없는 원본 전체화면 감상 모달(`uvRect = 0,0,1,1`).
+   - `PuzzleResponsiveLayout.cs`: 모바일 Safe Area(`Screen.safeArea`) 적용 및 세로(`Portrait`) / 가로(`Landscape`) 전용 HUD·보드·일시정지·로비·도감 레이아웃 재배치 (인게임 상단 Lobby 중복 버튼 제거).
    - `PauseSettingsUI.cs`, `PuzzleGame.cs`: 인게임 타이머/통계, 햄버거 아이콘(가로 선 3줄) 일시정지 버튼, `GAME` 탭(Restart, Undo, Hold to preview, Number ON/OFF, Back to lobby)과 `SYSTEM` 탭(Music, Sound, Line slide, Animation, Orientation)으로 분리된 일시정지 메뉴 및 `X` 닫기(Continue) 버튼, 3-2-1 재개 카운트다운, 에디터 창 전환 시 자동 일시정지 방지 처리.
 4. **이어서 진행할 작업:**
    - 에디터 Game 뷰 및 모바일 기기/시뮬레이터에서 세로·가로 UI 디자인 디테일 및 폰트/버튼 여백 마감 확인.
@@ -91,3 +91,17 @@
 - 검증: Unity 자동 리컴파일 완료(`Temp/pipeline_recompile_status.json`: `failed: false, errors: []`, 10:46 KST) 및 콘솔 에러 0건 확인. 에디터 PlayMode 통합 테스트는 에디터 창에서 직접 실행 가능.
 - 남은 작업: 에디터/실기기 플레이 확인 및 Phase 4 온라인 랭킹/광고 SDK 연동.
 - 푸시: 이 커밋 생성 후 `origin/master`(및 `origin/wip/home-phase1`)로 푸시 예정.
+
+### 2026-10-27 11:43 KST — 인게임 Lobby 버튼 제거·로비 페이지 무한 루프 방지·잠금 스테이지 자물쇠 가림막 추가
+- 직전 커밋: `301f45d` (`feat: 중복 스테이지 정리·난이도순 정렬 및 일시정지 탭 UI·포커스 개선`, 10:47 KST). `origin/master` 및 `origin/wip/home-phase1` 푸시 완료 확인.
+- 커밋 제목: `feat: 인게임 로비 버튼 제거·페이지 무한루프 방지 및 잠금 스테이지 자물쇠 가림막 적용`
+- 페이즈: Phase 3 인게임 HUD 및 스테이지 로비/도감 UI 개선.
+- 변경:
+  - `PuzzleResponsiveLayout.cs`: 일시정지(`PAUSED`) 메뉴의 `GAME` 탭 안에 `Back to lobby`가 있으므로 인게임 HUD 상단에 중복 표시되던 `Lobby` 버튼을 제거하고 상단 타이틀 레이아웃을 정리.
+  - `PuzzleLobbyGalleryUI.cs`:
+    - 스테이지 로비 및 도감에서 `Prev` / `Next` 페이지 이동 시 모듈러(`%`) 순환을 제거하여 첫 페이지에서는 `Prev` 비활성화, 마지막 페이지에서는 `Next` 비활성화 처리로 무한 루프 방지.
+    - `LOCKED` 상태인 스테이지 카드 및 미해금 도감 카드에서 원본 일러스트 텍스처가 노출되지 않도록 `Thumbnail.texture = null` 처리하고, 썸네일 앞면을 완전히 덮는 불투명 가림막(`LockOverlay`)과 중앙 자물쇠 아이콘(`PadlockIcon`)을 추가.
+  - `PhaseThreeTests.cs`: 인게임 상단 `Lobby` 버튼 부재 확인, 페이지 첫/끝 경계에서 무한 루프 방지 확인, 잠금 카드의 `LockOverlay` 활성화 및 원본 텍스처 비노출 검증 추가.
+- 검증: Unity 자동 리컴파일 완료(`Temp/pipeline_recompile_status.json`: `failed: false, errors: []`, 11:43 KST) 및 콘솔 에러 0건 확인.
+- 남은 작업: 에디터/실기기 플레이 확인 및 Phase 4 온라인 랭킹/광고 SDK 연동.
+- 푸시: 이 커밋 생성 후 `origin/master` 및 `origin/wip/home-phase1`로 푸시 예정.

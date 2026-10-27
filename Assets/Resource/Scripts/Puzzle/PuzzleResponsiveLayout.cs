@@ -14,7 +14,6 @@ namespace FirstPuzzle
         private RectTransform boardFrame;
         private RectTransform instructionsRect;
         private RectTransform footerRect;
-        private RectTransform lobbyButtonRect;
 
         private Rect lastSafeArea;
         private Vector2Int lastScreenSize;
@@ -72,26 +71,8 @@ namespace FirstPuzzle
             instructionsRect = contentRect.Find("Instructions") as RectTransform;
             footerRect = contentRect.Find("Footer") as RectTransform;
 
-            EnsureTopLobbyButton();
-        }
-
-        private void EnsureTopLobbyButton()
-        {
-            if (contentRect == null || game.pauseButton == null) return;
-            var existing = contentRect.Find("Lobby") as RectTransform;
-            if (existing == null)
-            {
-                var clone = Instantiate(game.pauseButton, contentRect);
-                clone.name = "Lobby";
-                clone.onClick = new Button.ButtonClickedEvent();
-                clone.onClick.AddListener(game.OpenLobby);
-                var icon = clone.transform.Find("HamburgerIcon");
-                if (icon != null) Destroy(icon.gameObject);
-                var label = clone.GetComponentInChildren<TMP_Text>(true);
-                if (label != null) label.text = "Lobby";
-                existing = (RectTransform)clone.transform;
-            }
-            lobbyButtonRect = existing;
+            var legacyLobby = contentRect.Find("Lobby");
+            if (legacyLobby != null) legacyLobby.gameObject.SetActive(false);
         }
 
         private void LateUpdate()
@@ -174,9 +155,8 @@ namespace FirstPuzzle
                 // Left side: Puzzle BoardFrame
                 SetAnchors(boardFrame, 0.00f, 0.02f, 0.62f, 0.98f);
 
-                // Right side: Pause (Hamburger icon), Lobby, Title, Stats, Instructions, Footer
+                // Right side: Pause (Hamburger icon), Title, Stats, Instructions, Footer
                 SetAnchors(game.pauseButton?.transform as RectTransform, 0.65f, 0.86f, 0.77f, 0.97f);
-                SetAnchors(lobbyButtonRect, 0.79f, 0.86f, 1.00f, 0.97f);
                 SetAnchors(game.heading?.rectTransform, 0.65f, 0.66f, 1.00f, 0.82f);
                 SetAnchors(game.stats?.rectTransform, 0.65f, 0.50f, 1.00f, 0.62f);
                 SetAnchors(instructionsRect, 0.65f, 0.34f, 1.00f, 0.46f);
@@ -188,10 +168,9 @@ namespace FirstPuzzle
                 contentRect.anchorMax = new Vector2(0.96f, 0.975f);
                 contentRect.offsetMin = contentRect.offsetMax = Vector2.zero;
 
-                // Top header row: Hamburger Pause on Top-Left, Title in Center, Lobby on Top-Right
+                // Top header row: Hamburger Pause on Top-Left, Title centered across header
                 SetAnchors(game.pauseButton?.transform as RectTransform, 0.00f, 0.905f, 0.16f, 0.985f);
-                SetAnchors(game.heading?.rectTransform, 0.18f, 0.895f, 0.78f, 0.99f);
-                SetAnchors(lobbyButtonRect, 0.79f, 0.905f, 1.00f, 0.985f);
+                SetAnchors(game.heading?.rectTransform, 0.18f, 0.895f, 1.00f, 0.99f);
                 SetAnchors(game.stats?.rectTransform, 0.00f, 0.825f, 1.00f, 0.885f);
 
                 // Center Board expanded since bottom controls are now inside the Pause menu

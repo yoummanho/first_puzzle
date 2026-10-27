@@ -123,19 +123,44 @@ namespace FirstPuzzleTests
                 PlayerPrefs.DeleteKey("PUZZLE_CLEAR_" + firstId);
                 PlayerPrefs.DeleteKey("PUZZLE_CLEAR_" + secondId);
 
-                // 1. Open Lobby & verify difficulty tabs and lock rules
+                // 1. Open Lobby & verify difficulty tabs, non-wrapping pagination, and lock overlay
+                var hudContent = game.pauseButton.transform.parent;
+                Assert.IsNull(hudContent.Find("Lobby"), "In-game HUD must not have a top Lobby button.");
+
                 game.OpenLobby();
                 Assert.IsTrue(game.Lobby.IsLobbyOpen);
                 Assert.IsTrue(game.board.IsPaused);
                 game.ShowPreview(true);
                 Assert.IsFalse(game.preview.gameObject.activeSelf, "Preview must remain blocked while Lobby is open.");
 
+                Assert.AreEqual(0, game.Lobby.LobbyPage);
+                game.Lobby.PrevLobbyPage();
+                Assert.AreEqual(0, game.Lobby.LobbyPage, "Lobby Prev must not wrap from first page to last page.");
+
+                game.Lobby.SelectFilter("3x3");
+                Assert.AreEqual("3x3", game.Lobby.ActiveFilter);
+                game.Lobby.NextLobbyPage();
+                Assert.AreEqual(0, game.Lobby.LobbyPage, "Single-page filter must not advance page.");
+
                 game.Lobby.SelectFilter("3x4");
                 Assert.AreEqual("3x4", game.Lobby.ActiveFilter);
                 Assert.Greater(game.Lobby.FilteredStageCount, 0);
                 game.Lobby.SelectFilter("ALL");
+                for (int p = 0; p < 10; p++) game.Lobby.NextLobbyPage();
+                Assert.AreEqual(3, game.Lobby.LobbyPage, "Lobby Next must clamp at the last page (page index 3 for 24 stages) without wrapping.");
+                for (int p = 0; p < 10; p++) game.Lobby.PrevLobbyPage();
+                Assert.AreEqual(0, game.Lobby.LobbyPage);
 
                 // Stage 0 is first 3x3 (unlocked), Stage 1 is second 3x3 so Stage 1 is locked when Stage 0 is uncleared!
+                var card1Lock = game.Lobby.transform.Find("LobbyPanel/StageCards/StageCard_01/ThumbFrame/LockOverlay");
+                var card2Lock = game.Lobby.transform.Find("LobbyPanel/StageCards/StageCard_02/ThumbFrame/LockOverlay");
+                var card2Thumb = game.Lobby.transform.Find("LobbyPanel/StageCards/StageCard_02/ThumbFrame/Thumbnail").GetComponent<RawImage>();
+                Assert.IsNotNull(card1Lock);
+                Assert.IsNotNull(card2Lock);
+                Assert.IsFalse(card1Lock.gameObject.activeSelf, "Unlocked stage card must hide LockOverlay.");
+                Assert.IsTrue(card2Lock.gameObject.activeSelf, "Locked stage card must show LockOverlay with padlock icon.");
+                Assert.IsNull(card2Thumb.texture, "Locked stage card must not expose original illustration texture.");
+
                 Assert.IsFalse(game.Lobby.TrySelectStageFromLobby(1), "Locked stage must not load.");
                 Assert.IsTrue(game.Lobby.IsLobbyOpen);
 

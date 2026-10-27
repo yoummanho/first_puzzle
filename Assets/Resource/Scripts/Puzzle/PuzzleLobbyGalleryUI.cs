@@ -67,6 +67,8 @@ namespace FirstPuzzle
         public bool IsViewerOpen => viewerModal != null && viewerModal.gameObject.activeSelf;
         public string ActiveFilter => activeFilter;
         public int FilteredStageCount => filteredStageIndices.Count;
+        public int LobbyPage => lobbyPage;
+        public int GalleryPage => galleryPage;
         public RawImage ViewerImage => viewerImage;
 
         private sealed class StageCardView
@@ -75,6 +77,7 @@ namespace FirstPuzzle
             public Image Background;
             public RawImage Thumbnail;
             public AspectRatioFitter Fitter;
+            public GameObject LockOverlay;
             public TMP_Text Title;
             public TMP_Text Status;
             public Button Button;
@@ -87,6 +90,7 @@ namespace FirstPuzzle
             public Image Background;
             public RawImage Thumbnail;
             public AspectRatioFitter Fitter;
+            public GameObject LockOverlay;
             public TMP_Text Title;
             public TMP_Text Badge;
             public Button Button;
@@ -177,15 +181,15 @@ namespace FirstPuzzle
         {
             int pageSize = CardsPerPage;
             int totalPages = Mathf.Max(1, Mathf.CeilToInt(filteredStageIndices.Count / (float)pageSize));
-            lobbyPage = (lobbyPage + 1) % totalPages;
+            if (lobbyPage >= totalPages - 1) return;
+            lobbyPage = Mathf.Min(totalPages - 1, lobbyPage + 1);
             RefreshLobby();
         }
 
         public void PrevLobbyPage()
         {
-            int pageSize = CardsPerPage;
-            int totalPages = Mathf.Max(1, Mathf.CeilToInt(filteredStageIndices.Count / (float)pageSize));
-            lobbyPage = (lobbyPage - 1 + totalPages) % totalPages;
+            if (lobbyPage <= 0) return;
+            lobbyPage = Mathf.Max(0, lobbyPage - 1);
             RefreshLobby();
         }
 
@@ -193,15 +197,15 @@ namespace FirstPuzzle
         {
             int pageSize = CardsPerPage;
             int totalPages = Mathf.Max(1, Mathf.CeilToInt((game.stages?.Length ?? 0) / (float)pageSize));
-            galleryPage = (galleryPage + 1) % totalPages;
+            if (galleryPage >= totalPages - 1) return;
+            galleryPage = Mathf.Min(totalPages - 1, galleryPage + 1);
             RefreshGallery();
         }
 
         public void PrevGalleryPage()
         {
-            int pageSize = CardsPerPage;
-            int totalPages = Mathf.Max(1, Mathf.CeilToInt((game.stages?.Length ?? 0) / (float)pageSize));
-            galleryPage = (galleryPage - 1 + totalPages) % totalPages;
+            if (galleryPage <= 0) return;
+            galleryPage = Mathf.Max(0, galleryPage - 1);
             RefreshGallery();
         }
 
@@ -272,8 +276,8 @@ namespace FirstPuzzle
             int totalPages = Mathf.Max(1, Mathf.CeilToInt(filteredStageIndices.Count / (float)pageSize));
             lobbyPage = Mathf.Clamp(lobbyPage, 0, totalPages - 1);
             pageLabel.text = $"PAGE {lobbyPage + 1} / {totalPages}  ({filteredStageIndices.Count} STAGES)";
-            prevPageButton.interactable = totalPages > 1;
-            nextPageButton.interactable = totalPages > 1;
+            prevPageButton.interactable = lobbyPage > 0;
+            nextPageButton.interactable = lobbyPage < totalPages - 1;
 
             int start = lobbyPage * pageSize;
             for (int slot = 0; slot < stageCards.Count; slot++)
@@ -296,10 +300,11 @@ namespace FirstPuzzle
 
                 card.Background.color = unlocked ? CardUnlocked : CardLocked;
                 card.Button.interactable = unlocked;
-                card.Thumbnail.texture = stage.Illustration;
+                card.Thumbnail.texture = unlocked ? stage.Illustration : null;
                 card.Thumbnail.uvRect = stage.GetImageUV();
-                card.Thumbnail.color = unlocked ? Color.white : new Color(0.08f, 0.11f, 0.14f, 0.92f);
+                card.Thumbnail.color = unlocked ? Color.white : Color.clear;
                 card.Fitter.aspectRatio = (float)stage.Columns / stage.Rows;
+                if (card.LockOverlay != null) card.LockOverlay.SetActive(!unlocked);
 
                 card.Title.text = $"#{stageIndex + 1:00}   [{stage.Columns}x{stage.Rows}]";
                 if (cleared)
@@ -332,8 +337,8 @@ namespace FirstPuzzle
             int totalPages = Mathf.Max(1, Mathf.CeilToInt(game.stages.Length / (float)pageSize));
             galleryPage = Mathf.Clamp(galleryPage, 0, totalPages - 1);
             galleryPageLabel.text = $"GALLERY PAGE {galleryPage + 1} / {totalPages}";
-            galleryPrevButton.interactable = totalPages > 1;
-            galleryNextButton.interactable = totalPages > 1;
+            galleryPrevButton.interactable = galleryPage > 0;
+            galleryNextButton.interactable = galleryPage < totalPages - 1;
 
             int start = galleryPage * pageSize;
             for (int slot = 0; slot < galleryCards.Count; slot++)
@@ -354,12 +359,13 @@ namespace FirstPuzzle
 
                 card.Background.color = cleared ? CardUnlocked : CardLocked;
                 card.Button.interactable = cleared;
-                card.Thumbnail.texture = stage.Illustration;
+                card.Thumbnail.texture = cleared ? stage.Illustration : null;
                 card.Thumbnail.uvRect = new Rect(0f, 0f, 1f, 1f); // Full aspect in gallery
-                card.Thumbnail.color = cleared ? Color.white : new Color(0.02f, 0.03f, 0.05f, 0.96f);
+                card.Thumbnail.color = cleared ? Color.white : Color.clear;
                 card.Fitter.aspectRatio = stage.Illustration != null
                     ? (float)stage.Illustration.width / Mathf.Max(1, stage.Illustration.height)
                     : 1f;
+                if (card.LockOverlay != null) card.LockOverlay.SetActive(!cleared);
 
                 card.Title.text = $"ILLUSTRATION #{stageIndex + 1:00}";
                 card.Badge.text = cleared ? "VIEW FULL ART" : "LOCKED (CLEAR STAGE)";
@@ -489,6 +495,7 @@ namespace FirstPuzzle
                 var fitter = thumbRect.gameObject.AddComponent<AspectRatioFitter>();
                 fitter.aspectMode = AspectRatioFitter.AspectMode.FitInParent;
                 fitter.aspectRatio = 1f;
+                var lockOverlay = BuildLockOverlay(thumbFrame);
 
                 var title = Label("CardTitle", cardRoot, 0.05f, 0.14f, 0.95f, 0.27f, "#01 [3x3]", 22);
                 var status = Label("CardStatus", cardRoot, 0.05f, 0.02f, 0.95f, 0.14f, "UNLOCKED", 18);
@@ -499,6 +506,7 @@ namespace FirstPuzzle
                     Background = cardRoot.GetComponent<Image>(),
                     Thumbnail = raw,
                     Fitter = fitter,
+                    LockOverlay = lockOverlay,
                     Title = title,
                     Status = status,
                     Button = button
@@ -539,6 +547,7 @@ namespace FirstPuzzle
                 var fitter = thumbRect.gameObject.AddComponent<AspectRatioFitter>();
                 fitter.aspectMode = AspectRatioFitter.AspectMode.FitInParent;
                 fitter.aspectRatio = 1f;
+                var lockOverlay = BuildLockOverlay(thumbFrame);
 
                 var title = Label("CardTitle", cardRoot, 0.05f, 0.13f, 0.95f, 0.25f, "ILLUSTRATION #01", 21);
                 var badge = Label("CardBadge", cardRoot, 0.05f, 0.02f, 0.95f, 0.13f, "VIEW FULL ART", 17);
@@ -549,6 +558,7 @@ namespace FirstPuzzle
                     Background = cardRoot.GetComponent<Image>(),
                     Thumbnail = raw,
                     Fitter = fitter,
+                    LockOverlay = lockOverlay,
                     Title = title,
                     Badge = badge,
                     Button = button
@@ -579,6 +589,35 @@ namespace FirstPuzzle
 
             viewerCaption = Label("ViewerCaption", viewerModal, 0.04f, 0.065f, 0.72f, 0.13f, "", 20);
             viewerCloseButton = MakeButton(viewerModal, "CloseViewer", "Close Full View", 0.74f, 0.04f, 0.96f, 0.12f, CloseViewer);
+        }
+
+        private static GameObject BuildLockOverlay(RectTransform thumbFrame)
+        {
+            // Full opaque cover in front of the thumbnail so the original illustration is completely hidden when locked.
+            var overlay = Panel("LockOverlay", thumbFrame, 0f, 0f, 1f, 1f, new Color(0.03f, 0.06f, 0.09f, 1f), false);
+            overlay.SetAsLastSibling();
+
+            var iconBox = Rect("PadlockIcon", overlay, 0.25f, 0.22f, 0.75f, 0.82f);
+            var fitter = iconBox.gameObject.AddComponent<AspectRatioFitter>();
+            fitter.aspectMode = AspectRatioFitter.AspectMode.FitInParent;
+            fitter.aspectRatio = 1f;
+
+            Color lockColor = new Color(0.76f, 0.86f, 0.90f, 0.95f);
+            Color holeColor = new Color(0.03f, 0.06f, 0.09f, 1f);
+
+            // Shackle (U-arch at top)
+            Panel("ShackleLeft", iconBox, 0.30f, 0.50f, 0.40f, 0.84f, lockColor, false);
+            Panel("ShackleRight", iconBox, 0.60f, 0.50f, 0.70f, 0.84f, lockColor, false);
+            Panel("ShackleTop", iconBox, 0.30f, 0.76f, 0.70f, 0.88f, lockColor, false);
+
+            // Padlock body
+            Panel("Body", iconBox, 0.20f, 0.12f, 0.80f, 0.54f, lockColor, false);
+
+            // Keyhole inside body
+            Panel("KeyholeTop", iconBox, 0.44f, 0.32f, 0.56f, 0.43f, holeColor, false);
+            Panel("KeyholeSlot", iconBox, 0.47f, 0.20f, 0.53f, 0.34f, holeColor, false);
+
+            return overlay.gameObject;
         }
 
         private static string FormatTime(float seconds)
