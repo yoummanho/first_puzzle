@@ -119,6 +119,7 @@ namespace FirstPuzzle
             ApplyHudLayout(orientation);
             PauseSettingsUI.ApplyLayout(game, orientation);
             if (game.Lobby != null) game.Lobby.ApplyLayout(orientation);
+            game.GetComponent<ConceptTheme>()?.ApplyLayout();
             Canvas.ForceUpdateCanvases();
         }
 
@@ -175,7 +176,7 @@ namespace FirstPuzzle
                 SetAnchors(game.pauseButton?.transform as RectTransform, 0.65f, 0.86f, 0.77f, 0.97f);
                 SetAnchors(game.heading?.rectTransform, 0.65f, 0.66f, 1.00f, 0.82f);
                 SetAnchors(game.stats?.rectTransform, 0.65f, 0.50f, 1.00f, 0.62f);
-                SetAnchors(instructionsRect, 0.65f, 0.34f, 1.00f, 0.46f);
+                SetAnchors(instructionsRect, 0.65f, 0.04f, 1.00f, 0.16f);
                 SetAnchors(footerRect, 0.65f, 0.04f, 1.00f, 0.16f);
             }
             else
@@ -190,7 +191,7 @@ namespace FirstPuzzle
                 SetAnchors(game.stats?.rectTransform, 0.00f, 0.825f, 1.00f, 0.885f);
 
                 // Center Board expanded since bottom controls are now inside the Pause menu
-                SetAnchors(boardFrame, 0.00f, 0.11f, 1.00f, 0.81f);
+                SetAnchors(boardFrame, 0.00f, 0.26f, 1.00f, 0.81f);
                 SetAnchors(instructionsRect, 0.00f, 0.05f, 1.00f, 0.095f);
                 SetAnchors(footerRect, 0.00f, 0.005f, 1.00f, 0.042f);
             }

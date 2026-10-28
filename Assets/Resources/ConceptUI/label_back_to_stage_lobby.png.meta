@@ -1,0 +1,546 @@
+fileFormatVersion: 2
+guid: a47d9eb899bf4d14e8601971bc653727
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 4325459022768579729
+    second: label_back_to_stage_lobby_0
+  - first:
+      213: 39317058686023581
+    second: label_back_to_stage_lobby_1
+  - first:
+      213: -1806841760262286596
+    second: label_back_to_stage_lobby_2
+  - first:
+      213: -2242592990411157596
+    second: label_back_to_stage_lobby_3
+  - first:
+      213: -2531050763929353416
+    second: label_back_to_stage_lobby_4
+  - first:
+      213: -2935247665130898492
+    second: label_back_to_stage_lobby_5
+  - first:
+      213: 1183678130219270046
+    second: label_back_to_stage_lobby_6
+  - first:
+      213: 2985012551654082936
+    second: label_back_to_stage_lobby_7
+  - first:
+      213: -2861442297039319042
+    second: label_back_to_stage_lobby_8
+  - first:
+      213: -7728350669153428448
+    second: label_back_to_stage_lobby_9
+  - first:
+      213: -8145598180909277288
+    second: label_back_to_stage_lobby_10
+  - first:
+      213: -7891692908195294536
+    second: label_back_to_stage_lobby_11
+  - first:
+      213: 7798043266289261397
+    second: label_back_to_stage_lobby_12
+  - first:
+      213: 6446493036972899865
+    second: label_back_to_stage_lobby_13
+  - first:
+      213: -6938338548600217854
+    second: label_back_to_stage_lobby_14
+  - first:
+      213: 3739198724561420515
+    second: label_back_to_stage_lobby_15
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 0
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: label_back_to_stage_lobby_0
+      rect:
+        serializedVersion: 2
+        x: 190
+        y: 45
+        width: 41
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 19421ae501e170c30800000000000000
+      internalID: 4325459022768579729
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: label_back_to_stage_lobby_1
+      rect:
+        serializedVersion: 2
+        x: 235
+        y: 44
+        width: 34
+        height: 38
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d97f79418aeab8000800000000000000
+      internalID: 39317058686023581
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: label_back_to_stage_lobby_2
+      rect:
+        serializedVersion: 2
+        x: 272
+        y: 44
+        width: 34
+        height: 38
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cf2993afdfecce6e0800000000000000
+      internalID: -1806841760262286596
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: label_back_to_stage_lobby_3
+      rect:
+        serializedVersion: 2
+        x: 310
+        y: 45
+        width: 34
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4af03c69e85b0e0e0800000000000000
+      internalID: -2242592990411157596
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: label_back_to_stage_lobby_4
+      rect:
+        serializedVersion: 2
+        x: 362
+        y: 44
+        width: 22
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 83382838db6efdcd0800000000000000
+      internalID: -2531050763929353416
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: label_back_to_stage_lobby_5
+      rect:
+        serializedVersion: 2
+        x: 386
+        y: 44
+        width: 37
+        height: 38
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4cbf318dcc7e347d0800000000000000
+      internalID: -2935247665130898492
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: label_back_to_stage_lobby_6
+      rect:
+        serializedVersion: 2
+        x: 444
+        y: 44
+        width: 40
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e9f3e10fcf44d6010800000000000000
+      internalID: 1183678130219270046
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: label_back_to_stage_lobby_7
+      rect:
+        serializedVersion: 2
+        x: 486
+        y: 44
+        width: 23
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8798c67b915ec6920800000000000000
+      internalID: 2985012551654082936
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: label_back_to_stage_lobby_8
+      rect:
+        serializedVersion: 2
+        x: 510
+        y: 44
+        width: 34
+        height: 38
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: eff81b3346d1a48d0800000000000000
+      internalID: -2861442297039319042
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: label_back_to_stage_lobby_9
+      rect:
+        serializedVersion: 2
+        x: 547
+        y: 31
+        width: 35
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 02c157153026fb490800000000000000
+      internalID: -7728350669153428448
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: label_back_to_stage_lobby_10
+      rect:
+        serializedVersion: 2
+        x: 586
+        y: 44
+        width: 34
+        height: 38
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 89f95d79c9505fe80800000000000000
+      internalID: -8145598180909277288
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: label_back_to_stage_lobby_11
+      rect:
+        serializedVersion: 2
+        x: 644
+        y: 45
+        width: 35
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8b2dc8aac131b7290800000000000000
+      internalID: -7891692908195294536
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: label_back_to_stage_lobby_12
+      rect:
+        serializedVersion: 2
+        x: 682
+        y: 44
+        width: 37
+        height: 38
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 55b5c4ee807383c60800000000000000
+      internalID: 7798043266289261397
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: label_back_to_stage_lobby_13
+      rect:
+        serializedVersion: 2
+        x: 724
+        y: 44
+        width: 35
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 91e7ccb134b867950800000000000000
+      internalID: 6446493036972899865
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: label_back_to_stage_lobby_14
+      rect:
+        serializedVersion: 2
+        x: 764
+        y: 44
+        width: 36
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 20fd847d9d116bf90800000000000000
+      internalID: -6938338548600217854
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: label_back_to_stage_lobby_15
+      rect:
+        serializedVersion: 2
+        x: 801
+        y: 31
+        width: 37
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3e0c31acd6d44e330800000000000000
+      internalID: 3739198724561420515
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      label_back_to_stage_lobby_0: 4325459022768579729
+      label_back_to_stage_lobby_1: 39317058686023581
+      label_back_to_stage_lobby_10: -8145598180909277288
+      label_back_to_stage_lobby_11: -7891692908195294536
+      label_back_to_stage_lobby_12: 7798043266289261397
+      label_back_to_stage_lobby_13: 6446493036972899865
+      label_back_to_stage_lobby_14: -6938338548600217854
+      label_back_to_stage_lobby_15: 3739198724561420515
+      label_back_to_stage_lobby_2: -1806841760262286596
+      label_back_to_stage_lobby_3: -2242592990411157596
+      label_back_to_stage_lobby_4: -2531050763929353416
+      label_back_to_stage_lobby_5: -2935247665130898492
+      label_back_to_stage_lobby_6: 1183678130219270046
+      label_back_to_stage_lobby_7: 2985012551654082936
+      label_back_to_stage_lobby_8: -2861442297039319042
+      label_back_to_stage_lobby_9: -7728350669153428448
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

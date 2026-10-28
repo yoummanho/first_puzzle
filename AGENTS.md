@@ -6,6 +6,7 @@
 - 두 프로젝트의 변경을 섞지 않는다.
 
 ## 작업 종료 프로세스 (기본 규약) 및 일일 진행 기록
+- **컨셉 디자인 작업 예외 (2026-10-28 사용자 지시 우선):** 컨셉 디자인 및 관련 후속 변경은 전용 브랜치 `feat/concept-image-ui`에만 커밋하고 `origin/feat/concept-image-ui`에만 푸시한다. 아래 기본 종료 규약의 `origin/master`, `origin/wip/home-phase1` 동시 푸시를 이 작업에 적용하지 않는다. `main`/`master`에 커밋·푸시·병합하지 않는다.
 - **작업 종료 프로세스 정규화 (필수 기본 규약):**
   1. 모든 수정 또는 기능 개발 작업이 완료되면, 별도 지시가 없더라도 작업 종료 단계에서 **반드시 이 파일(`AGENTS.md`)에 요약 내용을 먼저 작성·갱신한 뒤 Git 커밋 및 원격 푸시(`origin/master`, `origin/wip/home-phase1`)를 수행**한다.
   2. **기존 `AGENTS.md` 내용 변경 명시 규칙:** 새로 지시한 사안이 기존 `AGENTS.md`에 기술된 설계·기능·수치(예: UI 버튼 구성, BGM BPM, 사운드 재생 타이밍 등)에서 변경된 경우, `AGENTS.md` 본문(현재 페이즈/인계 가이드 등)의 기존 설명을 최신 상태로 수정하고, 하단 작업 기록에도 **`기존 AGENTS.md 내용 대비 변경 사항`** 항목을 두어 무엇이 어떻게 변경되었는지 명확히 명시한다.
@@ -24,6 +25,7 @@
 
 ## 다른 PC / 다른 에이전트 인계 가이드 (Handoff Guide)
 1. **브랜치 현황:**
+   - 컨셉 디자인은 `feat/concept-image-ui`에서 별도 진행한다. 작업 재개 시 현재 브랜치와 변경 사항을 먼저 확인하고, 기본 브랜치로 전환하거나 기본 브랜치를 무조건 pull하지 않는다.
    - 원격 기본 브랜치 `origin/master`(및 작업 브랜치 `origin/wip/home-phase1`)에 Phase 1 ~ Phase 3 작업분이 동기화되어 있다.
    - 작업을 시작할 때 `git pull origin master` (또는 작업 브랜치 확인) 후 `AGENTS.md`와 `Assets/SPEC.md`를 먼저 읽는다.
 2. **씬 및 에셋 구조:**
@@ -225,3 +227,13 @@
 - 검증: WAV 에셋 3종(`bgm_ingame_loop.wav` 705,644 bytes, `bgm_lobby.wav` 378,246 bytes, `bgm_title.wav` 352,844 bytes) 생성 및 `git diff --check` 통과 확인.
 - 남은 작업: 에디터/실기기 청음 및 시각 확인 (Phase 4 온라인/광고 SDK는 보류 유지).
 - 푸시: 이 커밋 생성 후 `origin/master` 및 `origin/wip/home-phase1`로 푸시 예정.
+
+### 2026-10-28 09:09 KST — 컨셉 디자인 전용 브랜치 작업 재개 및 체크포인트
+- 직전 커밋: `a8c60c4` (`feat: 타일 숫자 외곽선 텍스트 적용 및 메인 스테이지 BGM 어쿠스틱 퀄업`). 원격 조회로 `origin/master`, `origin/wip/home-phase1` 모두 동일 해시 확인.
+- 커밋 제목: `wip: 컨셉 디자인 작업 보존 및 전용 브랜치 푸시 규약 적용`
+- 대상 페이즈: Phase 3 컨셉 UI 디자인 실험.
+- 기존 AGENTS.md 내용 대비 변경 사항: 컨셉 작업은 전용 브랜치 `feat/concept-image-ui`에만 커밋·푸시하도록 기본 종료 규약의 예외 추가. 기존 파스텔 UI에서 크림색 배경·검은 외곽선·이미지 라벨 및 아이콘 테마를 실험하고, 인게임 Undo/미리보기 버튼을 추가한 미완료 작업분 보존.
+- 실제 변경: 이전 작업에서 남은 ConceptTheme, ConceptImageLabel, ConceptPlate와 UI 연결 변경, 컨셉 원본·배경 백업·ConceptUI 리소스 및 에셋 생성 도구를 체크포인트로 저장. 임시 화면 캡처(Assets/Temp)는 로컬에 유지하고 커밋에서 제외.
+- 검증: 편집기 스크립트 진단 오류 없음. 기존 추적 코드의 git diff --check는 통과했으나, 신규 파일을 포함한 staged 검사에서는 Unity 생성 .meta의 후행 공백 경고가 확인됨(원본 보존). 이번 작업에서 Unity 컴파일·플레이·자동 테스트 및 실기기 시각 검증은 미실시. 디자인 완성으로 간주하지 않음.
+- 남은 작업: 이전 대화 본문 조회 결과가 비어 마지막 세부 디자인 지시는 복구하지 못함. 사용자 추가 피드백 및 컨셉 대비 화면 검증 후 디자인 마감. Phase 4 보류 유지.
+- 푸시: 이 커밋 생성 후 `origin/feat/concept-image-ui`에만 최초 푸시 예정. 실제 결과는 완료 응답 또는 후속 기록에서 확인.

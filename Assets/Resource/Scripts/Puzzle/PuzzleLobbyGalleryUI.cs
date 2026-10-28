@@ -9,12 +9,12 @@ namespace FirstPuzzle
     /// <summary>Phase 3 Lobby (difficulty tabs + stage cards) and Illustration Gallery (collection + full-screen viewer).</summary>
     public sealed class PuzzleLobbyGalleryUI : MonoBehaviour
     {
-        private static readonly Color PanelBg = new Color(0.08f, 0.22f, 0.34f, 0.72f);
-        private static readonly Color CardUnlocked = new Color(0.11f, 0.30f, 0.42f, 0.92f);
-        private static readonly Color CardLocked = new Color(0.07f, 0.16f, 0.24f, 0.88f);
-        private static readonly Color TabActive = new Color(0.18f, 0.52f, 0.62f, 1f);
-        private static readonly Color TabInactive = new Color(0.09f, 0.24f, 0.34f, 0.90f);
-        private static readonly Color TextLight = new Color(0.95f, 0.98f, 1.00f, 1f);
+        private static readonly Color PanelBg = new Color(0.98f, 0.98f, 0.95f, 0.96f);
+        private static readonly Color CardUnlocked = new Color(0.55f, 0.86f, 0.79f, 1f);
+        private static readonly Color CardLocked = new Color(0.78f, 0.78f, 0.75f, 1f);
+        private static readonly Color TabActive = new Color(0.43f, 0.81f, 0.92f, 1f);
+        private static readonly Color TabInactive = new Color(0.88f, 0.88f, 0.85f, 1f);
+        private static readonly Color TextLight = new Color(0.07f, 0.07f, 0.06f, 1f);
 
         private PuzzleGame game;
         private RectTransform titlePanel;
@@ -507,11 +507,11 @@ namespace FirstPuzzle
         private void BuildTitlePanel()
         {
             // Fullscreen title screen over the casual background (in-game HUD/board is hidden via SetInGameBackdropVisible)
-            titlePanel = Panel("TitlePanel", transform, 0f, 0f, 1f, 1f, new Color(0.06f, 0.18f, 0.28f, 0.18f), true);
-            titleCard = Panel("TitleCard", titlePanel, 0f, 0f, 1f, 1f, new Color(0.07f, 0.20f, 0.32f, 0.38f), true);
+            titlePanel = Panel("TitlePanel", transform, 0f, 0f, 1f, 1f, Color.clear, true);
+            titleCard = Panel("TitleCard", titlePanel, 0f, 0f, 1f, 1f, Color.clear, true);
             titleMainLabel = Label("MainTitle", titleCard, 0.06f, 0.56f, 0.94f, 0.78f, "PICTURE PUZZLE", 68);
             titleMainLabel.fontStyle = FontStyles.Bold;
-            titleSubLabel = Label("SubTitle", titleCard, 0.08f, 0.45f, 0.92f, 0.55f, "COLLECTIBLE ILLUSTRATION SLIDING PUZZLE", 24);
+            titleSubLabel = Label("SubTitle", titleCard, 0.08f, 0.45f, 0.92f, 0.55f, "COLLECTIBLE ILLUSTRATION\nSLIDING PUZZLE", 24);
             titleStartButton = MakeButton(titleCard, "StartButton", "TAP TO START", 0.18f, 0.18f, 0.82f, 0.30f, () => game.EnterLobbyFromTitle());
             var startImg = titleStartButton.GetComponent<Image>();
             if (startImg != null) startImg.color = new Color(0.16f, 0.52f, 0.62f, 0.96f);
@@ -663,20 +663,8 @@ namespace FirstPuzzle
             fitter.aspectMode = AspectRatioFitter.AspectMode.FitInParent;
             fitter.aspectRatio = 1f;
 
-            Color lockColor = new Color(0.76f, 0.86f, 0.90f, 0.95f);
-            Color holeColor = new Color(0.03f, 0.06f, 0.09f, 1f);
-
-            // Shackle (U-arch at top)
-            Panel("ShackleLeft", iconBox, 0.30f, 0.50f, 0.40f, 0.84f, lockColor, false);
-            Panel("ShackleRight", iconBox, 0.60f, 0.50f, 0.70f, 0.84f, lockColor, false);
-            Panel("ShackleTop", iconBox, 0.30f, 0.76f, 0.70f, 0.88f, lockColor, false);
-
-            // Padlock body
-            Panel("Body", iconBox, 0.20f, 0.12f, 0.80f, 0.54f, lockColor, false);
-
-            // Keyhole inside body
-            Panel("KeyholeTop", iconBox, 0.44f, 0.32f, 0.56f, 0.43f, holeColor, false);
-            Panel("KeyholeSlot", iconBox, 0.47f, 0.20f, 0.53f, 0.34f, holeColor, false);
+            overlay.GetComponent<Image>().color = new Color32(233,233,228,255);
+            ConceptTheme.Art("LockArtwork", iconBox, "icon_lock", 0f, 0f, 1f, 1f);
 
             return overlay.gameObject;
         }

@@ -52,6 +52,7 @@ namespace FirstPuzzle
             Audio = GetComponent<PuzzleAudio>();
             if (Audio == null) Audio = gameObject.AddComponent<PuzzleAudio>();
             Audio.Initialize(Settings, board);
+            ConceptTheme.Install(this);
         }
 
         private void OnEnable()
