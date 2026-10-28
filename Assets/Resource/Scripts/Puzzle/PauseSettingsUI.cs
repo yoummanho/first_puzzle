@@ -13,10 +13,10 @@ namespace FirstPuzzle
     /// <summary>Configures the Pause modal with GAME/SYSTEM tabs, an X close button, and the Hamburger icon on the HUD Pause button.</summary>
     public static class PauseSettingsUI
     {
-        private static readonly Color TabActiveColor = new Color(0.16f, 0.44f, 0.50f, 1f);
-        private static readonly Color TabInactiveColor = new Color(0.07f, 0.16f, 0.20f, 0.96f);
-        private static readonly Color CloseBtnColor = new Color(0.20f, 0.34f, 0.38f, 1f);
-        private static readonly Color IconColor = new Color(0.90f, 0.96f, 0.98f, 1f);
+        private static readonly Color TabActiveColor = ConceptTheme.Cyan;
+        private static readonly Color TabInactiveColor = ConceptTheme.Locked;
+        private static readonly Color CloseBtnColor = ConceptTheme.Pink;
+        private static readonly Color IconColor = ConceptTheme.Ink;
 
         public static void Install(
             PuzzleGame game,

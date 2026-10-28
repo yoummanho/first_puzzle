@@ -16,6 +16,16 @@
   6. 실제 테스트 결과와 미검증 항목을 구분한다. 상세 기능 명세는 [Assets/SPEC.md](Assets/SPEC.md)를 따른다.
 
 ## 현재 페이즈
+컨셉 브랜치의 Phase 3 UI는 아래 Core Style Guide를 적용한다. 기본 브랜치의 파스텔 UI와 분리한다.
+
+### 컨셉 디자인 Core Style Guide (2026-10-28)
+- 배경: `#F8F9FA`, 퍼즐·별·번개 두들 `#E5E7EB` 불투명도 약 18%. 노이즈 및 그라데이션 배제.
+- 보드·버튼·카드·배지: `#1E1E24` 외곽선 3px, 아래쪽 6px 블러 없는 하드 섀도우(Canvas 기준 해상도의 UI 단위).
+- 폰트: 영문 Lilita One, 한글 배달의민족 주아체 fallback. 흰색/앰버 채움, 차콜 외곽선·솔리드 그림자.
+- 팔레트: Primary `#38E54D`/`#FF3366`, Active `#00D2FF`/`#FFBE0B`, Surface `#FFFFFF`/`#F3F4F6`, Locked `#D1D5DB`. 단색 또는 투톤 채색.
+- 타이틀 카드·도감은 원본 전체를 비율 유지로 표시. 기존 플레이 보드/스테이지 썸네일의 중앙 크롭은 유지하며 비균등 스케일 금지.
+- 개별 버튼 아이콘·문구는 `Assets/Resources/ConceptUI/Buttons/Icons`, `Buttons/Labels`로 분리. 바탕 마스크는 `Surfaces`, 배경은 `Backgrounds`, 로고는 `Brand`, 폰트·라이선스는 `Fonts`. 편집법은 [ConceptUI 안내](Assets/Resources/ConceptUI/README.md).
+
 | 페이즈 | 범위 | 상태 |
 |---|---|---|
 | Phase 1 | StageData, 정사각형 타일, 결정론적 셔플, 다중 밀기, Undo, 클리어 연출 | 구현 및 자동 테스트 완료 |
@@ -32,9 +42,10 @@
    - 실제 플레이 씬: `Assets/Scenes/PuzzleGame.unity` (`PuzzleGameSceneBuilder.cs`로 생성, 중복을 제거한 30개 고유 스테이지가 3x3부터 칸수 오름차순으로 연결 완료).
    - Phase 1 코어 검증용 씬: `Assets/Scenes/PhaseOneTest.unity` (`PhaseOneSceneBuilder.cs`).
    - 일러스트 원본 경로: `Assets/Resource.art/Puzzle_images` (30종 정리 완료, GIF/WebP는 첫 프레임 PNG와 함께 보존).
-   - 캐주얼 배경 경로: `Assets/Resource.art/Backgrounds/bg_puzzle_misty_forest_temp.png` (기존 어두운 안개 숲 배경을 밝고 화사한 파스텔 하늘·초원 캐주얼 배경으로 교체, GUID 유지).
+   - 컨셉 브랜치 런타임 배경: `Assets/Resources/ConceptUI/Backgrounds/background.png` (오프화이트·미니멀 두들). 기존 파스텔 배경 `Assets/Resource.art/Backgrounds/bg_puzzle_misty_forest_temp.png`는 보존하고 런타임 테마에서 교체한다.
    - 오디오 에셋 경로: `Assets/Resource/Audio/` (`bgm_title.wav`, `bgm_lobby.wav`, `bgm_ingame_loop.wav`[일반 플레이용 120 BPM 44.1 kHz 스튜디오 어쿠스틱 피아노·비브라폰·스트링 패드·업라이트 베이스 루프, 8.0초], `sfx_game_start.wav`, `sfx_tile_move.wav`, `sfx_tile_correct.wav`, `sfx_stage_clear.wav` 총 7종이 실제 WAV 파일로 저장되어 `PuzzleGame` 루트의 `PuzzleAudio` 인스펙터에 직접 연결됨).
 3. **핵심 런타임 스크립트 (`Assets/Resource/Scripts/Puzzle/`):**
+   - `ConceptTheme.cs`, `ConceptImageLabel.cs`, `ConceptPlate.cs`: 컨셉 브랜치 전용 런타임 테마. 이미지형 버튼/라벨, 외곽선·하드 섀도우, Lilita One·주아체, 비율 유지 타이틀 카드 구성. 인게임에는 원형 Undo/누르고 미리보기 버튼을 추가하며 기존 일시정지 메뉴 동작도 유지한다. 아래 기본 UI 설명의 햄버거는 컨셉 테마에서 분홍색 일시정지 아이콘으로 표시한다.
    - `StageData.cs`, `PuzzleBoardState.cs`, `PuzzleTile.cs`, `BoardManager.cs`: Phase 1 퍼즐 코어 (정사각형 타일 유지, 중앙 크롭 UV, 결정론적 역방향 셔플, 다중 밀기, Undo 3회 및 보상 티켓 콜백, `Numbers: ON` 상태에서 타일 숫자 텍스트에 굵은 외곽선(`LiberationSans SDF - Outline` + `OUTLINE_ON`, `OutlineWidth = 0.24`, 짙은 네이비 외곽선, `Bold`) 적용, 타일이 정답 칸에 들어갈 때 `TilePlacedCorrectly` 이벤트 발생, 클리어 페이드인).
    - `SettingsManager.cs`: 5종 설정(`PREF_BGM`, `PREF_SFX`, `PREF_MULTIPUSH`, `PREF_SLIDE_ANIM`, `PREF_ORIENTATION` 세로/가로) 저장/복원 및 `Screen.orientation` 반영.
    - `PuzzleAudio.cs`: `PuzzleGame` 루트 오브젝트에 직렬화 부착되어 Inspector에서 7종 오디오 클립(`titleMusicClip`, `lobbyMusicClip`, `musicClip` 인게임 루프[120 BPM 44.1 kHz 스튜디오 어쿠스틱 피아노·비브라폰·스트링 패드·업라이트 베이스·브러시 퍼커션 편곡으로 퀄리티 업그레이드, 기존 150 BPM은 추후 시간제한 스테이지용으로 보류], `gameStartClip`, `moveClip`, `tileCorrectClip` 타일 정답 위치 안착 시 짧고 맑은 벨 소리, `clearClip`)을 직접 교체·편집 가능. 인게임 시작(`PlayGameStartThenInGameMusic`) 시 `gameStartClip` 효과음이 끝난 뒤 **0.5초 대기 후 볼륨 0에서 0.8초 동안 천천히 페이드인**되며 인게임 루프 BGM이 재생됨.
@@ -237,3 +248,31 @@
 - 검증: 편집기 스크립트 진단 오류 없음. 기존 추적 코드의 git diff --check는 통과했으나, 신규 파일을 포함한 staged 검사에서는 Unity 생성 .meta의 후행 공백 경고가 확인됨(원본 보존). 이번 작업에서 Unity 컴파일·플레이·자동 테스트 및 실기기 시각 검증은 미실시. 디자인 완성으로 간주하지 않음.
 - 남은 작업: 이전 대화 본문 조회 결과가 비어 마지막 세부 디자인 지시는 복구하지 못함. 사용자 추가 피드백 및 컨셉 대비 화면 검증 후 디자인 마감. Phase 4 보류 유지.
 - 푸시: 이 커밋 생성 후 `origin/feat/concept-image-ui`에만 최초 푸시 예정. 실제 결과는 완료 응답 또는 후속 기록에서 확인.
+
+### 2026-10-28 09:52 KST — 컨셉 Core Style Guide 적용 및 버튼 이미지 편집 폴더 정리
+- 직전 커밋: `2a0f2b7` (`wip: 컨셉 디자인 작업 보존 및 전용 브랜치 푸시 규약 적용`). 원격 조회로 `origin/feat/concept-image-ui` 동일 해시 확인. `origin/master`, `origin/wip/home-phase1`은 `a8c60c4` 유지.
+- 커밋 제목: `feat: 컨셉 스타일 가이드 적용 및 버튼 이미지 편집 구조 정리`
+- 대상 페이즈: Phase 3 컨셉 UI 디자인.
+- 기존 AGENTS.md 내용 대비 변경 사항:
+  - 파스텔 배경 설명에 컨셉 브랜치의 오프화이트·두들 런타임 배경을 구분하고 Core Style Guide 4대 규칙과 금지 규칙을 본문/SPEC에 명시.
+  - 일반적인 크림/파스텔 색과 그라데이션 로고에서 지정된 그린·핑크·사이언·앰버·쿨 그레이 단색 팔레트로 변경. Arial 이미지 글자를 Lilita One으로 교체하고 동적 텍스트에 Lilita One 및 주아체 fallback 적용.
+  - 컨셉 테마의 원형 Undo/미리보기 HUD 및 분홍 일시정지 아이콘을 인계 가이드에 명시. 기존 일시정지 내부 기능 유지.
+- 실제 변경:
+  - 배경 #F8F9FA + #E5E7EB 약 18% 퍼즐·별·번개 규칙 패턴. 노이즈·그라데이션·블러 없이 재생성.
+  - 보드/버튼/카드/배지의 흰색 바탕 마스크에 차콜 #1E1E24 3px 외곽선 및 아래쪽 6px 하드 섀도우를 런타임 적용(Canvas 기준 UI 단위). 선택 탭·잠금 상태 색도 통일.
+  - 타이틀 팬 카드에 원본 전체 UV와 AspectRatioFitter 적용, 카드 묶음 비율 고정으로 가로 폴더블에서 길어지는 프레임 보정. 기존 퍼즐 원본/보드 알고리즘은 보존.
+  - ConceptUI 리소스를 Buttons/Icons, Buttons/Labels, Surfaces, Backgrounds, Brand, Fonts로 정리하고 기존 메타 GUID 유지. Lilita One/주아체 TTF 및 OFL 동봉. README에 개별 PNG 교체법과 재생성 시 수동 수정 덮어쓰기 주의 명시.
+  - 생성 도구에서 전체 글자 윤곽을 먼저 만든 뒤 비율 유지 축소하여 SYSTEM 문구의 줄바꿈/끝 글자 잘림 해결. UI 텍스처 59종 무압축·밉맵 없음 설정.
+- 검증: Unity 재컴파일 오류/경고 0건. 에디터 자동 테스트 36/36 통과, 최종 레이아웃 보정 후 Phase 3 흐름·비율·Safe Area 통합 테스트 1/1 추가 통과. 새 검증에 한글 fallback, 타이틀 원본 UV/종횡비, 버튼 리소스 로딩·입력 대상 포함. 1080×1920 세로와 2176×1812 가로에서 타이틀/로비/인게임/일시정지 화면 점검 및 프레임 진행 확인. 마지막 플레이 콘솔 오류/경고 0건. 검증 후 플레이 종료·화면방향/해상도/백그라운드 실행 설정 복원, 씬 미저장 변경 없음.
+- 미검증/남은 작업: 실제 모바일 기기의 터치·가독성 검수 및 사용자 디자인 피드백. Phase 4 보류. 화면 캡처와 일회성 검증 스크립트는 커밋 제외.
+- 푸시: 이 커밋 생성 후 `origin/feat/concept-image-ui`에만 푸시 예정. 기본 브랜치에는 반영하지 않음. 성공 여부는 완료 응답과 후속 기록에서 확인.
+
+### 2026-10-29 01:20 KST — 전일 컨셉 UI 미커밋 작업 검증 및 마감
+- 직전 커밋: `2a0f2b7`. 원격 조회로 `origin/feat/concept-image-ui`와 동일함을 확인. 전일 09:52 기록의 변경분은 미커밋 상태였으므로 이번 커밋으로 함께 마감한다.
+- 커밋 제목: `feat: 컨셉 스타일 가이드 적용 및 버튼 이미지 편집 구조 정리`
+- 대상 페이즈: Phase 3 컨셉 UI 디자인. Phase 4 보류 유지.
+- 기존 AGENTS.md 내용 대비 변경 사항: 전일 기록의 구현·스타일 규격은 유지하며, 미완료였던 Git 저장·원격 반영 절차와 오늘 재실행한 검증 결과를 보완한다.
+- 실제 변경: 지정 팔레트·외곽선·하드 섀도우, Lilita One/주아체 fallback, 타이틀 카드 비율 유지, 버튼/배경/로고/폰트 폴더 분리와 편집 안내 및 테스트를 최종 반영한다. 임시 화면 캡처는 로컬 보존하고 커밋에서 제외한다.
+- 검증: 설치된 Unity CLI 최신 버전(1.0.0-beta.14) 확인. Unity EditMode 전체 테스트 36/36 통과(실패/건너뜀 0), 변경 런타임 스크립트 편집기 진단 오류 없음. 이동한 기존 메타 GUID 불일치/누락 0건, PNG 59종 확인. 기존 경로를 사용하는 C#/생성 도구 참조 없음. git diff --check 통과.
+- 미검증/남은 작업: 오늘은 자동 테스트를 재실행했으며 화면 육안 검수는 전일 기록과 구분한다. 실제 모바일 기기 터치·가독성 검수 및 사용자 디자인 피드백은 별도 후속 작업이다.
+- 푸시: 커밋 생성 후 `origin/feat/concept-image-ui`에만 푸시 예정. 시작 시 기본 원격 두 브랜치는 `a8c60c4`임을 확인했으며 이번 작업 대상으로 삼지 않는다. 성공 여부는 원격 해시 재조회 후 완료 보고에 명시한다.

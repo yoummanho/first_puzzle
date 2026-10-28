@@ -189,6 +189,21 @@ namespace FirstPuzzleTests
                 Assert.IsNotNull(titleCardRect);
                 Assert.AreEqual(Vector2.zero, titleCardRect.anchorMin, "TitleCard must be full-screen.");
                 Assert.AreEqual(Vector2.one, titleCardRect.anchorMax, "TitleCard must be full-screen.");
+                Assert.IsNotNull(game.GetComponent<ConceptTheme>(), "Concept theme must finish installing.");
+                Assert.AreEqual("Concept Lilita One", game.heading.font.name);
+                Assert.IsTrue(game.heading.font.HasCharacter('한', true, true), "Korean fallback must render Korean text.");
+                foreach (var illustration in titleCardRect.Find("IllustrationCards").GetComponentsInChildren<RawImage>(true))
+                {
+                    Assert.AreEqual(new Rect(0, 0, 1, 1), illustration.uvRect);
+                    var fit = illustration.GetComponent<AspectRatioFitter>();
+                    Assert.AreEqual(AspectRatioFitter.AspectMode.FitInParent, fit.aspectMode);
+                    Assert.That(fit.aspectRatio, Is.EqualTo((float)illustration.texture.width / illustration.texture.height).Within(.001f));
+                }
+                var previewFace = hudContent.Find("HudPreview/Face").GetComponent<Image>();
+                Assert.IsTrue(previewFace.raycastTarget, "Image-based preview control must remain interactive.");
+                Assert.AreEqual(ConceptTheme.Pink, previewFace.color);
+                Assert.IsNotNull(ConceptTheme.Load("icon_preview"), "Organized button assets must resolve at runtime.");
+                Assert.IsNotNull(ConceptTheme.Load("label_tap_to_start"));
                 Assert.AreEqual(MusicContext.Title, game.Audio.ActiveMusicContext, "Title BGM must play on Title screen.");
                 AudioClip titleClip = game.Audio.CurrentMusicClip;
                 Assert.IsNotNull(titleClip);

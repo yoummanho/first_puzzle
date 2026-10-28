@@ -8,10 +8,16 @@ namespace FirstPuzzle
     /// <summary>Image-driven cream/ink skin. Existing gameplay, labels and button events remain the source of truth.</summary>
     public sealed class ConceptTheme : MonoBehaviour
     {
-        public static readonly Color Cream = new Color32(247, 243, 226, 255);
-        public static readonly Color Ink = new Color32(18, 18, 16, 255);
-        public static readonly Color Green = new Color32(111, 211, 103, 255);
-        public static readonly Color Pink = new Color32(255, 114, 165, 255);
+        public static readonly Color Cream = Color.white;
+        public static readonly Color Background = new Color32(248, 249, 250, 255);
+        public static readonly Color Ink = new Color32(30, 30, 36, 255);
+        public static readonly Color Green = new Color32(56, 229, 77, 255);
+        public static readonly Color Pink = new Color32(255, 51, 102, 255);
+        public static readonly Color Cyan = new Color32(0, 210, 255, 255);
+        public static readonly Color Amber = new Color32(255, 190, 11, 255);
+        public static readonly Color Surface = new Color32(243, 244, 246, 255);
+        public static readonly Color Locked = new Color32(209, 213, 219, 255);
+        private static TMP_FontAsset displayFont;
         private static readonly Dictionary<string, Sprite> sprites = new Dictionary<string, Sprite>();
         private PuzzleGame game;
         private RectTransform undo, preview, fan;
@@ -22,12 +28,50 @@ namespace FirstPuzzle
         public static Sprite Load(string key)
         {
             if (sprites.TryGetValue(key, out var cached)) return cached;
-            var texture = Resources.Load<Texture2D>("ConceptUI/" + key);
+            var texture = Resources.Load<Texture2D>(AssetPath(key));
             if (texture == null) { sprites[key] = null; return null; }
             var border = key == "panel" || key == "pill" || key == "tile" ? new Vector4(48, 48, 48, 48) : Vector4.zero;
             var sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(.5f,.5f), 100, 0, SpriteMeshType.FullRect, border);
             sprites[key] = sprite;
             return sprite;
+        }
+
+        public static string AssetPath(string key)
+        {
+            string folder = key.StartsWith("icon_") ? "Buttons/Icons/" :
+                key.StartsWith("label_") ? "Buttons/Labels/" :
+                key == "background" ? "Backgrounds/" : key == "logo" ? "Brand/" : "Surfaces/";
+            return "ConceptUI/" + folder + key;
+        }
+
+        public static void StyleText(TMP_Text label)
+        {
+            if (displayFont == null)
+            {
+                var latin = Resources.Load<Font>("ConceptUI/Fonts/LilitaOne-Regular");
+                var korean = Resources.Load<Font>("ConceptUI/Fonts/Jua-Regular");
+                if (latin != null)
+                {
+                    displayFont = TMP_FontAsset.CreateFontAsset(latin);
+                    displayFont.name = "Concept Lilita One";
+                    displayFont.fallbackFontAssetTable = new List<TMP_FontAsset>();
+                    if (korean != null)
+                        displayFont.fallbackFontAssetTable.Add(TMP_FontAsset.CreateFontAsset(korean));
+                    var material = displayFont.material;
+                    material.EnableKeyword(ShaderUtilities.Keyword_Outline);
+                    material.SetColor(ShaderUtilities.ID_OutlineColor, Ink);
+                    material.SetFloat(ShaderUtilities.ID_OutlineWidth, .4f);
+                    material.SetFloat(ShaderUtilities.ID_FaceDilate, .1f);
+                    material.EnableKeyword("UNDERLAY_ON");
+                    material.SetColor("_UnderlayColor", Ink);
+                    material.SetFloat("_UnderlayOffsetY", -.5f);
+                    material.SetFloat("_UnderlaySoftness", 0f);
+                }
+            }
+            if (displayFont != null) { label.font = displayFont; label.fontSharedMaterial = displayFont.material; }
+            label.color = Color.white;
+            label.fontStyle = FontStyles.Normal;
+            label.extraPadding = true;
         }
 
         public static void Anchors(RectTransform rect, float x0, float y0, float x1, float y1)
@@ -52,6 +96,18 @@ namespace FirstPuzzle
             if (image == null) return;
             image.sprite = Load(sprite); image.type = UnityEngine.UI.Image.Type.Sliced;
             image.preserveAspect = false; image.color = color;
+            // Effects live outside the tinted fill, keeping the charcoal outline neutral.
+            var shadow = image.GetComponent<UnityEngine.UI.Shadow>();
+            if (shadow == null || shadow is UnityEngine.UI.Outline)
+                shadow = image.gameObject.AddComponent<UnityEngine.UI.Shadow>();
+            shadow.effectColor = Ink;
+            shadow.effectDistance = new Vector2(0, -6);
+            shadow.useGraphicAlpha = true;
+            var outline = image.GetComponent<UnityEngine.UI.Outline>();
+            if (outline == null) outline = image.gameObject.AddComponent<UnityEngine.UI.Outline>();
+            outline.effectColor = Ink;
+            outline.effectDistance = new Vector2(3, -3);
+            outline.useGraphicAlpha = true;
         }
 
         public static void Install(PuzzleGame owner)
@@ -70,24 +126,31 @@ namespace FirstPuzzle
             if (bg != null)
             {
                 var raw = bg.GetComponent<RawImage>();
-                if (raw != null) { raw.texture = Resources.Load<Texture2D>("ConceptUI/background"); raw.color = Color.white; }
+                if (raw != null) { raw.texture = Resources.Load<Texture2D>(AssetPath("background")); raw.color = Color.white; }
                 var image = bg.GetComponent<UnityEngine.UI.Image>();
                 if (image != null) { image.sprite = Load("background"); image.color = Color.white; }
             }
             foreach (var label in game.GetComponentsInChildren<TMP_Text>(true))
             {
-                label.color = Ink; label.fontStyle |= FontStyles.Bold;
+                StyleText(label);
                 if (label.GetComponent<ConceptImageLabel>() == null) label.gameObject.AddComponent<ConceptImageLabel>().Initialize(label);
             }
             foreach (var button in game.GetComponentsInChildren<UnityEngine.UI.Button>(true))
-                Skin(button.GetComponent<UnityEngine.UI.Image>(), Cream);
+            {
+                Skin(button.GetComponent<UnityEngine.UI.Image>(), button.name == "PlayButton" ? Green : Cream);
+                var colors = button.colors;
+                colors.normalColor = colors.highlightedColor = colors.selectedColor = Color.white;
+                colors.pressedColor = new Color(.85f, .85f, .85f, 1);
+                colors.disabledColor = new Color(.82f, .84f, .86f, 1);
+                button.colors = colors;
+            }
             Skin(game.pauseButton.GetComponent<UnityEngine.UI.Image>(), Cream, "pill");
             var hamburger = game.pauseButton.transform.Find("HamburgerIcon");
             if (hamburger != null) hamburger.gameObject.SetActive(false);
             Art("PauseIcon",game.pauseButton.transform,"icon_pause",.12f,.12f,.88f,.88f);
             var curtain = game.curtain.GetComponent<UnityEngine.UI.Image>();
-            if (curtain != null) curtain.color = new Color32(250,250,243,255);
-            Plate(game.heading, Cream); Plate(game.stats, new Color32(255,218,44,255));
+            if (curtain != null) curtain.color = Background;
+            Plate(game.heading, Cream); Plate(game.stats, Amber);
             game.heading.margin = new Vector4(20,10,20,10);
             game.stats.margin = new Vector4(35,8,25,8);
             var content = game.ResponsiveLayout.ContentRect;
@@ -99,11 +162,15 @@ namespace FirstPuzzle
             undo=Control("HudUndo",content,Green,"icon_undo");
             undoAction=undo.gameObject.AddComponent<UnityEngine.UI.Button>(); undoAction.targetGraphic=undo.GetComponentInChildren<UnityEngine.UI.Image>();
             undoAction.onClick.AddListener(game.Undo);
-            var badge=Art("Remaining",undo,"pill",.65f,.70f,1.05f,1.10f); badge.color=Cream;
+            var undoColors=undoAction.colors;
+            undoColors.disabledColor=new Color(.82f,.84f,.86f,1);
+            undoColors.pressedColor=new Color(.85f,.85f,.85f,1);
+            undoAction.colors=undoColors;
+            var badge=Art("Remaining",undo,"pill",.65f,.70f,1.05f,1.10f); Skin(badge,Amber,"pill");
             undoCount=new GameObject("Count",typeof(RectTransform),typeof(TextMeshProUGUI)).GetComponent<TMP_Text>();
             undoCount.transform.SetParent(badge.transform,false); Anchors(undoCount.rectTransform,0,0,1,1);
             undoCount.font=TMP_Settings.defaultFontAsset; undoCount.fontSize=36; undoCount.alignment=TextAlignmentOptions.Center;
-            undoCount.fontStyle=FontStyles.Bold; undoCount.color=Ink; undoCount.raycastTarget=false;
+            StyleText(undoCount); undoCount.raycastTarget=false;
             preview=Control("HudPreview",content,Pink,"icon_preview");
             preview.gameObject.AddComponent<HoldPreview>().game=game;
             // Match reference title using the project's own artwork rather than baking UI into a screen-sized image.
@@ -116,20 +183,29 @@ namespace FirstPuzzle
                 var sub=title.Find("SubTitle")?.GetComponent<TMP_Text>(); if(sub != null) Plate(sub,Ink);
                 Skin(title.Find("StartButton").GetComponent<UnityEngine.UI.Image>(),Green,"pill");
                 fan=new GameObject("IllustrationCards",typeof(RectTransform)).GetComponent<RectTransform>(); fan.SetParent(title,false);
-                for(int i=0;i<3;i++)
+                var composition = new GameObject("CardComposition", typeof(RectTransform), typeof(AspectRatioFitter)).GetComponent<RectTransform>();
+                composition.SetParent(fan, false);
+                var compositionFit = composition.GetComponent<AspectRatioFitter>();
+                compositionFit.aspectMode = AspectRatioFitter.AspectMode.FitInParent;
+                compositionFit.aspectRatio = 1.2f;
+                for(int i=0;i<Mathf.Min(3, game.stages.Length);i++)
                 {
-                    var card=Art("CollectibleCard"+i,fan,"panel",.18f+i*.09f,.08f,.66f+i*.09f,.92f);
+                    var card=Art("CollectibleCard"+i,composition,"panel",.18f+i*.09f,.08f,.66f+i*.09f,.92f);
                     Skin(card,Cream); card.rectTransform.localEulerAngles=new Vector3(0,0,i==0?18:i==1?-18:0);
                     var raw=new GameObject("Artwork",typeof(RectTransform),typeof(RawImage)).GetComponent<RawImage>(); raw.transform.SetParent(card.transform,false);
                     Anchors(raw.rectTransform,.09f,.07f,.91f,.93f); raw.texture=game.stages[i].Illustration; raw.raycastTarget=false;
-                    raw.uvRect=game.stages[i].GetImageUV();
+                    raw.uvRect=new Rect(0,0,1,1);
+                    var fit=raw.gameObject.AddComponent<AspectRatioFitter>();
+                    fit.aspectMode=AspectRatioFitter.AspectMode.FitInParent;
+                    fit.aspectRatio=(float)raw.texture.width/raw.texture.height;
                 }
             }
             foreach(var img in game.Lobby.GetComponentsInChildren<UnityEngine.UI.Image>(true))
             {
-                if(img.name=="ThumbFrame") img.color=new Color32(233,233,228,255);
-                if(img.name=="GalleryButton")Skin(img,new Color32(118,211,237,255));
+                if(img.name=="ThumbFrame") Skin(img,Surface);
+                if(img.name=="GalleryButton")Skin(img,Cyan);
             }
+            Skin(game.nextButton?.GetComponent<UnityEngine.UI.Image>(), Green, "pill");
             IconButton(game.Lobby.transform,"PrevPage","icon_prev"); IconButton(game.Lobby.transform,"NextPage","icon_next");
             IconButton(game.Lobby.transform,"CloseViewer","icon_close");
             ApplyLayout();
@@ -147,7 +223,7 @@ namespace FirstPuzzle
         private static RectTransform Control(string name,Transform parent,Color color,string icon)
         {
             var root=new GameObject(name,typeof(RectTransform)).GetComponent<RectTransform>(); root.SetParent(parent,false);
-            var image=Art("Face",root,"circle",0,0,1,1); image.color=color; image.raycastTarget=true;
+            var image=Art("Face",root,"circle",0,0,1,1); Skin(image,color,"circle"); image.preserveAspect=true; image.type=UnityEngine.UI.Image.Type.Simple; image.raycastTarget=true;
             var aspect=image.gameObject.AddComponent<AspectRatioFitter>();aspect.aspectMode=AspectRatioFitter.AspectMode.FitInParent;aspect.aspectRatio=1;
             Art("Icon",image.transform,icon,.17f,.17f,.83f,.83f);return root;
         }
@@ -171,8 +247,8 @@ namespace FirstPuzzle
         {
             if(game==null || undo==null || preview==null)return;
             orientation=game.Settings.Orientation; bool wide=orientation==PlayOrientation.Landscape;
-            Anchors(undo,wide?.67f:.02f,wide?.20f:.09f,wide?.80f:.27f,wide?.40f:.23f);
-            Anchors(preview,wide?.84f:.73f,wide?.20f:.09f,wide?.97f:.98f,wide?.40f:.23f);
+            Anchors(undo,wide?.67f:.02f,wide?.20f:.115f,wide?.80f:.27f,wide?.40f:.235f);
+            Anchors(preview,wide?.84f:.73f,wide?.20f:.115f,wide?.97f:.98f,wide?.40f:.235f);
             var title=game.Lobby.transform.Find("TitlePanel/TitleCard");
             if(title!=null)
             {

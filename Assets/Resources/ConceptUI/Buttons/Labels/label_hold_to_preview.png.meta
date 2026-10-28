@@ -1,0 +1,468 @@
+fileFormatVersion: 2
+guid: b32b87ac080f697459271630c2b7ec84
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -9093874179072539550
+    second: label_hold_to_preview_0
+  - first:
+      213: 8627742092315334519
+    second: label_hold_to_preview_1
+  - first:
+      213: -5111253610672306318
+    second: label_hold_to_preview_2
+  - first:
+      213: 5125675937679100937
+    second: label_hold_to_preview_3
+  - first:
+      213: -1981785603207562345
+    second: label_hold_to_preview_4
+  - first:
+      213: -6024491825034925752
+    second: label_hold_to_preview_5
+  - first:
+      213: 6950605121574234179
+    second: label_hold_to_preview_6
+  - first:
+      213: -3099897408772385189
+    second: label_hold_to_preview_7
+  - first:
+      213: -7734639958939330173
+    second: label_hold_to_preview_8
+  - first:
+      213: 6253934477109972924
+    second: label_hold_to_preview_9
+  - first:
+      213: 4051168296492014574
+    second: label_hold_to_preview_10
+  - first:
+      213: -6514654135356045423
+    second: label_hold_to_preview_11
+  - first:
+      213: -6888393629639008530
+    second: label_hold_to_preview_12
+  - first:
+      213: -8406364168385379042
+    second: label_hold_to_preview_13
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 0
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: label_hold_to_preview_0
+      rect:
+        serializedVersion: 2
+        x: 270
+        y: 45
+        width: 40
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 264c8449d911cc180800000000000000
+      internalID: -9093874179072539550
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: label_hold_to_preview_1
+      rect:
+        serializedVersion: 2
+        x: 358
+        y: 45
+        width: 12
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7771422a8b5ebb770800000000000000
+      internalID: 8627742092315334519
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: label_hold_to_preview_2
+      rect:
+        serializedVersion: 2
+        x: 375
+        y: 44
+        width: 35
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 277c1f2fbed2119b0800000000000000
+      internalID: -5111253610672306318
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: label_hold_to_preview_3
+      rect:
+        serializedVersion: 2
+        x: 431
+        y: 44
+        width: 23
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 90c412bbb1f022740800000000000000
+      internalID: 5125675937679100937
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: label_hold_to_preview_4
+      rect:
+        serializedVersion: 2
+        x: 655
+        y: 83
+        width: 12
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 79b74db6e784f74e0800000000000000
+      internalID: -1981785603207562345
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: label_hold_to_preview_5
+      rect:
+        serializedVersion: 2
+        x: 316
+        y: 44
+        width: 37
+        height: 38
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8496c80ba94b46ca0800000000000000
+      internalID: -6024491825034925752
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: label_hold_to_preview_6
+      rect:
+        serializedVersion: 2
+        x: 455
+        y: 44
+        width: 37
+        height: 38
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 348617d3882857060800000000000000
+      internalID: 6950605121574234179
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: label_hold_to_preview_7
+      rect:
+        serializedVersion: 2
+        x: 515
+        y: 32
+        width: 36
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b56d7fd0bb3faf4d0800000000000000
+      internalID: -3099897408772385189
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: label_hold_to_preview_8
+      rect:
+        serializedVersion: 2
+        x: 556
+        y: 45
+        width: 24
+        height: 37
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 38911edefe909a490800000000000000
+      internalID: -7734639958939330173
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: label_hold_to_preview_9
+      rect:
+        serializedVersion: 2
+        x: 579
+        y: 44
+        width: 34
+        height: 38
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cbf45bca5407ac650800000000000000
+      internalID: 6253934477109972924
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: label_hold_to_preview_10
+      rect:
+        serializedVersion: 2
+        x: 614
+        y: 45
+        width: 37
+        height: 36
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: eeb1bb50a14a83830800000000000000
+      internalID: 4051168296492014574
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: label_hold_to_preview_11
+      rect:
+        serializedVersion: 2
+        x: 655
+        y: 45
+        width: 12
+        height: 36
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 197c29b749c4795a0800000000000000
+      internalID: -6514654135356045423
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: label_hold_to_preview_12
+      rect:
+        serializedVersion: 2
+        x: 671
+        y: 44
+        width: 33
+        height: 38
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: eee9d487d728760a0800000000000000
+      internalID: -6888393629639008530
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: label_hold_to_preview_13
+      rect:
+        serializedVersion: 2
+        x: 706
+        y: 45
+        width: 52
+        height: 36
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e1541d2e358965b80800000000000000
+      internalID: -8406364168385379042
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    outline: []
+    customData:
+    physicsShape: []
+    bones: []
+    spriteID:
+    internalID: 0
+    vertices: []
+    indices:
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      label_hold_to_preview_0: -9093874179072539550
+      label_hold_to_preview_1: 8627742092315334519
+      label_hold_to_preview_10: 4051168296492014574
+      label_hold_to_preview_11: -6514654135356045423
+      label_hold_to_preview_12: -6888393629639008530
+      label_hold_to_preview_13: -8406364168385379042
+      label_hold_to_preview_2: -5111253610672306318
+      label_hold_to_preview_3: 5125675937679100937
+      label_hold_to_preview_4: -1981785603207562345
+      label_hold_to_preview_5: -6024491825034925752
+      label_hold_to_preview_6: 6950605121574234179
+      label_hold_to_preview_7: -3099897408772385189
+      label_hold_to_preview_8: -7734639958939330173
+      label_hold_to_preview_9: 6253934477109972924
+  mipmapLimitGroupName:
+  pSDRemoveMatte: 0
+  userData:
+  assetBundleName:
+  assetBundleVariant:

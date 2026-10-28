@@ -1,0 +1,1014 @@
+fileFormatVersion: 2
+guid: 7fd0381730a3f8343bedef9511790741
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 3079149018671581954
+    second: label_collectible_illustration_sliding_puzzle_0
+  - first:
+      213: 7032346263852804353
+    second: label_collectible_illustration_sliding_puzzle_1
+  - first:
+      213: -7382418526918459871
+    second: label_collectible_illustration_sliding_puzzle_2
+  - first:
+      213: 6710824348368169212
+    second: label_collectible_illustration_sliding_puzzle_3
+  - first:
+      213: 5163541315422995638
+    second: label_collectible_illustration_sliding_puzzle_4
+  - first:
+      213: -5411424412368186121
+    second: label_collectible_illustration_sliding_puzzle_5
+  - first:
+      213: -2734611744672704691
+    second: label_collectible_illustration_sliding_puzzle_6
+  - first:
+      213: 480128924007211519
+    second: label_collectible_illustration_sliding_puzzle_7
+  - first:
+      213: 6251410073029710393
+    second: label_collectible_illustration_sliding_puzzle_8
+  - first:
+      213: -1707307882422058313
+    second: label_collectible_illustration_sliding_puzzle_9
+  - first:
+      213: 1724072672387697648
+    second: label_collectible_illustration_sliding_puzzle_10
+  - first:
+      213: -7672839774582059875
+    second: label_collectible_illustration_sliding_puzzle_11
+  - first:
+      213: -6615225425341555563
+    second: label_collectible_illustration_sliding_puzzle_12
+  - first:
+      213: -6242457065327977468
+    second: label_collectible_illustration_sliding_puzzle_13
+  - first:
+      213: 3574444447496202049
+    second: label_collectible_illustration_sliding_puzzle_14
+  - first:
+      213: 53582663585042855
+    second: label_collectible_illustration_sliding_puzzle_15
+  - first:
+      213: 2240875596894135394
+    second: label_collectible_illustration_sliding_puzzle_16
+  - first:
+      213: 2766240554519166734
+    second: label_collectible_illustration_sliding_puzzle_17
+  - first:
+      213: -7819186579838465135
+    second: label_collectible_illustration_sliding_puzzle_18
+  - first:
+      213: -4741116111460378090
+    second: label_collectible_illustration_sliding_puzzle_19
+  - first:
+      213: -5750745355380863218
+    second: label_collectible_illustration_sliding_puzzle_20
+  - first:
+      213: -5373529639440690342
+    second: label_collectible_illustration_sliding_puzzle_21
+  - first:
+      213: -8700369408313127195
+    second: label_collectible_illustration_sliding_puzzle_22
+  - first:
+      213: -7250653365814409647
+    second: label_collectible_illustration_sliding_puzzle_23
+  - first:
+      213: -707289907410933646
+    second: label_collectible_illustration_sliding_puzzle_24
+  - first:
+      213: -8724082886030201264
+    second: label_collectible_illustration_sliding_puzzle_25
+  - first:
+      213: -1495342974826413814
+    second: label_collectible_illustration_sliding_puzzle_26
+  - first:
+      213: -5488121927402851765
+    second: label_collectible_illustration_sliding_puzzle_27
+  - first:
+      213: -4106555960194623198
+    second: label_collectible_illustration_sliding_puzzle_28
+  - first:
+      213: 3083331944242124655
+    second: label_collectible_illustration_sliding_puzzle_29
+  - first:
+      213: -6194292366901185977
+    second: label_collectible_illustration_sliding_puzzle_30
+  - first:
+      213: 4159774064172425212
+    second: label_collectible_illustration_sliding_puzzle_31
+  - first:
+      213: 2956218925064757906
+    second: label_collectible_illustration_sliding_puzzle_32
+  - first:
+      213: 754206878971200722
+    second: label_collectible_illustration_sliding_puzzle_33
+  - first:
+      213: -5670331121858933093
+    second: label_collectible_illustration_sliding_puzzle_34
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 0
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: label_collectible_illustration_sliding_puzzle_0
+      rect:
+        serializedVersion: 2
+        x: 154
+        y: 112
+        width: 33
+        height: 38
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 20b896ce7b55bba20800000000000000
+      internalID: 3079149018671581954
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: label_collectible_illustration_sliding_puzzle_1
+      rect:
+        serializedVersion: 2
+        x: 190
+        y: 112
+        width: 36
+        height: 38
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 109ed720ba9e79160800000000000000
+      internalID: 7032346263852804353
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: label_collectible_illustration_sliding_puzzle_2
+      rect:
+        serializedVersion: 2
+        x: 230
+        y: 113
+        width: 27
+        height: 37
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 12e33c7a6716c8990800000000000000
+      internalID: -7382418526918459871
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: label_collectible_illustration_sliding_puzzle_3
+      rect:
+        serializedVersion: 2
+        x: 260
+        y: 113
+        width: 27
+        height: 37
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cf8e68a7033a12d50800000000000000
+      internalID: 6710824348368169212
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: label_collectible_illustration_sliding_puzzle_4
+      rect:
+        serializedVersion: 2
+        x: 290
+        y: 113
+        width: 29
+        height: 37
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6b447d0087598a740800000000000000
+      internalID: 5163541315422995638
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: label_collectible_illustration_sliding_puzzle_5
+      rect:
+        serializedVersion: 2
+        x: 322
+        y: 112
+        width: 32
+        height: 38
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7f4daebfa22c6e4b0800000000000000
+      internalID: -5411424412368186121
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: label_collectible_illustration_sliding_puzzle_6
+      rect:
+        serializedVersion: 2
+        x: 356
+        y: 113
+        width: 30
+        height: 37
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d471c285b15bc0ad0800000000000000
+      internalID: -2734611744672704691
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: label_collectible_illustration_sliding_puzzle_7
+      rect:
+        serializedVersion: 2
+        x: 389
+        y: 113
+        width: 9
+        height: 37
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ff127d966b2c9a600800000000000000
+      internalID: 480128924007211519
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: label_collectible_illustration_sliding_puzzle_8
+      rect:
+        serializedVersion: 2
+        x: 402
+        y: 113
+        width: 32
+        height: 37
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9321c3c075871c650800000000000000
+      internalID: 6251410073029710393
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: label_collectible_illustration_sliding_puzzle_9
+      rect:
+        serializedVersion: 2
+        x: 438
+        y: 113
+        width: 27
+        height: 37
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7b24202d68c6e48e0800000000000000
+      internalID: -1707307882422058313
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: label_collectible_illustration_sliding_puzzle_10
+      rect:
+        serializedVersion: 2
+        x: 468
+        y: 113
+        width: 29
+        height: 37
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0fb80a406f22de710800000000000000
+      internalID: 1724072672387697648
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: label_collectible_illustration_sliding_puzzle_11
+      rect:
+        serializedVersion: 2
+        x: 515
+        y: 113
+        width: 10
+        height: 37
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d9c4c81a0e8948590800000000000000
+      internalID: -7672839774582059875
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: label_collectible_illustration_sliding_puzzle_12
+      rect:
+        serializedVersion: 2
+        x: 529
+        y: 113
+        width: 27
+        height: 37
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 59c526d468ff134a0800000000000000
+      internalID: -6615225425341555563
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: label_collectible_illustration_sliding_puzzle_13
+      rect:
+        serializedVersion: 2
+        x: 559
+        y: 113
+        width: 27
+        height: 37
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 40c9f7f7f565e59a0800000000000000
+      internalID: -6242457065327977468
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: label_collectible_illustration_sliding_puzzle_14
+      rect:
+        serializedVersion: 2
+        x: 589
+        y: 112
+        width: 30
+        height: 38
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 147e06a694afa9130800000000000000
+      internalID: 3574444447496202049
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: label_collectible_illustration_sliding_puzzle_15
+      rect:
+        serializedVersion: 2
+        x: 623
+        y: 112
+        width: 31
+        height: 38
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7a11b1d062d5eb000800000000000000
+      internalID: 53582663585042855
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: label_collectible_illustration_sliding_puzzle_16
+      rect:
+        serializedVersion: 2
+        x: 655
+        y: 113
+        width: 31
+        height: 37
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 26467b29b70391f10800000000000000
+      internalID: 2240875596894135394
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: label_collectible_illustration_sliding_puzzle_17
+      rect:
+        serializedVersion: 2
+        x: 688
+        y: 113
+        width: 70
+        height: 37
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e0ff46fc029a36620800000000000000
+      internalID: 2766240554519166734
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: label_collectible_illustration_sliding_puzzle_18
+      rect:
+        serializedVersion: 2
+        x: 753
+        y: 113
+        width: 31
+        height: 37
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 19b0a34cb3bac7390800000000000000
+      internalID: -7819186579838465135
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: label_collectible_illustration_sliding_puzzle_19
+      rect:
+        serializedVersion: 2
+        x: 786
+        y: 113
+        width: 10
+        height: 37
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 61ad581240c243eb0800000000000000
+      internalID: -4741116111460378090
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: label_collectible_illustration_sliding_puzzle_20
+      rect:
+        serializedVersion: 2
+        x: 798
+        y: 112
+        width: 37
+        height: 38
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e0fcbca619f3130b0800000000000000
+      internalID: -5750745355380863218
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: label_collectible_illustration_sliding_puzzle_21
+      rect:
+        serializedVersion: 2
+        x: 838
+        y: 113
+        width: 30
+        height: 37
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a53da1b53436d65b0800000000000000
+      internalID: -5373529639440690342
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: label_collectible_illustration_sliding_puzzle_22
+      rect:
+        serializedVersion: 2
+        x: 310
+        y: 57
+        width: 30
+        height: 38
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5ee02d2ae14124780800000000000000
+      internalID: -8700369408313127195
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: label_collectible_illustration_sliding_puzzle_23
+      rect:
+        serializedVersion: 2
+        x: 345
+        y: 58
+        width: 27
+        height: 36
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 156442ded21806b90800000000000000
+      internalID: -7250653365814409647
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: label_collectible_illustration_sliding_puzzle_24
+      rect:
+        serializedVersion: 2
+        x: 374
+        y: 58
+        width: 10
+        height: 37
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2786d8b93933f26f0800000000000000
+      internalID: -707289907410933646
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: label_collectible_illustration_sliding_puzzle_25
+      rect:
+        serializedVersion: 2
+        x: 388
+        y: 58
+        width: 32
+        height: 37
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 05eea1b56d4dde680800000000000000
+      internalID: -8724082886030201264
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: label_collectible_illustration_sliding_puzzle_26
+      rect:
+        serializedVersion: 2
+        x: 424
+        y: 58
+        width: 10
+        height: 37
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a018810bc797f3be0800000000000000
+      internalID: -1495342974826413814
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: label_collectible_illustration_sliding_puzzle_27
+      rect:
+        serializedVersion: 2
+        x: 438
+        y: 58
+        width: 30
+        height: 37
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b42fe113f2646d3b0800000000000000
+      internalID: -5488121927402851765
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: label_collectible_illustration_sliding_puzzle_28
+      rect:
+        serializedVersion: 2
+        x: 472
+        y: 57
+        width: 35
+        height: 38
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 22916569c159207c0800000000000000
+      internalID: -4106555960194623198
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: label_collectible_illustration_sliding_puzzle_29
+      rect:
+        serializedVersion: 2
+        x: 526
+        y: 58
+        width: 29
+        height: 37
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f679a2d21123aca20800000000000000
+      internalID: 3083331944242124655
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: label_collectible_illustration_sliding_puzzle_30
+      rect:
+        serializedVersion: 2
+        x: 559
+        y: 57
+        width: 30
+        height: 38
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 742f0fb39e3790aa0800000000000000
+      internalID: -6194292366901185977
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: label_collectible_illustration_sliding_puzzle_31
+      rect:
+        serializedVersion: 2
+        x: 591
+        y: 58
+        width: 31
+        height: 37
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cff51e0d87c7ab930800000000000000
+      internalID: 4159774064172425212
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: label_collectible_illustration_sliding_puzzle_32
+      rect:
+        serializedVersion: 2
+        x: 621
+        y: 58
+        width: 31
+        height: 37
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 292a5ca1379960920800000000000000
+      internalID: 2956218925064757906
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: label_collectible_illustration_sliding_puzzle_33
+      rect:
+        serializedVersion: 2
+        x: 655
+        y: 58
+        width: 27
+        height: 36
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2d40c34192b777a00800000000000000
+      internalID: 754206878971200722
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: label_collectible_illustration_sliding_puzzle_34
+      rect:
+        serializedVersion: 2
+        x: 685
+        y: 58
+        width: 29
+        height: 37
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b9e81ca23efee41b0800000000000000
+      internalID: -5670331121858933093
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    outline: []
+    customData:
+    physicsShape: []
+    bones: []
+    spriteID:
+    internalID: 0
+    vertices: []
+    indices:
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      label_collectible_illustration_sliding_puzzle_0: 3079149018671581954
+      label_collectible_illustration_sliding_puzzle_1: 7032346263852804353
+      label_collectible_illustration_sliding_puzzle_10: 1724072672387697648
+      label_collectible_illustration_sliding_puzzle_11: -7672839774582059875
+      label_collectible_illustration_sliding_puzzle_12: -6615225425341555563
+      label_collectible_illustration_sliding_puzzle_13: -6242457065327977468
+      label_collectible_illustration_sliding_puzzle_14: 3574444447496202049
+      label_collectible_illustration_sliding_puzzle_15: 53582663585042855
+      label_collectible_illustration_sliding_puzzle_16: 2240875596894135394
+      label_collectible_illustration_sliding_puzzle_17: 2766240554519166734
+      label_collectible_illustration_sliding_puzzle_18: -7819186579838465135
+      label_collectible_illustration_sliding_puzzle_19: -4741116111460378090
+      label_collectible_illustration_sliding_puzzle_2: -7382418526918459871
+      label_collectible_illustration_sliding_puzzle_20: -5750745355380863218
+      label_collectible_illustration_sliding_puzzle_21: -5373529639440690342
+      label_collectible_illustration_sliding_puzzle_22: -8700369408313127195
+      label_collectible_illustration_sliding_puzzle_23: -7250653365814409647
+      label_collectible_illustration_sliding_puzzle_24: -707289907410933646
+      label_collectible_illustration_sliding_puzzle_25: -8724082886030201264
+      label_collectible_illustration_sliding_puzzle_26: -1495342974826413814
+      label_collectible_illustration_sliding_puzzle_27: -5488121927402851765
+      label_collectible_illustration_sliding_puzzle_28: -4106555960194623198
+      label_collectible_illustration_sliding_puzzle_29: 3083331944242124655
+      label_collectible_illustration_sliding_puzzle_3: 6710824348368169212
+      label_collectible_illustration_sliding_puzzle_30: -6194292366901185977
+      label_collectible_illustration_sliding_puzzle_31: 4159774064172425212
+      label_collectible_illustration_sliding_puzzle_32: 2956218925064757906
+      label_collectible_illustration_sliding_puzzle_33: 754206878971200722
+      label_collectible_illustration_sliding_puzzle_34: -5670331121858933093
+      label_collectible_illustration_sliding_puzzle_4: 5163541315422995638
+      label_collectible_illustration_sliding_puzzle_5: -5411424412368186121
+      label_collectible_illustration_sliding_puzzle_6: -2734611744672704691
+      label_collectible_illustration_sliding_puzzle_7: 480128924007211519
+      label_collectible_illustration_sliding_puzzle_8: 6251410073029710393
+      label_collectible_illustration_sliding_puzzle_9: -1707307882422058313
+  mipmapLimitGroupName:
+  pSDRemoveMatte: 0
+  userData:
+  assetBundleName:
+  assetBundleVariant:

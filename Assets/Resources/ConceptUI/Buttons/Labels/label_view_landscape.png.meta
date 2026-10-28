@@ -1,0 +1,520 @@
+fileFormatVersion: 2
+guid: a083147b220654e4998ca35d0e371678
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 3130257393109264855
+    second: label_view_landscape_0
+  - first:
+      213: -5671929664721870329
+    second: label_view_landscape_1
+  - first:
+      213: 1998671072541461937
+    second: label_view_landscape_2
+  - first:
+      213: -6924532346832770348
+    second: label_view_landscape_3
+  - first:
+      213: -7422838709889274738
+    second: label_view_landscape_4
+  - first:
+      213: 2287771680104444430
+    second: label_view_landscape_5
+  - first:
+      213: 1219648235746094922
+    second: label_view_landscape_6
+  - first:
+      213: -1503073688464584307
+    second: label_view_landscape_7
+  - first:
+      213: -1402205341362920049
+    second: label_view_landscape_8
+  - first:
+      213: 420246584077580731
+    second: label_view_landscape_9
+  - first:
+      213: 2403519844066324074
+    second: label_view_landscape_10
+  - first:
+      213: 4724668802489514901
+    second: label_view_landscape_11
+  - first:
+      213: 1337635825623228280
+    second: label_view_landscape_12
+  - first:
+      213: -4244243992134198495
+    second: label_view_landscape_13
+  - first:
+      213: -1872144733056438200
+    second: label_view_landscape_14
+  - first:
+      213: 1717279751033063440
+    second: label_view_landscape_15
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 0
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: label_view_landscape_0
+      rect:
+        serializedVersion: 2
+        x: 211
+        y: 45
+        width: 46
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7d961d3a388e07b20800000000000000
+      internalID: 3130257393109264855
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: label_view_landscape_1
+      rect:
+        serializedVersion: 2
+        x: 259
+        y: 83
+        width: 11
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 702a04765024941b0800000000000000
+      internalID: -5671929664721870329
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: label_view_landscape_2
+      rect:
+        serializedVersion: 2
+        x: 406
+        y: 45
+        width: 35
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1bdcea540c4bcbb10800000000000000
+      internalID: 1998671072541461937
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: label_view_landscape_3
+      rect:
+        serializedVersion: 2
+        x: 441
+        y: 45
+        width: 49
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4daa45fa48e17ef90800000000000000
+      internalID: -6924532346832770348
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: label_view_landscape_4
+      rect:
+        serializedVersion: 2
+        x: 493
+        y: 45
+        width: 40
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e8ce7007587ccf890800000000000000
+      internalID: -7422838709889274738
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: label_view_landscape_5
+      rect:
+        serializedVersion: 2
+        x: 541
+        y: 45
+        width: 41
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e02f2dfc83ccfbf10800000000000000
+      internalID: 2287771680104444430
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: label_view_landscape_6
+      rect:
+        serializedVersion: 2
+        x: 586
+        y: 44
+        width: 40
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a4fe392cb9f0de010800000000000000
+      internalID: 1219648235746094922
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: label_view_landscape_7
+      rect:
+        serializedVersion: 2
+        x: 631
+        y: 44
+        width: 43
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d8115d7a172042be0800000000000000
+      internalID: -1503073688464584307
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: label_view_landscape_8
+      rect:
+        serializedVersion: 2
+        x: 675
+        y: 45
+        width: 49
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f8568e5dbad5a8ce0800000000000000
+      internalID: -1402205341362920049
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: label_view_landscape_9
+      rect:
+        serializedVersion: 2
+        x: 728
+        y: 45
+        width: 38
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bb9f30aaa0405d500800000000000000
+      internalID: 420246584077580731
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: label_view_landscape_10
+      rect:
+        serializedVersion: 2
+        x: 772
+        y: 45
+        width: 37
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a6eec2450940b5120800000000000000
+      internalID: 2403519844066324074
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: label_view_landscape_11
+      rect:
+        serializedVersion: 2
+        x: 259
+        y: 45
+        width: 11
+        height: 36
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 59bf1c55e35619140800000000000000
+      internalID: 4724668802489514901
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: label_view_landscape_12
+      rect:
+        serializedVersion: 2
+        x: 275
+        y: 44
+        width: 33
+        height: 38
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 87fdb1142bc309210800000000000000
+      internalID: 1337635825623228280
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: label_view_landscape_13
+      rect:
+        serializedVersion: 2
+        x: 309
+        y: 45
+        width: 53
+        height: 36
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 12b51cc739a6915c0800000000000000
+      internalID: -4244243992134198495
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: label_view_landscape_14
+      rect:
+        serializedVersion: 2
+        x: 367
+        y: 69
+        width: 11
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8407d0ac84ec406e0800000000000000
+      internalID: -1872144733056438200
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: label_view_landscape_15
+      rect:
+        serializedVersion: 2
+        x: 367
+        y: 45
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0180c44c5d005d710800000000000000
+      internalID: 1717279751033063440
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    outline: []
+    customData:
+    physicsShape: []
+    bones: []
+    spriteID:
+    internalID: 0
+    vertices: []
+    indices:
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      label_view_landscape_0: 3130257393109264855
+      label_view_landscape_1: -5671929664721870329
+      label_view_landscape_10: 2403519844066324074
+      label_view_landscape_11: 4724668802489514901
+      label_view_landscape_12: 1337635825623228280
+      label_view_landscape_13: -4244243992134198495
+      label_view_landscape_14: -1872144733056438200
+      label_view_landscape_15: 1717279751033063440
+      label_view_landscape_2: 1998671072541461937
+      label_view_landscape_3: -6924532346832770348
+      label_view_landscape_4: -7422838709889274738
+      label_view_landscape_5: 2287771680104444430
+      label_view_landscape_6: 1219648235746094922
+      label_view_landscape_7: -1503073688464584307
+      label_view_landscape_8: -1402205341362920049
+      label_view_landscape_9: 420246584077580731
+  mipmapLimitGroupName:
+  pSDRemoveMatte: 0
+  userData:
+  assetBundleName:
+  assetBundleVariant:

@@ -9,12 +9,12 @@ namespace FirstPuzzle
     /// <summary>Phase 3 Lobby (difficulty tabs + stage cards) and Illustration Gallery (collection + full-screen viewer).</summary>
     public sealed class PuzzleLobbyGalleryUI : MonoBehaviour
     {
-        private static readonly Color PanelBg = new Color(0.98f, 0.98f, 0.95f, 0.96f);
-        private static readonly Color CardUnlocked = new Color(0.55f, 0.86f, 0.79f, 1f);
-        private static readonly Color CardLocked = new Color(0.78f, 0.78f, 0.75f, 1f);
-        private static readonly Color TabActive = new Color(0.43f, 0.81f, 0.92f, 1f);
-        private static readonly Color TabInactive = new Color(0.88f, 0.88f, 0.85f, 1f);
-        private static readonly Color TextLight = new Color(0.07f, 0.07f, 0.06f, 1f);
+        private static readonly Color PanelBg = Color.clear;
+        private static readonly Color CardUnlocked = Color.white;
+        private static readonly Color CardLocked = ConceptTheme.Locked;
+        private static readonly Color TabActive = ConceptTheme.Cyan;
+        private static readonly Color TabInactive = ConceptTheme.Locked;
+        private static readonly Color TextLight = Color.white;
 
         private PuzzleGame game;
         private RectTransform titlePanel;
@@ -663,7 +663,7 @@ namespace FirstPuzzle
             fitter.aspectMode = AspectRatioFitter.AspectMode.FitInParent;
             fitter.aspectRatio = 1f;
 
-            overlay.GetComponent<Image>().color = new Color32(233,233,228,255);
+            overlay.GetComponent<Image>().color = ConceptTheme.Locked;
             ConceptTheme.Art("LockArtwork", iconBox, "icon_lock", 0f, 0f, 1f, 1f);
 
             return overlay.gameObject;
